@@ -71,9 +71,11 @@ yourself making unrelated changes, make a new branch for those
 changes.
 
 #### Commit Message Guidelines
+``` bash
 <type>(<scope>): <subject>
 <body>
 <footer>
+```
 
 Allowed <type> values:
   - feat (new feature)
@@ -97,8 +99,9 @@ Example <scope> values:
 The <scope> can be empty (eg. if the change is a global or difficult to assign to a single component), in which case the parentheses are omitted.
 
 Example of a Commit Message Subject Line:
+``` bash
   - [feat] (test): write initial client-side tests
-
+```
 
 - Commit messages should be written in the present tense; e.g. "Fix continuous
   integration script".
