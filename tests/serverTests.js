@@ -7,3 +7,8 @@ describe('Server', function() {
     expect(true).toBe(true);
   })
 })
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 00e3e9406eebb20d944fee90924ce5ccf83a3084
