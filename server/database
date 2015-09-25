@@ -1,0 +1,15 @@
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('emails.db');
+
+//setting up sqlite3 database w/ potential email schema
+var insertReturn = exports.insertReturn = function(){
+  db.run("CREATE TABLE IF NOT EXISTS emailList (to_field char(100),from_field char(100),cc char(100),bcc char(100),subject char(100), priority char(100), text MEDIUMTEXT, date DATE)")
+  db.run("INSERT into emailList (to_field, from_field, cc, bcc, subject, priority, text, date) VALUES('dageprotect@gmail.com','no_reply@gmail.com','','','testing database insert','high','The State De­part­ment con­firmed that Clin­ton turned over her email only after Con­gress dis­covered that she had ex­clus­ively used a private email sys­tem. Ac­cord­ing to The Wash­ing­ton Post, the de­part­ment first con­tac­ted her in the sum­mer of 2014, at least three months be­fore the agency asked Clin­ton and three of her pre­de­cessors to provide their emails. The story un­der­cuts Clin­ton’s claim that her de­cision to turn over self-se­lec­ted email was a re­sponse to a routine-sound­ing re­cords re­quest. She hasn’t been telling the truth.','2015-09-24T20:48:24.000Z')");
+  db.all("SELECT to_field, from_field FROM emailList", function(err, rows) {  
+          if(err){
+            console.log('err')
+          }
+          console.log(rows);    
+      });   
+  db.close();  
+}

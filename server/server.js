@@ -1,5 +1,3 @@
-//this is placeholder file for server.js
-
 var express = require('express');
 var app = express();
 
@@ -22,3 +20,4 @@ if (__filename === process.argv[1]) {
 }
 
 module.exports = app;
+
