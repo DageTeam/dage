@@ -7,6 +7,7 @@ var watchify = require('watchify');
 var reactify = require('reactify');
 var streamify = require('gulp-streamify');
 var jscs = require('gulp-jscs');
+var gulpNpmTest = require('gulp-npm-test');
 
 var path = {
   HTML: 'client/src/dashboard.html',
@@ -25,6 +26,11 @@ gulp.task('jscs', function() {
     .pipe(jscs.reporter())            //report on the progress of the task
     .pipe(jscs.reporter('fail'))
     .pipe(gulp.dest('server'));
+});
+
+//this runs 'npm test'
+gulp.task('test', function() {
+  gulpNpmTest({ withoutNpmRun: false}); //to run npm test. default=true
 });
 
 gulp.task('copy', function() {
