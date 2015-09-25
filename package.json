@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-<<<<<<< HEAD
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node ./tests/serverSpec.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DageTeam/dage.git"
->>>>>>> [feat] set up sqlite3 database files. ready for export
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-<<<<<<< HEAD
     "url": "https://github.com/DageTeam/dage/issues"
   },
   "homepage": "https://github.com/DageTeam/dage#readme",
@@ -47,6 +44,4 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
   }
-=======
->>>>>>> [feat] set up sqlite3 database files. ready for export
 }
