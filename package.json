@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/DageTeam/dage#readme",
   "dependencies": {
+    "express": "^4.13.3",
     "react": "^0.13.3",
     "react-redux": "^3.0.0",
     "redux": "^3.0.0",
-    "express": "^4.13.3",
     "sqlite3": "^3.1.0"
   },
   "devDependencies": {
@@ -29,10 +29,10 @@
     "browserify": "^11.2.0",
     "eslint-config-airbnb": "0.0.9",
     "eslint-plugin-react": "^3.4.2",
-    "express": "^4.13.3",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-html-replace": "^1.5.4",
+    "gulp-jscs": "^3.0.0",
     "gulp-react": "^3.0.1",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^1.4.1",
