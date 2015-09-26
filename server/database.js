@@ -1,7 +1,8 @@
-
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('emails.db');
 
 //setting up sqlite3 database w/ potential email schema
-var insertReturn = exports.insertReturn = function() {
+var insertReturn = exports.insertReturn = function(body) {
   var toField = 'dageprotect@gmail.com';
   var fromField = 'no_reply@gmail.com';
   var cc = 'cc';
@@ -30,5 +31,4 @@ var insertReturn = exports.insertReturn = function() {
     console.log('these are rows', rows);
   });
 
-  db.close();
 };
