@@ -19,7 +19,7 @@ var path = {
   ENTRY_POINT: './client/src/js/app.jsx',
 };
 
-//this task auto-fixes according to the code style in
+//this task auto-fixes according to the code style defined in .jscs file found inside the root folder.
 gulp.task('jscs', function() {
   return gulp.src('server/server.js') //TEST with one file. Todo: accept all files
     .pipe(jscs({fix:true}))           //fixes the style errors found
@@ -30,7 +30,7 @@ gulp.task('jscs', function() {
 
 //this runs 'npm test'
 gulp.task('test', function() {
-  gulpNpmTest({ withoutNpmRun: false}); //to run npm test. default=true
+  gulpNpmTest(require('gulp'));
 });
 
 gulp.task('copy', function() {
@@ -77,7 +77,6 @@ gulp.task('replaceHTML', function() {
     }))
     .pipe(gulp.dest(path.DEST));
 });
-
 
 gulp.task('commit', ['jscs', 'build', 'test']);
 
