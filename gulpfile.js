@@ -21,7 +21,7 @@ var path = {
 
 //this task auto-fixes according to the code style defined in .jscs file found inside the root folder.
 gulp.task('jscs', function() {
-  return gulp.src('server/server.js') //TEST with one file. Todo: accept all files
+  return gulp.src('*/*.js') //test all JS files
     .pipe(jscs({fix:true}))           //fixes the style errors found
     .pipe(jscs.reporter())            //report on the progress of the task
     .pipe(jscs.reporter('fail'))
