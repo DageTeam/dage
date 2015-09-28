@@ -38,3 +38,7 @@ Thumbs.db
 ######################
 /node_modules
 /tests/lib/
+
+# Build Files #
+######################
+/client/dist/build/build.min.js
