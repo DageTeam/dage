@@ -23,6 +23,7 @@
 # Logs and databases #
 ######################
 *.log
+emails.db
 
 # OS generated files #
 ######################
