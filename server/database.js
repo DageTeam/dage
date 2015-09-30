@@ -11,8 +11,8 @@ var insertReturn = exports.insertReturn = function(email) {
   var priority = email.priority;
   var text = email.text;
   var date = email.date;
-  var createString = 'CREATE TABLE IF NOT EXISTS emailList (to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, date DATE)';
-  var sampleInsert = 'INSERT into emailList (to_field, from_field, cc, bcc, subject, priority, text, date) VALUES(\''
+  var createString = 'CREATE TABLE IF NOT EXISTS emailList(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER)';
+  var sampleInsert = 'INSERT into emailList (to_field, from_field, cc, bcc, subject, priority, text, date, checked) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
     + cc + '\',\''
@@ -20,14 +20,14 @@ var insertReturn = exports.insertReturn = function(email) {
     + subject + '\',\''
     + priority + '\',\''
     + text + '\',\''
-    + date + '\')';
+    + date + '\',\''
+    + '0' + '\')';
   db.run(createString);
   db.run(sampleInsert);
   db.all('SELECT * FROM emailList', function(err, rows) {
     if (err) {
       console.log('err');
     }
-
     console.log('these are rows', rows);
   });
 
@@ -40,7 +40,6 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
     if (err) {
       console.log('err');
     }
-
     console.log('rows fetched, running callback');
     cb(rows);
   })
