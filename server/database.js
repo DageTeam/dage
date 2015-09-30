@@ -32,10 +32,10 @@ var insertReturn = exports.insertReturn = function(email) {
   db.all('SELECT * FROM emailList', function(err, rows) {
     if (err) {
       console.log('err');
+    } else {
+      console.log('these are rows', rows);
     }
-    console.log('these are rows', rows);
   });
-
 };
 
 var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
@@ -44,20 +44,22 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
   db.all(queryString, function(err, rows) {
     if (err) {
       console.log('err');
+    } else {
+      console.log('rows fetched, running callback');
+      cb(rows);
     }
-    console.log('rows fetched, running callback');
-    cb(rows);
   })
 };
 
-var getUncheckedEmails = exports.getUncheckedEmails = function(){
+var getUncheckedEmails = exports.getUncheckedEmails = function() {
   console.log('starting to get Unchecked Emails');
   var query = 'SELECT * FROM emailList WHERE checked="0"';
-  db.all(query, function(err, responseArrayOfObjects){
-    if (err){
+  db.all(query, function(err, responseArrayOfObjects) {
+    if (err) {
       console.log('There was an error getting Unchecked Emails');
-    }
+    } else {
     console.log('this is the db response.....', responseArrayOfObjects);
     return responseArrayOfObjects;
+  }
   });
 };
