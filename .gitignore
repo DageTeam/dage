@@ -43,3 +43,4 @@ Thumbs.db
 # Build Files #
 ######################
 /client/dist/build/build.min.js
+dist
