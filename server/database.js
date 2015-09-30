@@ -2,15 +2,15 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('emails.db');
 
 //setting up sqlite3 database w/ potential email schema
-var insertReturn = exports.insertReturn = function(body) {
-  var toField = 'dageprotect@gmail.com';
-  var fromField = 'no_reply@gmail.com';
-  var cc = 'cc';
-  var bcc = 'bcc';
-  var subject = 'testing database insert';
-  var priority = 'high';
-  var text = 'this is the text';
-  var date = '2015-09-24T20:48:24.000Z';
+var insertReturn = exports.insertReturn = function(email) {
+  var toField = email.to === undefined ? 'undefined' : email.to[0].address;
+  var fromField = email.from === undefined ? 'undefined' : email.from[0].address;
+  var cc = email.cc === undefined ? 'undefined' : email.cc[0].address;
+  var bcc = email.bcc === undefined ? 'undefined' : email.bcc[0].address;
+  var subject = email.subject;
+  var priority = email.priority;
+  var text = email.text;
+  var date = email.date;
   var createString = 'CREATE TABLE IF NOT EXISTS emailList (to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, date DATE)';
   var sampleInsert = 'INSERT into emailList (to_field, from_field, cc, bcc, subject, priority, text, date) VALUES(\''
     + toField + '\',\''

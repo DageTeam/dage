@@ -4,8 +4,9 @@ var Imap = require('imap'),
 var MailParser = require('mailparser').MailParser;
 var emailBuffer = [],
     emailResults = [];
+var db = require('./database.js');
+var CronJob = require('cron').CronJob;
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 //create new IMAP instance. Connect with gmail.
 var imap = new Imap({
   user: 'dageprotect@gmail.com',
@@ -21,6 +22,13 @@ function openInbox(cb) {
 }
 
 
+var job = new CronJob({
+  cronTime: '*/10 * * * * * ', 
+  onTick: function() {
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+
 
 imap.once('ready', function() {
   openInbox(function(err, box) {
@@ -34,9 +42,9 @@ imap.once('ready', function() {
         return imap.end();
       }
       
-      var f = imap.fetch(results, {markSeen:true, bodies: ['']});
+      var fetch = imap.fetch(results, {markSeen:true, bodies: ['']});
       //for every message that we fetch...
-      f.on('message', function(msg) {
+      fetch.on('message', function(msg) {
         //...create new instance of MailParser
         var mailparser = new MailParser();
         console.log('mailparser instance created...')
@@ -57,11 +65,11 @@ imap.once('ready', function() {
 
       });
 
-      f.once('error', function(err) {
+      fetch.once('error', function(err) {
         console.log('Fetch error: ' + err);
       });
 
-      f.once('end', function() {
+      fetch.once('end', function() {
         console.log('Done fetching all messages!');
         
         imap.end();
@@ -80,9 +88,18 @@ imap.once('end', function() {
   for(var i = 0; i < emailBuffer.length; i+=2){
     emailResults.push(emailBuffer[i]);
   }
-  console.log('filtered email results: ', emailResults)
+  emailResults.forEach(function(item){
+    db.insertReturn(item);
+  })
+  // console.log('filtered email results: ', emailResults)
   console.log('Connection ended');
 });
 
 imap.connect();
+
+},
+start: true,
+timeZone: "America/Los_Angeles"
+});
+job.start();
 
