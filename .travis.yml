@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "0.12"
+  - "4.0"
+  - "iojs-v2"
+
+install:
+  - npm install
+
+script:
+  - NODE_ENV=production npm run deploy
