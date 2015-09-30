@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled source #
 ###################
 *.com
@@ -43,3 +44,4 @@ Thumbs.db
 # Build Files #
 ######################
 /client/dist/build/build.min.js
+dist
