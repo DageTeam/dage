@@ -2,6 +2,8 @@
 var request = require('request');
 var testUrl = 'http://localhost:6789';
 
+//Remember to have the server running PRIOR to running tests with nodemon server/server.js
+
 //Specs for server routing and server routing ONLY
 describe('Server', function() {
 
@@ -29,5 +31,18 @@ describe('Server', function() {
       done();
     });
   });
+
+  //
+  it('should should handle /dashboard url, returning the db response for flagged emails', function(done) {
+    //TODO: change expectedResponse to whatever the redirect should respond with
+    expectedResponse = 'Dashboard';
+    request(testUrl + '/dashboard', function(error, response, body) {
+      var res = JSON.parse(body);
+      expect(Array.isArray(res)).toBe(true);
+      expect(typeof res[0]).toEqual('object');
+      expect(res[0]['to_field']).toEqual('dageprotect@gmail.com');
+      done();
+    })
+  })
 
 });
