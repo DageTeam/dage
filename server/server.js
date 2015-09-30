@@ -4,15 +4,25 @@ var db = require('./database.js');
 
 //Default route
 app.get('/', function(req, res) {
-  db.insertReturn(req.body);
+  // db.insertReturn(req.body);
   res.send('Hello, world!');
 });
 
 //Test route TODO: get rid of
 app.get('/test', function(req, res) {
-  db.insertReturn();
+  // db.insertReturn();
   res.send('Test');
 });
+
+
+//dashboard is the placeholder url for the dashboard url for the client
+app.get('/dashboard', function(req, res) {
+  //get the flagged emails via a db query
+  db.getFlaggedEmails(function(emails) {
+    console.log(typeof emails);
+    res.send(emails);
+  });
+})
 
 app.post('/', function(req, res) {
   res.send('You posted!');
