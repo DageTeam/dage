@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var db = require('./database.js');
+var algo = require('./flaggingAlgo.js');
 
 //Default route
 app.get('/', function(req, res) {
