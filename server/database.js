@@ -1,5 +1,9 @@
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('emails.db');
+var path = require('path');
+
+//create new database called emails.db
+var dbFile = path.join(__dirname + '/emails.db');
+var db = exports.db = new sqlite3.Database(dbFile);
 
 //setting up sqlite3 database w/ potential email schema
 var insertReturn = exports.insertReturn = function(email) {
@@ -24,10 +28,11 @@ var insertReturn = exports.insertReturn = function(email) {
     + text + '\',\''
     + date + '\',\''
     + checked + '\',\''
-    + flagged + '\')';
+    + flagged + '\');';
   var createContextTable = 'CREATE TABLE IF NOT EXISTS flaggedContextList(id INTEGER PRIMARY KEY AUTOINCREMENT, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
 
   db.run(createEmailTable);
+  db.run(createContextTable);
   db.run(sampleInsert);
   db.all('SELECT * FROM emailList', function(err, rows) {
     if (err) {
@@ -51,15 +56,17 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
   })
 };
 
-var getUncheckedEmails = exports.getUncheckedEmails = function() {
+// getFlaggedEmails(function(a) {console.log(a)});
+
+var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
   console.log('starting to get Unchecked Emails');
   var query = 'SELECT * FROM emailList WHERE checked="0"';
   db.all(query, function(err, responseArrayOfObjects) {
     if (err) {
       console.log('There was an error getting Unchecked Emails');
     } else {
-    console.log('this is the db response.....', responseArrayOfObjects);
-    return responseArrayOfObjects;
-  }
+      console.log('this is the database response.....', responseArrayOfObjects);
+      cb(responseArrayOfObjects);
+    }
   });
 };
