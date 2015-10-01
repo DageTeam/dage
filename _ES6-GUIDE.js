@@ -138,6 +138,50 @@ return state.map(todo => Object.assign({}, todo, {
 }));
 
 /*******************
+ * Dynamic property names & template strings-we can now assign object literals to a derived
+ * property name. we have the ability to construct objects whose property names are determined 
+ * by a JavaScript expression at runtime.
+ ******************/
+
+ //ES5
+ var Form = React.createClass({
+  onChange: function(inputName, e) {
+    var stateToSet = {};
+    stateToSet[inputName + 'Value'] = e.target.value;
+    this.setState(stateToSet);
+  },
+ });
+
+ //ES6
+ class Form extends React.Component {
+  onChange(inputName, e) {
+    this.setState({
+      [`${inputName}Value`]: e.target.value,
+    });
+  }
+ } 
+
+/*******************
+ * Destructuring & spread attributes - when we want to pass down most of a parent component
+ * props to a child component, but not all of them. 
+ ******************/
+
+ //ES6
+ class MaximumPower extends React.Component {
+  render() {
+    var {
+      className,
+      ...others,  // contains all properties of this.props except for className
+    } = this.props;
+    return (
+      <div className={className}> //here, we can pass down just className
+        <Power {...others} /> //here, we pass down all properties of this.props except for className
+      </div>
+    );
+  }
+ }
+
+/*******************
  * what's the same: setting state
  * TODO: add more examples as they come up
  ******************/
