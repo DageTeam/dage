@@ -19,9 +19,7 @@ var mailListener = new MailListener({
   attachmentOptions: { directory: 'attachments/' } // specify a download directory for attachments
 });
 
-
 mailListener.start(); // start listening
-
 
 mailListener.on('server:connected', function() {
   console.log('imapConnected');
