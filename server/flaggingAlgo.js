@@ -4,22 +4,11 @@ var database = require('./database.js');
 //temp small list of bad words
 var badWords = ['damn', 'shit', 'crap', 'butt'];
 
-//fx to pull all unchecked emails from the db
-var uncheckedEmails = database.getUncheckedEmails;
-
-//fx to update the emailTable to mark an email as checked
-var markChecked = function(emailID) {
-  var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
-  database.db.run(checkString);
-  console.log('markChecked fx ran/////');
-};
-
-//fx to update the emailTable  to mark an email as flagged
-var markFlagged = function(emailID) {
-  var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
-  database.db.run(flagString);
-  console.log('markFlagged fx ran/////');
-};
+//import fx
+var getUncheckedEmails = database.getUncheckedEmails;
+var markChecked = database.markChecked;
+var markFlagged = database.markFlagged;
+var insertIntoContextTable = database.insertIntoContextTable;
 
 //fx to createContext. context = a substring of 200chars before and 200 after the flaggedKeyWord
 var createContext = function(email, flaggedKeyWord) {
@@ -33,22 +22,15 @@ var createContext = function(email, flaggedKeyWord) {
   return context;
 };
 
-//fx to insert into the contextTable
-var insertIntoContextTable = function(emailID, flaggedKeyWord, context) {
-  var flaggedContent = 'INSERT INTO contextTable (emailID, flaggedKeyWord, context) VALUES (' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
-  database.db.run(flaggedContent);
-  console.log('insertIntoContextTable fx ran/////');
-};
-
 //fx to check emails for bad words and then store it into the contextTable
-var filterEmail = function(emailArray) {
+var filterEmail = exports.filterEmail = function(emailArray) {
   console.log('filterEmail fx ran/////');
   console.log('filterEmailz emailArray argument is ///////.....', emailArray);
 
   //loop thru the responseArray
   for (var i = 0; i < emailArray.length; i++) {
     var email = emailArray[i];
-
+    console.log('heeeeeeeee', typeof markFlagged)
     // change checked value to 1 in the emailTable
     markChecked(email.id);
 
@@ -75,7 +57,13 @@ var filterEmail = function(emailArray) {
   console.log('filterEmail fx is done running/////');
 };
 
-//TESTING purposes. delete fitlerEmail call.
-uncheckedEmails(function(emailArray) {
-  filterEmail(emailArray);
-});
+var scanEmail = function(){
+  getUncheckedEmails(function(emailArray) {
+    filterEmail(emailArray);
+  });
+};
+
+// TESTING purposes. delete fitlerEmail call.
+scanEmail();
+
+// TODO: create cron job to make it run every 30mins.

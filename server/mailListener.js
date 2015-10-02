@@ -42,7 +42,7 @@ mailListener.on('mail', function(mail, seqno, attributes) {
   mail.text = sanitizeInput(mail.text);
 
   // insert incoming mail to database
-  db.insertReturn(mail);
+  db.insertEmail(mail);
   console.log('emailParsed', mail);
 });
 
