@@ -33,13 +33,21 @@ mailListener.on('error', function(err) {
   console.log(err);
 });
 
+mailListener.on('attachment', function(attachment) {
+  console.log(attachment.path);
+});
+
 mailListener.on('mail', function(mail, seqno, attributes) {
+  mail.subject = sanitizeInput(mail.subject);
+  mail.text = sanitizeInput(mail.text);
+
   // insert incoming mail to database
   db.insertReturn(mail);
   console.log('emailParsed', mail);
 });
 
-mailListener.on('attachment', function(attachment) {
-  console.log(attachment.path);
-});
-
+//fx to sanitize the email text's quotes
+var sanitizeInput = function(str) {
+  str = str.replace(/'/g, '\'\'');
+  return str;
+};
