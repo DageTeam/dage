@@ -17,8 +17,8 @@ var insertReturn = exports.insertReturn = function(email) {
   var date = email.date;
   var checked = '0';
   var flagged = '0';
-  var createEmailTable = 'CREATE TABLE IF NOT EXISTS emailList(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER, flagged INTEGER)';
-  var sampleInsert = 'INSERT into emailList (to_field, from_field, cc, bcc, subject, priority, text, date, checked, flagged) VALUES(\''
+  var createEmailTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER, flagged INTEGER)';
+  var sampleInsert = 'INSERT into emailTable (to_field, from_field, cc, bcc, subject, priority, text, date, checked, flagged) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
     + cc + '\',\''
@@ -29,12 +29,12 @@ var insertReturn = exports.insertReturn = function(email) {
     + date + '\',\''
     + checked + '\',\''
     + flagged + '\');';
-  var createContextTable = 'CREATE TABLE IF NOT EXISTS flaggedContextList(id INTEGER PRIMARY KEY AUTOINCREMENT, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
+  var createContextTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
 
   db.run(createEmailTable);
   db.run(createContextTable);
   db.run(sampleInsert);
-  db.all('SELECT * FROM emailList', function(err, rows) {
+  db.all('SELECT * FROM emailTable', function(err, rows) {
     if (err) {
       console.log('err');
     } else {
@@ -45,7 +45,7 @@ var insertReturn = exports.insertReturn = function(email) {
 
 var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
   console.log('triggered');
-  var queryString = 'SELECT * FROM emailList WHERE flagged="1"';
+  var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
   db.all(queryString, function(err, rows) {
     if (err) {
       console.log('err');
@@ -60,7 +60,7 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
 
 var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
   console.log('starting to get Unchecked Emails');
-  var query = 'SELECT * FROM emailList WHERE checked="0"';
+  var query = 'SELECT * FROM emailTable WHERE checked="0"';
   db.all(query, function(err, responseArrayOfObjects) {
     if (err) {
       console.log('There was an error getting Unchecked Emails');

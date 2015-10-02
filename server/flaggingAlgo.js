@@ -7,16 +7,16 @@ var badWords = ['damn', 'shit', 'crap', 'butt'];
 //fx to pull all unchecked emails from the db
 var uncheckedEmails = database.getUncheckedEmails;
 
-//fx to update the emailList table to mark an email as checked
+//fx to update the emailTable to mark an email as checked
 var markChecked = function(emailID) {
-  var checkString = 'UPDATE emailList SET checked="1" WHERE id=' + emailID;
+  var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
   database.db.run(checkString);
   console.log('markChecked fx ran/////');
 };
 
-//fx to update the emailList table to mark an email as flagged
+//fx to update the emailTable  to mark an email as flagged
 var markFlagged = function(emailID) {
-  var flagString = 'UPDATE emailList SET flagged="1" WHERE id=' + emailID;
+  var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
   database.db.run(flagString);
   console.log('markFlagged fx ran/////');
 };
@@ -33,14 +33,14 @@ var createContext = function(email, flaggedKeyWord) {
   return context;
 };
 
-//fx to insert into the flagged content context table
+//fx to insert into the contextTable
 var insertIntoContextTable = function(emailID, flaggedKeyWord, context) {
-  var flaggedContent = 'INSERT INTO flaggedContextList (emailID, flaggedKeyWord, context) VALUES (' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
+  var flaggedContent = 'INSERT INTO contextTable (emailID, flaggedKeyWord, context) VALUES (' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
   database.db.run(flaggedContent);
   console.log('insertIntoContextTable fx ran/////');
 };
 
-//fx to check emails for bad words and then store it into the flaggedContextList table
+//fx to check emails for bad words and then store it into the contextTable
 var filterEmail = function(emailArray) {
   console.log('filterEmail fx ran/////');
   console.log('filterEmailz emailArray argument is ///////.....', emailArray);
@@ -49,7 +49,7 @@ var filterEmail = function(emailArray) {
   for (var i = 0; i < emailArray.length; i++) {
     var email = emailArray[i];
 
-    // change checked value to 1 in the emailList table;
+    // change checked value to 1 in the emailTable
     markChecked(email.id);
 
     // loop thru the badWordsArray
@@ -60,13 +60,13 @@ var filterEmail = function(emailArray) {
 
       //if object's TEXT value contains that 'bad word'
       if (subString.test(email.text)) {
-        // change flag value to 1 in the emailList table;
+        // change flag value to 1 in the emailTable ;
         markFlagged(email.id);
 
         // //create context
         var context = createContext(email, badWords[j]);
 
-        // //insert the 'flaggedKeyWord', the 'id', the 'context' into flaggedContextList table
+        // //insert the 'flaggedKeyWord', the 'id', the 'context' into contextTable
         insertIntoContextTable(email.id, badWords[j], context);
       }
     }
@@ -75,7 +75,7 @@ var filterEmail = function(emailArray) {
   console.log('filterEmail fx is done running/////');
 };
 
-//TESTING purposes. delete fitlerEmails call.
+//TESTING purposes. delete fitlerEmail call.
 uncheckedEmails(function(emailArray) {
   filterEmail(emailArray);
 });
