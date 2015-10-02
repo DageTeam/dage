@@ -45,7 +45,7 @@ var insertReturn = exports.insertReturn = function(email) {
 
 var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
   console.log('triggered');
-  var queryString = 'SELECT * FROM emailList';
+  var queryString = 'SELECT * FROM emailList WHERE flagged="1"';
   db.all(queryString, function(err, rows) {
     if (err) {
       console.log('err');
