@@ -2,13 +2,13 @@ var React = require('react');
 
 var Select = require('react-select');
 
-function AddChange() {
+function AddFlag() {
   console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
   //insert the newly added flag as param for CB so that redux code can connect with DB to insert it. 
   this.props./*CBNewFlag*/(Array.prototype.slice.apply(arguments[arguments.length-1]))//double check to see if param === last added object values.PLAY WITH IT.
 }
 
-var SelectedValuesField = React.createClass({
+var FlagDisplay = React.createClass({
   propTypes:{
           allowCreate: React.propTypes.bool, 
           hint: React.PropTypes.string, 
@@ -26,8 +26,10 @@ var SelectedValuesField = React.createClass({
           multi //test if this is needed
           placeholder="Add keywords here"
           options={this.props.options} //won't need. Test.
-          onChange={AddChange} />
+          onChange={AddFlag} />
       </div>
     )
   }
 })
+
+module.exports = FlagDisplay;
