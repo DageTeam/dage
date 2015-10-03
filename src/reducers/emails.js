@@ -8,7 +8,7 @@ import {
   EMAIL_SHOW_EMAIL,
 } from 'constants/email';
 
-const initialState = [
+const emailsArray = [
   {
     id: 'emailId',
     sender: 'emailSender',
@@ -16,20 +16,28 @@ const initialState = [
     subject: 'subjectString',
     body: 'bodyString',
     sendTime: 1000,
-    focusLevel: '',
+    focusLevel: 'one',
     flags:
       [
         {
-          type: 'flagTypeString',
-          context: 'contextString',
+          type: 'flagTypeString1',
+          context: 'contextString1',
         },
         {
-          type: 'flagTypeString',
-          context: 'contextString',
+          type: 'flagTypeString2',
+          context: 'contextString2',
         },
       ],
   },
 ];
+
+const emails = {
+  isFetchingEmail: false,
+  fetchingEmailError: '',
+  emailsArray,
+}
+
+const initialState = emails;
 
 export default createReducer(initialState, {
   // [COUNTER_INCREMENT] : (state) => state + 1

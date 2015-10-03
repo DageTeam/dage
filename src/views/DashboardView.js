@@ -8,17 +8,17 @@ import FlaggedEmailList from 'components/FlaggedEmailList';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  stateTree : state,
+  emails : state.emails,
 });
 export class DashboardView extends React.Component {
   static propTypes = {
     dispatch : React.PropTypes.func,
-    stateTree  : React.PropTypes.object,
+    emails : React.PropTypes.object,
   }
 
   constructor () {
     super();
-    this.tempState =
+    this.tempEmails =
     {
       emailsArray:
       [
@@ -33,12 +33,12 @@ export class DashboardView extends React.Component {
           flags :
           [
             {
-              type: 'flagTypeString',
-              context: 'contextString',
+              type: 'flagTypeString1',
+              context: 'contextString1',
             },
             {
-              type: 'flagTypeString',
-              context: 'contextString',
+              type: 'flagTypeString2',
+              context: 'contextString2',
             },
           ],
         }
@@ -53,11 +53,11 @@ export class DashboardView extends React.Component {
   }
 
   render () {
-    console.log(this.props.stateTree)
+    console.log(this.props.emails)
     return (
       <div className='container text-center'>
         <h1>Dage Dashboard</h1>
-        <FlaggedEmailList state={ this.props.stateTree }/>
+        <FlaggedEmailList state={ this.props.emails }/>
       </div>
     );
   }
