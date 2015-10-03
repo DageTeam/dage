@@ -8,12 +8,12 @@ import FlaggedEmailList from 'components/FlaggedEmailList';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  state : state
+  stateTree : state,
 });
 export class DashboardView extends React.Component {
   static propTypes = {
     dispatch : React.PropTypes.func,
-    state  : React.PropTypes.object,
+    stateTree  : React.PropTypes.object,
   }
 
   constructor () {
@@ -53,10 +53,11 @@ export class DashboardView extends React.Component {
   }
 
   render () {
+    console.log(this.props.stateTree)
     return (
       <div className='container text-center'>
         <h1>Dage Dashboard</h1>
-        <FlaggedEmailList state={ this.tempState }/>
+        <FlaggedEmailList state={ this.props.stateTree }/>
       </div>
     );
   }
