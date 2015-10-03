@@ -39,6 +39,7 @@ var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, from
 //fx to update the emailTable to mark an email as checked
 var markChecked = exports.markChecked = function(emailID) {
   var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
+
   db.run(checkString);
   console.log('markChecked fx ran/////');
 };
@@ -46,6 +47,7 @@ var markChecked = exports.markChecked = function(emailID) {
 //fx to update the emailTable  to mark an email as flagged
 var markFlagged = exports.markFlagged = function(emailID) {
   var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
+
   db.run(flagString);
   console.log('markFlagged fx ran/////');
 };
@@ -97,6 +99,7 @@ var insertEmail = exports.insertEmail = function(email) {
 var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
   console.log('triggered');
   var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+
   db.all(queryString, function(err, rows) {
     if (err) {
       console.log('err');
@@ -104,13 +107,14 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
       console.log('rows fetched, running callback');
       cb(rows);
     }
-  })
+  });
 };
 
 //fx to pull all unchecked emails from the db
 var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
   console.log('starting to get Unchecked Emails');
   var query = 'SELECT * FROM emailTable WHERE checked="0"';
+
   db.all(query, function(err, responseArrayOfObjects) {
     if (err) {
       console.log('There was an error getting Unchecked Emails');
@@ -120,3 +124,99 @@ var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
     }
   });
 };
+
+//fx to add a new filter into the database for the user
+var addFilter = exports.addFilter = function(body, cb) {
+  console.log('this is body', body);
+  var username = body.username;
+  var filterName = body.filterName;
+  var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
+
+  //get user id from database
+  db.all(getUserIDString, function(err, userInfo) {
+    if (err) {
+      console.log('There was an error finding the userID for username', username);
+    } else {
+      console.log('found username', userInfo);
+      var userID = userInfo[0].id;
+      var queryString = 'INSERT INTO filterTable (userID, filterName) VALUES (' + userID + ',\'' +  filterName +  '\')';
+
+      db.all(queryString, function(error, response) {
+        if (error) {
+          console.log('this is the error', error);
+          cb(err);
+        } else {
+          console.log('this is the response', response);
+          cb('YOUR FILTER HAS BEEN ADDED');
+        }
+      });
+    }
+  });
+};
+
+//create contextTable if it doenst exit
+var createFilterTable = function() {
+  var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
+
+  db.run(createTable);
+};
+
+//fx to add a new filter into the database for the user
+var addKeyword = exports.addKeyword = function(body, cb) {
+  console.log('this is body', body);
+  var username = body.username;
+  var filterName = body.filterName;
+  var keyword = body.keyword;
+  var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
+
+  //get user id from database
+  db.all(getUserIDString, function(err, userInfo) {
+    if (err) {
+      console.log('There was an error finding the userID for username', username);
+    } else {
+      console.log('found username', userInfo);
+      var userID = userInfo[0].id;
+      var getFilterIDString = 'SELECT * FROM filterTable WHERE userID="' + userID + '" AND filterName="' + filterName + '"';
+
+      //get filter id from database
+      db.all(getFilterIDString, function(err, filterInfo) {
+        if (err) {
+          console.log('There was an error finding the filterID for filter', filterName, 'and user', username);
+        } else {
+          console.log('found filter', filterInfo);
+          var filterID = filterInfo[0].id;
+          var queryString = 'INSERT INTO keywordTable (userID, filterID, keyword) VALUES (' + userID + ',' +  filterID + ',\'' + keyword + '\')';
+
+          //insert keyword into the keywordTable
+          db.all(queryString, function(error, response) {
+            if (error) {
+              console.log('this is the error', error);
+              cb(err);
+            } else {
+              console.log('this is the response', response);
+              cb('YOUR KEYWORD HAS BEEN ADDED');
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
+var createKeywordTable = function() {
+  var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword char(50))';
+
+  db.run(createTable);
+};
+
+//fx to create userTable if none exist
+var createUserTable = function() {
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username char(20))';
+
+  //TODO: add user password and stuff
+  db.run(createUserTable);
+};
+
+createUserTable();
+createFilterTable();
+createKeywordTable();
