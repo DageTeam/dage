@@ -1,5 +1,6 @@
 // var badWordsArray = require('./badWordsArray.js');
 var database = require('./database.js');
+var cron = require('cron');
 
 //temp small list of bad words
 var badWords = ['damn', 'shit', 'crap', 'butt'];
@@ -31,6 +32,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
   for (var i = 0; i < emailArray.length; i++) {
     var email = emailArray[i];
     console.log('heeeeeeeee', typeof markFlagged)
+
     // change checked value to 1 in the emailTable
     markChecked(email.id);
 
@@ -57,7 +59,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
   console.log('filterEmail fx is done running/////');
 };
 
-var scanEmail = function(){
+var scanEmail = function() {
   getUncheckedEmails(function(emailArray) {
     filterEmail(emailArray);
   });
@@ -66,4 +68,17 @@ var scanEmail = function(){
 // TESTING purposes. delete fitlerEmail call.
 scanEmail();
 
-// TODO: create cron job to make it run every 30mins.
+//fx to create cronJob to periodically scan emailTable, filter it, store offensive emails to contextTable
+var cronJob = cron.job(
+  '0 */1 * * * *', //every 30mins at the 0th second.
+  function() {
+    console.log('CRONJOB starting now......///////', new Date());
+    scanEmail();
+  },
+
+  null, //run this fx onComplete
+  true, //run on first call
+  'America/Los_Angeles'
+);
+
+cronJob.start();
