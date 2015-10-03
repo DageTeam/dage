@@ -33,7 +33,7 @@ describe('Server', function() {
   });
 
   //
-  it('should should handle /dashboard url, returning the db response for flagged emails', function(done) {
+  xit('should should handle /dashboard url, returning the db response for flagged emails', function(done) {
     //TODO: change expectedResponse to whatever the redirect should respond with
     expectedResponse = 'Dashboard';
     request(testUrl + '/dashboard', function(error, response, body) {
