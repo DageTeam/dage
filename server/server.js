@@ -1,17 +1,18 @@
 var express = require('express');
 var app = express();
+var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 
 //Default route
 app.get('/', function(req, res) {
-  // db.insertReturn(req.body);
+  // db.insertEmail(req.body);
   res.send('Hello, world!');
 });
 
 //Test route TODO: get rid of
 app.get('/test', function(req, res) {
-  // db.insertReturn();
+  // db.insertEmail();
   res.send('Test');
 });
 

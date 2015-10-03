@@ -1,25 +1,15 @@
 // var badWordsArray = require('./badWordsArray.js');
 var database = require('./database.js');
+var cron = require('cron');
 
 //temp small list of bad words
 var badWords = ['damn', 'shit', 'crap', 'butt'];
 
-//fx to pull all unchecked emails from the db
-var uncheckedEmails = database.getUncheckedEmails;
-
-//fx to update the emailList table to mark an email as checked
-var markChecked = function(emailID) {
-  var checkString = 'UPDATE emailList SET checked="1" WHERE id=' + emailID;
-  database.db.run(checkString);
-  console.log('markChecked fx ran/////');
-};
-
-//fx to update the emailList table to mark an email as flagged
-var markFlagged = function(emailID) {
-  var flagString = 'UPDATE emailList SET flagged="1" WHERE id=' + emailID;
-  database.db.run(flagString);
-  console.log('markFlagged fx ran/////');
-};
+//import fx
+var getUncheckedEmails = database.getUncheckedEmails;
+var markChecked = database.markChecked;
+var markFlagged = database.markFlagged;
+var insertIntoContextTable = database.insertIntoContextTable;
 
 //fx to createContext. context = a substring of 200chars before and 200 after the flaggedKeyWord
 var createContext = function(email, flaggedKeyWord) {
@@ -33,23 +23,17 @@ var createContext = function(email, flaggedKeyWord) {
   return context;
 };
 
-//fx to insert into the flagged content context table
-var insertIntoContextTable = function(emailID, flaggedKeyWord, context) {
-  var flaggedContent = 'INSERT INTO flaggedContextList (emailID, flaggedKeyWord, context) VALUES (' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
-  database.db.run(flaggedContent);
-  console.log('insertIntoContextTable fx ran/////');
-};
-
-//fx to check emails for bad words and then store it into the flaggedContextList table
-var filterEmail = function(emailArray) {
+//fx to check emails for bad words and then store it into the contextTable
+var filterEmail = exports.filterEmail = function(emailArray) {
   console.log('filterEmail fx ran/////');
   console.log('filterEmailz emailArray argument is ///////.....', emailArray);
 
   //loop thru the responseArray
   for (var i = 0; i < emailArray.length; i++) {
     var email = emailArray[i];
+    console.log('heeeeeeeee', typeof markFlagged)
 
-    // change checked value to 1 in the emailList table;
+    // change checked value to 1 in the emailTable
     markChecked(email.id);
 
     // loop thru the badWordsArray
@@ -60,13 +44,13 @@ var filterEmail = function(emailArray) {
 
       //if object's TEXT value contains that 'bad word'
       if (subString.test(email.text)) {
-        // change flag value to 1 in the emailList table;
+        // change flag value to 1 in the emailTable ;
         markFlagged(email.id);
 
         // //create context
         var context = createContext(email, badWords[j]);
 
-        // //insert the 'flaggedKeyWord', the 'id', the 'context' into flaggedContextList table
+        // //insert the 'flaggedKeyWord', the 'id', the 'context' into contextTable
         insertIntoContextTable(email.id, badWords[j], context);
       }
     }
@@ -75,7 +59,26 @@ var filterEmail = function(emailArray) {
   console.log('filterEmail fx is done running/////');
 };
 
-//TESTING purposes. delete fitlerEmails call.
-uncheckedEmails(function(emailArray) {
-  filterEmail(emailArray);
-});
+var scanEmail = function() {
+  getUncheckedEmails(function(emailArray) {
+    filterEmail(emailArray);
+  });
+};
+
+// TESTING purposes. delete fitlerEmail call.
+scanEmail();
+
+//fx to create cronJob to periodically scan emailTable, filter it, store offensive emails to contextTable
+var cronJob = cron.job(
+  '0 */1 * * * *', //every 30mins at the 0th second.
+  function() {
+    console.log('CRONJOB starting now......///////', new Date());
+    scanEmail();
+  },
+
+  null, //run this fx onComplete
+  true, //run on first call
+  'America/Los_Angeles'
+);
+
+cronJob.start();
