@@ -8,16 +8,42 @@ import FlaggedEmailList from 'components/FlaggedEmailList';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter : state.counter
+  state : state
 });
-export class HomeView extends React.Component {
+export class DashboardView extends React.Component {
   static propTypes = {
     dispatch : React.PropTypes.func,
-    counter  : React.PropTypes.number
+    state  : React.PropTypes.object,
   }
 
   constructor () {
     super();
+    this.tempState =
+    {
+      emailsArray:
+      [
+        {
+          id: 'emailId',
+          sender: 'emailSender',
+          recipient: 'emailRecipient',
+          subject: 'subjectString',
+          body: 'bodyString',
+          sendTime: 1000,
+          focusLevel: '',
+          flags :
+          [
+            {
+              type: 'flagTypeString',
+              context: 'contextString',
+            },
+            {
+              type: 'flagTypeString',
+              context: 'contextString',
+            },
+          ],
+        }
+      ]
+    };
   }
 
   // normally you'd import an action creator, but I don't want to create
@@ -29,15 +55,11 @@ export class HomeView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>Sample Counter: {this.props.counter}</h2>
-        <button className='btn btn-default'
-                onClick={::this._increment}>
-          Increment
-        </button>
+        <h1>Dage Dashboard</h1>
+        <FlaggedEmailList state={ this.tempState }/>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(HomeView);
+export default connect(mapStateToProps)(DashboardView);
