@@ -1,6 +1,14 @@
 import React       from 'react';
 import { connect } from 'react-redux';
 import FlaggedEmailList from 'components/FlaggedEmailList';
+import {
+  emailArrayFetch,
+  emailArrayFetchSuccess,
+  emailArrayFetchError,
+  emailShowOneFlag,
+  emailShowAllFlags,
+  emailShowEmail,
+} from 'actions/actions';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -53,11 +61,18 @@ export class DashboardView extends React.Component {
   }
 
   render () {
-    console.log(this.props.emails)
+    let callbacks = {
+      _emailShowOneFlag : emailId => {
+        this.props.dispatch(emailShowOneFlag(emailId));
+      },
+    }
     return (
       <div className='container text-center'>
         <h1>Dage Dashboard</h1>
-        <FlaggedEmailList state={ this.props.emails }/>
+        <FlaggedEmailList
+          state={ this.props.emails }
+          callbacks={ callbacks }
+        />
       </div>
     );
   }

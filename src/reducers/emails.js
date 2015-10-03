@@ -16,7 +16,7 @@ const emailsArray = [
     subject: 'subjectString',
     body: 'bodyString',
     sendTime: 1000,
-    focusLevel: 'one',
+    focusLevel: 'complete',
     flags:
       [
         {
@@ -54,7 +54,18 @@ export default createReducer(initialState, {
   },
 
   [EMAIL_SHOW_ONE_FLAG]: (state, payload) => {
-    return state;
+    let newState = Object.assign({}, state);
+    let { emailId } = payload;
+    newState.emailsArray.forEach((email, index, list) => {
+      console.log('COMPARE', emailId, email.id)
+      if(emailId === email.id){
+        console.log('FIIIIIIRE')
+        list[index].focusLevel = 'one';
+      }
+    });
+    console.log('OldSTATE', state)
+    console.log('NewSTATE', newState)
+    return newState;
   },
 
   [EMAIL_SHOW_ALL_FLAGS]: (state, payload) => {
