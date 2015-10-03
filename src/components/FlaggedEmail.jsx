@@ -1,15 +1,16 @@
 var React = require('react');
+var FlaggedContext = require('components/FlaggedContext')
 
 var FlaggedEmail = React.createClass({
 
   showAllFlags: function(){
-    this.props./*CBFuncShowFlags*/('all');
+    // this.props./*CBFuncShowFlags*/('all');
   },
   showCompleteEmail: function(){
-    this.props./*CBFuncShowCompleteEmail*/('complete');
+    // this.props./*CBFuncShowCompleteEmail*/('complete');
   },
   showOneFlag: function() {
-    this.props./*CBFuncShowOnee*/('one');
+    // this.props./*CBFuncShowOnee*/('one');
   },
 
   render: function(){
@@ -23,7 +24,7 @@ var FlaggedEmail = React.createClass({
     for (var i = 0; i < displayLength; i++) {
       var content = contentList[i];
       contentRows.push(
-          <FlaggedContext 
+          <FlaggedContext
             type={ content.type }
             context={ content.context }/>
         )
@@ -33,17 +34,17 @@ var FlaggedEmail = React.createClass({
       return(
         <div className='jumbotron'>
           <div className='container'>
-            
+
             <div className='col-xs-10'>
               <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
             </div>
             <div className='col-xs-10'>
-              <p> Flagged content: 
+              <p> Flagged content:
               { contentRows } </p>
             </div>
             <span className='input-group-btn'>
-              <button id='showAllFlags' onClick={showAllFlags} className='btn btn-success-outline'>Show All Flags</button>
-              <button id='showCompleteEmail' onClick={showCompleteEmail} className='btn btn-primary-outline'>Show Complete Email</button>
+              <button id='showAllFlags' onClick={this.showAllFlags} className='btn btn-success-outline'>Show All Flags</button>
+              <button id='showCompleteEmail' onClick={this.showCompleteEmail} className='btn btn-primary-outline'>Show Complete Email</button>
             </span>
           </div>
         </div>
@@ -53,7 +54,7 @@ var FlaggedEmail = React.createClass({
           //TODO: fill in the complete email render
           <div className='jumbotron'>
             <div className='container'>
-              
+
               <div className='col-xs-10'>
                 <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
               </div>
