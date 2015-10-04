@@ -5,9 +5,11 @@ var FlaggedEmail = React.createClass({
 
   showAllFlags: function(){
     // this.props./*CBFuncShowFlags*/('all');
+    this.props.callbacks._emailShowAllFlags(this.props.emailId)
   },
   showCompleteEmail: function(){
     // this.props./*CBFuncShowCompleteEmail*/('complete');
+    this.props.callbacks._emailShowComplete(this.props.emailId)
   },
   showOneFlag: function() {
     // this.props./*CBFuncShowOnee*/('one');
