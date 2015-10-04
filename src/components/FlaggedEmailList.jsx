@@ -11,12 +11,15 @@ var FlaggedEmailList = React.createClass({
       var email = emailList[i];
       emailRows.push(
         <FlaggedEmail
+          key = {email.id}
+          emailId = {email.id}
           sender = {email.sender}
           recipient = {email.recipient}
           sendTime = {email.sendTime}
           flags = {email.flags}
           body = {email.body}
           focusLevel = {email.focusLevel}
+          callbacks = {this.props.callbacks}
           // /*CBFuncShowFlags*/={this.props.CBFunc}
           // /*CBFuncShowCompleteEmail*/={this.props.CBFunc}
           />

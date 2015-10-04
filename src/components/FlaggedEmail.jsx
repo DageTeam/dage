@@ -11,6 +11,7 @@ var FlaggedEmail = React.createClass({
   },
   showOneFlag: function() {
     // this.props./*CBFuncShowOnee*/('one');
+    this.props.callbacks._emailShowOneFlag(this.props.emailId)
   },
 
   render: function(){
@@ -63,7 +64,7 @@ var FlaggedEmail = React.createClass({
                 {this.props.body}</p>
               </div>
               <span className='input-group-btn'>
-                <button id='showOneFlag' onClick={showOneFlag} className='btn btn-primary-outline'>Collapse</button>
+                <button id='showOneFlag' onClick={this.showOneFlag} className='btn btn-primary-outline'>Collapse</button>
               </span>
             </div>
           </div>

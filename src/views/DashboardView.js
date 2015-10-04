@@ -1,6 +1,14 @@
 import React       from 'react';
 import { connect } from 'react-redux';
 import FlaggedEmailList from 'components/FlaggedEmailList';
+import {
+  emailArrayFetch,
+  emailArrayFetchSuccess,
+  emailArrayFetchError,
+  emailShowOneFlag,
+  emailShowAllFlags,
+  emailShowEmail,
+} from 'actions/actions';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -8,17 +16,17 @@ import FlaggedEmailList from 'components/FlaggedEmailList';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  state : state
+  emails : state.emails,
 });
 export class DashboardView extends React.Component {
   static propTypes = {
     dispatch : React.PropTypes.func,
-    state  : React.PropTypes.object,
+    emails : React.PropTypes.object,
   }
 
   constructor () {
     super();
-    this.tempState =
+    this.tempEmails =
     {
       emailsArray:
       [
@@ -33,12 +41,12 @@ export class DashboardView extends React.Component {
           flags :
           [
             {
-              type: 'flagTypeString',
-              context: 'contextString',
+              type: 'flagTypeString1',
+              context: 'contextString1',
             },
             {
-              type: 'flagTypeString',
-              context: 'contextString',
+              type: 'flagTypeString2',
+              context: 'contextString2',
             },
           ],
         }
@@ -53,10 +61,18 @@ export class DashboardView extends React.Component {
   }
 
   render () {
+    let callbacks = {
+      _emailShowOneFlag : emailId => {
+        this.props.dispatch(emailShowOneFlag(emailId));
+      },
+    }
     return (
       <div className='container text-center'>
         <h1>Dage Dashboard</h1>
-        <FlaggedEmailList state={ this.tempState }/>
+        <FlaggedEmailList
+          state={ this.props.emails }
+          callbacks={ callbacks }
+        />
       </div>
     );
   }
