@@ -5,7 +5,7 @@ import {
   EMAIL_ARRAY_FETCH_ERROR,
   EMAIL_SHOW_ONE_FLAG,
   EMAIL_SHOW_ALL_FLAGS,
-  EMAIL_SHOW_EMAIL,
+  EMAIL_SHOW_COMPLETE,
 } from 'constants/email';
 
 const emailsArray = [
@@ -59,21 +59,32 @@ export default createReducer(initialState, {
     newState.emailsArray.forEach((email, index, list) => {
       console.log('COMPARE', emailId, email.id)
       if(emailId === email.id){
-        console.log('FIIIIIIRE')
         list[index].focusLevel = 'one';
       }
     });
-    console.log('OldSTATE', state)
-    console.log('NewSTATE', newState)
     return newState;
   },
 
   [EMAIL_SHOW_ALL_FLAGS]: (state, payload) => {
-    return state;
+    let newState = Object.assign({}, state);
+    let { emailId } = payload;
+    newState.emailsArray.forEach((email, index, list) => {
+      if(emailId === email.id){
+        list[index].focusLevel = 'allFlags';
+      }
+    });
+    return newState;
   },
 
-  [EMAIL_SHOW_EMAIL]: (state, payload) => {
-    return state;
+  [EMAIL_SHOW_COMPLETE]: (state, payload) => {
+    let newState = Object.assign({}, state);
+    let { emailId } = payload;
+    newState.emailsArray.forEach((email, index, list) => {
+      if(emailId === email.id){
+        list[index].focusLevel = 'complete';
+      }
+    });
+    return newState;
   },
 
 });

@@ -4,7 +4,7 @@ import {
   EMAIL_ARRAY_FETCH_ERROR,
   EMAIL_SHOW_ONE_FLAG,
   EMAIL_SHOW_ALL_FLAGS,
-  EMAIL_SHOW_EMAIL,
+  EMAIL_SHOW_COMPLETE,
 } from 'constants/email';
 
 export function emailArrayFetch() {
@@ -31,13 +31,15 @@ export function emailShowOneFlag(emailId) {
     payload: { emailId },
   }
 }
-export function emailShowAllFlags() {
+export function emailShowAllFlags(emailId) {
   return {
     type: EMAIL_SHOW_ALL_FLAGS,
+    payload: { emailId },
   }
 }
-export function emailShowEmail() {
+export function emailShowComplete(emailId) {
   return {
-    type: EMAIL_SHOW_EMAIL,
+    type: EMAIL_SHOW_COMPLETE,
+    payload: { emailId },
   }
 }

@@ -7,7 +7,7 @@ import {
   emailArrayFetchError,
   emailShowOneFlag,
   emailShowAllFlags,
-  emailShowEmail,
+  emailShowComplete,
 } from 'actions/actions';
 
 // We define mapStateToProps where we'd normally use the @connect
@@ -64,6 +64,12 @@ export class DashboardView extends React.Component {
     let callbacks = {
       _emailShowOneFlag : emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
+      },
+      _emailShowAllFlags : emailId => {
+        this.props.dispatch(emailShowAllFlags(emailId));
+      },
+      _emailShowComplete : emailId => {
+        this.props.dispatch(emailShowComplete(emailId));
       },
     }
     return (
