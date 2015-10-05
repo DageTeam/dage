@@ -154,13 +154,6 @@ var addFilter = exports.addFilter = function(body, cb) {
   });
 };
 
-//create contextTable if it doenst exit
-var createFilterTable = function() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
-
-  db.run(createTable);
-};
-
 //fx to add a new filter into the database for the user
 var addKeyword = exports.addKeyword = function(body, cb) {
   console.log('this is body', body);
@@ -203,8 +196,19 @@ var addKeyword = exports.addKeyword = function(body, cb) {
   });
 };
 
+var getFlaggedWords = exports.getFlaggedWords = function() {
+  var queryString = 'SELECT keyword FROM keywordTable'
+};
+
 var createKeywordTable = function() {
   var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword char(50))';
+
+  db.run(createTable);
+};
+
+//create contextTable if it doenst exit
+var createFilterTable = function() {
+  var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
 
   db.run(createTable);
 };

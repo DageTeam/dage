@@ -3,7 +3,7 @@ var database = require('./database.js');
 var cron = require('cron');
 
 //temp small list of bad words
-var badWords = ['damn', 'shit', 'crap', 'butt'];
+// var badWords = ['damn', 'shit', 'crap', 'butt'];
 
 //import fx
 var getUncheckedEmails = database.getUncheckedEmails;
@@ -38,9 +38,12 @@ var filterEmail = exports.filterEmail = function(emailArray) {
 
     // loop thru the badWordsArray
     // TODO: update badWords
-    for (var j = 0; j < badWords.length; j++) {
+    var flaggedWords = [];
+    
+
+    for (var j = 0; j < flaggedWords.length; j++) {
       // console.log('this is i', i, ' and this is j', j);
-      var subString = new RegExp(badWords[j], 'ig');
+      var subString = new RegExp(flaggedWords[j], 'ig');
 
       //if object's TEXT value contains that 'bad word'
       if (subString.test(email.text)) {
@@ -48,10 +51,10 @@ var filterEmail = exports.filterEmail = function(emailArray) {
         markFlagged(email.id);
 
         // //create context
-        var context = createContext(email, badWords[j]);
+        var context = createContext(email, flaggedWords[j]);
 
         // //insert the 'flaggedKeyWord', the 'id', the 'context' into contextTable
-        insertIntoContextTable(email.id, badWords[j], context);
+        insertIntoContextTable(email.id, flaggedWords[j], context);
       }
     }
   }
