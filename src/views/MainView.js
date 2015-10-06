@@ -6,6 +6,7 @@ import SideNav from 'components/SideNav';
 import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import MainContainer from 'components/MainContainer';
+
 // import {
 //   emailArrayFetch,
 //   emailArrayFetchSuccess,
@@ -21,22 +22,23 @@ import MainContainer from 'components/MainContainer';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  state : state
+  state: state,
 });
 export class MainView extends React.Component {
   static propTypes = {
-    dispatch : React.PropTypes.func,
+    dispatch: React.PropTypes.func,
+
     // emails : React.PropTypes.object,
   }
 
-  constructor () {
+  constructor() {
     super();
   }
 
   // normally you'd import an action creator, but I don't want to create
   // a file that you're just going to delete anyways!
 
-  render () {
+  render() {
     let callbacks = {};
     return (
       <div>
@@ -45,7 +47,7 @@ export class MainView extends React.Component {
         <SideNav />
         <Footer />
         <ScriptLoader />
-        <div className="page-overlay"></div>
+        <div className='page-overlay'></div>
         <div
           state={ this.props.state }
           callbacks={ callbacks }
