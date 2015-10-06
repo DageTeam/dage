@@ -8,7 +8,7 @@ import {
   emailShowOneFlag,
   emailShowAllFlags,
   emailShowComplete,
-} from 'actions/actions';
+} from 'actions/emails';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
