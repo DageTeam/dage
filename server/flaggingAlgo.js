@@ -14,7 +14,7 @@ var getFlaggedWords = database.getFlaggedWords;
 
 //fx to createContext. context = a substring of 200chars before and 200 after the flaggedKeyWord
 var createContext = function(email, flaggedKeyWord) {
-  var text = email.text;
+  var text = email.body;
   var index = text.search(flaggedKeyWord);
   var numOfChars = 200;
   var start = index - numOfChars;
@@ -32,6 +32,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
   //loop thru the responseArray
   for (var i = 0; i < emailArray.length; i++) {
     var email = emailArray[i];
+    email.body = email.body.replace(/'/g, '\'\'');
 
     // change checked value to 1 in the emailTable
     markChecked(email.id);
@@ -43,9 +44,10 @@ var filterEmail = exports.filterEmail = function(emailArray) {
         var subString = new RegExp(keyword.keyword, 'ig');
 
         //if object's TEXT value contains that 'bad word'
-        if (subString.test(email.text)) {
+        if (subString.test(email.body)) {
           // change flag value to 1 in the emailTable ;
           markFlagged(email.id);
+          console.log('triggered for string', email.body, ' and word', keyword.keyword);
 
           // //create context
           var context = createContext(email, keyword.keyword);

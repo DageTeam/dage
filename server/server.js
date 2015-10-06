@@ -19,16 +19,29 @@ app.get('/test', function(req, res) {
   res.send('Test');
 });
 
-
 //dashboard is the placeholder url for the dashboard url for the client
 app.get('/emailData', function(req, res) {
-  //get the flagged emails via a db query
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  db.getFlaggedEmails(function(emails) {
-    console.log(typeof emails);
-    console.log(emails);
-    res.send(emails);
-  });
+
+  //TODO: placeholder until authentication complete
+  var userIsAuthenticated = true;
+  var isAdmin = true;
+
+  if (userIsAuthenticated) {
+    //TODO: placeholder userID until authentication is complete
+    var userID = 1;
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    //get the flagged emails via a db query
+    db.getFlaggedEmails(userID, isAdmin, function(emails) {
+      console.log(typeof emails);
+      console.log(emails);
+      res.send(emails);
+    });
+  } else {
+    res.send('user is not authenticated');
+  }
+
 });
 
 const emailsArray = [
@@ -54,10 +67,9 @@ const emailsArray = [
   },
 ];
 
-
 app.get('/tempEmailData', function(req, res) {
   //get the flagged emails via a db query
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Origin', '*');
   db.getFlaggedEmails(function(emails) {
     res.send(emailsArray);
   });
@@ -67,8 +79,8 @@ app.post('/submitfilter', function(req, res) {
   // req.body will be {username: 'Anthony', filter: 'Anthony's filter'};
   // TODO (not for MVP): add sessions, token, etc etc
   // invoke the database function to insert into filtersTable, passing in the req.body
-    //pass in cb that sends back a response
-    //send back object with message
+  //pass in cb that sends back a response
+  //send back object with message
   db.addFilter(req.body, function(message) {
     //TODO: define and udpate the message being sent back. Will have to look inside the function in database.js
     res.send(message);
