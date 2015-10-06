@@ -24,7 +24,7 @@ var markFlagged = exports.markFlagged = function(emailID) {
 
 //insert email into emailTable
 var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
-  var emailContent = 'INSERT into emailTable (to_field, from_field, cc, bcc, subject, priority, text, date, checked, flagged) VALUES(\''
+  var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
     + cc + '\',\''
@@ -77,6 +77,7 @@ var addFilter = exports.addFilter = function(body, cb) {
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
       console.log('There was an error finding the userID for username', username);
+
       //if username is not found.
     } else if (userInfo.length === 0) {
       console.log('user not found for username', username);
@@ -140,13 +141,11 @@ var addKeyword = exports.addKeyword = function(body, cb) {
   });
 };
 
-
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
 var getFlaggedWords = exports.getFlaggedWords = function(cb) {
   var queryString = 'SELECT userID, filterID, keyword FROM keywordTable';
-  console.log('this is cb fuckers', cb);
-  db.all(queryString, function(err, flaggedWords){
+  db.all(queryString, function(err, flaggedWords) {
     if (err) {
       console.log('There was an error getting keywords', err);
     } else {
@@ -158,16 +157,41 @@ var getFlaggedWords = exports.getFlaggedWords = function(cb) {
 };
 
 //fx to get an array of flagged emails.
-var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
+var getFlaggedEmails = exports.getFlaggedEmails = function(userID, isAdmin, cb) {
   console.log('triggered');
   var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
 
-  db.all(queryString, function(err, rows) {
+  db.all(queryString, function(err, flaggedEmails) {
     if (err) {
       console.log('err');
     } else {
-      console.log('rows fetched, running callback');
-      cb(rows);
+      console.log('emails fetched, now getting all the flagged contexts for user');
+      var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyWord, context FROM contextTable' : 'SELECT emailID, flaggedKeyWord, context FROM contextTable WHERE userID=' + userID;
+      console.log('this is fetchString', fetchString);
+      db.all(fetchString, function(error, flaggedContext) {
+        if (error) {
+          console.log('fetch error', error)
+        } else {
+          console.log('emails and flagged contexts all fetched');
+          for (var i = 0; i < flaggedContext.length; i++) {
+            for (var j = 0; j < flaggedEmails.length; j++) {
+              flaggedEmails[j].flags = flaggedEmails[j].flags || [];
+              if (flaggedContext[i].emailID === flaggedEmails[j].id) {
+                flaggedEmails[j].flags.push(flaggedContext[i])
+              }
+            }
+          }
+
+          cb(flaggedEmails);
+        }
+      })
+
+      // for (var i = 0; i < flaggedEmails.length; i++) {
+      //   var email = flaggedEmails[i];
+
+      // }
+
+      // cb(flaggedEmails);
     }
   });
 };
@@ -202,7 +226,7 @@ var printEmailTable = function() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER, flagged INTEGER)';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient char(100), sender char(100), cc char(100), bcc char(100), subject char(100), priority char(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
 
   db.run(createTable);
 };
@@ -236,6 +260,7 @@ var createUserTable = function() {
   db.run(createUserTable);
 };
 
+createEmailTable();
 createUserTable();
 createFilterTable();
 createKeywordTable();
