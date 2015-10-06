@@ -5,18 +5,21 @@ var path = require('path');
 var dbFile = path.join(__dirname + '/emails.db');
 var db = exports.db = new sqlite3.Database(dbFile);
 
-//create emailTable if it doesnt exist
-var createEmailTable = function() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER, flagged INTEGER)';
+/////FX's TO MODIFY DB
+//fx to update the emailTable to mark an email as checked
+var markChecked = exports.markChecked = function(emailID) {
+  var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
 
-  db.run(createTable);
+  db.run(checkString);
+  console.log('markChecked fx ran/////');
 };
 
-//create contextTable if it doenst exit
-var createContextTable = function() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
+//fx to update the emailTable  to mark an email as flagged
+var markFlagged = exports.markFlagged = function(emailID) {
+  var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
 
-  db.run(createTable);
+  db.run(flagString);
+  console.log('markFlagged fx ran/////');
 };
 
 //insert email into emailTable
@@ -36,45 +39,12 @@ var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, from
   db.run(emailContent);
 };
 
-//fx to update the emailTable to mark an email as checked
-var markChecked = exports.markChecked = function(emailID) {
-  var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
-
-  db.run(checkString);
-  console.log('markChecked fx ran/////');
-};
-
-//fx to update the emailTable  to mark an email as flagged
-var markFlagged = exports.markFlagged = function(emailID) {
-  var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
-
-  db.run(flagString);
-  console.log('markFlagged fx ran/////');
-};
-
 //fx to insert into the contextTable
-var insertIntoContextTable = exports.insertIntoContextTable = function(emailID, flaggedKeyWord, context) {
-  var flaggedContent = 'INSERT INTO contextTable (emailID, flaggedKeyWord, context) VALUES (' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
+var insertIntoContextTable = exports.insertIntoContextTable = function(userID, filterID, emailID, flaggedKeyWord, context) {
+  var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyWord, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
 
   db.run(flaggedContent);
   console.log('insertIntoContextTable fx ran/////');
-};
-
-// var scanEmail = function(){
-//   getUncheckedEmails(function(emailArray){
-//     algo.filterEmail(emailArray);
-//   });
-// };
-
-//fx to print email table to the terminal
-var printEmailTable = function() {
-  db.all('SELECT * FROM emailTable', function(err, rows) {
-    if (err) {
-      console.log('err');
-    } else {
-      console.log('these are rows', rows);
-    }
-  });
 };
 
 //setting up sqlite3 database w/ potential email schema
@@ -96,35 +66,6 @@ var insertEmail = exports.insertEmail = function(email) {
   printEmailTable();
 };
 
-var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
-  console.log('triggered');
-  var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
-
-  db.all(queryString, function(err, rows) {
-    if (err) {
-      console.log('err');
-    } else {
-      console.log('rows fetched, running callback');
-      cb(rows);
-    }
-  });
-};
-
-//fx to pull all unchecked emails from the db
-var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
-  console.log('starting to get Unchecked Emails');
-  var query = 'SELECT * FROM emailTable WHERE checked="0"';
-
-  db.all(query, function(err, responseArrayOfObjects) {
-    if (err) {
-      console.log('There was an error getting Unchecked Emails');
-    } else {
-      console.log('this is the database response.....', responseArrayOfObjects);
-      cb(responseArrayOfObjects);
-    }
-  });
-};
-
 //fx to add a new filter into the database for the user
 var addFilter = exports.addFilter = function(body, cb) {
   console.log('this is body', body);
@@ -136,6 +77,9 @@ var addFilter = exports.addFilter = function(body, cb) {
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
       console.log('There was an error finding the userID for username', username);
+      //if username is not found.
+    } else if (userInfo.length === 0) {
+      console.log('user not found for username', username);
     } else {
       console.log('found username', userInfo);
       var userID = userInfo[0].id;
@@ -196,24 +140,95 @@ var addKeyword = exports.addKeyword = function(body, cb) {
   });
 };
 
-var getFlaggedWords = exports.getFlaggedWords = function() {
-  var queryString = 'SELECT keyword FROM keywordTable'
+
+/////FX's TO GET DATA FROM DB
+//fx to get an array of flagged keywords.
+var getFlaggedWords = exports.getFlaggedWords = function(cb) {
+  var queryString = 'SELECT userID, filterID, keyword FROM keywordTable';
+  console.log('this is cb fuckers', cb);
+  db.all(queryString, function(err, flaggedWords){
+    if (err) {
+      console.log('There was an error getting keywords', err);
+    } else {
+      console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
+
+      cb(flaggedWords);
+    }
+  });
 };
 
+//fx to get an array of flagged emails.
+var getFlaggedEmails = exports.getFlaggedEmails = function(cb) {
+  console.log('triggered');
+  var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+
+  db.all(queryString, function(err, rows) {
+    if (err) {
+      console.log('err');
+    } else {
+      console.log('rows fetched, running callback');
+      cb(rows);
+    }
+  });
+};
+
+//fx to pull all unchecked emails from the db
+var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
+  console.log('starting to get Unchecked Emails');
+  var query = 'SELECT * FROM emailTable WHERE checked="0"';
+
+  db.all(query, function(err, responseArrayOfObjects) {
+    if (err) {
+      console.log('There was an error getting Unchecked Emails');
+    } else {
+      console.log('this is the database response.....', responseArrayOfObjects);
+      cb(responseArrayOfObjects);
+    }
+  });
+};
+
+/////FX FOR DEBUGGING PURPOSES
+//fx to print email table to the terminal
+var printEmailTable = function() {
+  db.all('SELECT * FROM emailTable', function(err, rows) {
+    if (err) {
+      console.log('err');
+    } else {
+      console.log('these are rows', rows);
+    }
+  });
+};
+
+/////FX's TO CREATE TABLES
+//create emailTable if it doesnt exit
+var createEmailTable = function() {
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, to_field char(100), from_field char(100), cc char(100), bcc char(100), subject char(100), priority char(100), text MEDIUMTEXT, parsedText MEDIUMTEXT, date DATE, checked INTEGER, flagged INTEGER)';
+
+  db.run(createTable);
+};
+
+//fx to create contextTable if it doesnt exit
+var createContextTable = function() {
+  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
+
+  db.run(createTable);
+};
+
+//fx to create keywordTable  if it doesnt exit
 var createKeywordTable = function() {
   var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword char(50))';
 
   db.run(createTable);
 };
 
-//create contextTable if it doenst exit
+//fx to create contextTable if it doesnt exit
 var createFilterTable = function() {
   var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
 
   db.run(createTable);
 };
 
-//fx to create userTable if none exist
+//fx to create userTable if it doesnt exit
 var createUserTable = function() {
   var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username char(20))';
 
@@ -224,3 +239,4 @@ var createUserTable = function() {
 createUserTable();
 createFilterTable();
 createKeywordTable();
+createContextTable();
