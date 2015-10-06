@@ -1,5 +1,5 @@
 var React = require('react');
-var FlaggedEmail = require('components/FlaggedEmail');
+var FlaggedEmail = require('components/FlaggedEmail.jsx');
 
 var FlaggedEmailList = React.createClass({
 
