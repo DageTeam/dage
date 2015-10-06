@@ -60,6 +60,10 @@ export class DashboardView extends React.Component {
     this.props.dispatch({ type : 'COUNTER_INCREMENT' });
   }
 
+  componentDidMount () {
+    this.props.dispatch(emailArrayFetch())
+  }
+
   fetch () {
     this.props.dispatch(emailArrayFetch())
   }
