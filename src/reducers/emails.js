@@ -1,6 +1,7 @@
 import { createReducer } from 'utils';
 import {
-  EMAIL_ARRAY_FETCH,
+  // EMAIL_ARRAY_FETCH,
+  EMAIL_ARRAY_REQUEST,
   EMAIL_ARRAY_FETCH_SUCCESS,
   EMAIL_ARRAY_FETCH_ERROR,
   EMAIL_SHOW_ONE_FLAG,
@@ -33,6 +34,7 @@ const emailsArray = [
 
 const emails = {
   isFetchingEmail: false,
+  lastUpdated: 0,
   fetchingEmailError: '',
   emailsArray,
 }
@@ -41,12 +43,22 @@ const initialState = emails;
 
 export default createReducer(initialState, {
   // [COUNTER_INCREMENT] : (state) => state + 1
-  [EMAIL_ARRAY_FETCH]: (state, payload) => {
-    return state;
+  // [EMAIL_ARRAY_FETCH]: (state, payload) => {
+  //   return state;
+  // },
+
+  [EMAIL_ARRAY_REQUEST]: (state, payload) => {
+    return Object.assign({}, state, {
+      isFetchingEmail: true,
+    });
   },
 
   [EMAIL_ARRAY_FETCH_SUCCESS]: (state, payload) => {
-    return state;
+    return Object.assign({}, state, {
+      isFetching: false,
+      lastUpdated: payload.receivedAt,
+      emailsArray: payload.emailsArray,
+    })
   },
 
   [EMAIL_ARRAY_FETCH_ERROR]: (state, payload) => {
@@ -57,7 +69,6 @@ export default createReducer(initialState, {
     let newState = Object.assign({}, state);
     let { emailId } = payload;
     newState.emailsArray.forEach((email, index, list) => {
-      console.log('COMPARE', emailId, email.id)
       if(emailId === email.id){
         list[index].focusLevel = 'one';
       }

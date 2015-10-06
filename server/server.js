@@ -21,11 +21,45 @@ app.get('/test', function(req, res) {
 
 
 //dashboard is the placeholder url for the dashboard url for the client
-app.get('/dashboard', function(req, res) {
+app.get('/emailData', function(req, res) {
   //get the flagged emails via a db query
+  res.setHeader("Access-Control-Allow-Origin", "*");
   db.getFlaggedEmails(function(emails) {
     console.log(typeof emails);
+    console.log(emails);
     res.send(emails);
+  });
+});
+
+const emailsArray = [
+  {
+    id: 'emailId',
+    sender: 'ServerEMAIL!!!',
+    recipient: 'emailRecipient',
+    subject: 'subjectString',
+    body: 'bodyString',
+    sendTime: 1000,
+    focusLevel: 'complete',
+    flags:
+      [
+        {
+          type: 'flagTypeString1',
+          context: 'contextString1',
+        },
+        {
+          type: 'flagTypeString2',
+          context: 'contextString2',
+        },
+      ],
+  },
+];
+
+
+app.get('/tempEmailData', function(req, res) {
+  //get the flagged emails via a db query
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  db.getFlaggedEmails(function(emails) {
+    res.send(emailsArray);
   });
 });
 
@@ -55,7 +89,7 @@ app.get('/*', function(req, res) {
   res.send('Redirect');
 });
 
-var server = app.listen((process.env.PORT || 3000), function() {
+var server = app.listen((process.env.PORT || 4000), function() {
   var host = server.address().address;
   var port = server.address().port;
 });
