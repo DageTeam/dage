@@ -28,7 +28,7 @@ var FlaggedEmail = React.createClass({
       var content = contentList[i];
       contentRows.push(
           <FlaggedContext
-            type={ content.type }
+            flaggedKeyWord={ content.flaggedKeyWord }
             context={ content.context }/>
         )
     }
