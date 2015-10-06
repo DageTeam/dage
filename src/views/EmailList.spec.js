@@ -1,6 +1,6 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
-import { FlaggedEmailList } from './FlaggedEmailList.js';
+import FlaggedEmailList from 'components/FlaggedEmailList.jsx';
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer();

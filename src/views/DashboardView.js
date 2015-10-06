@@ -60,8 +60,25 @@ export class DashboardView extends React.Component {
     this.props.dispatch({ type : 'COUNTER_INCREMENT' });
   }
 
+  componentDidMount () {
+    this.props.dispatch(emailArrayFetch())
+  }
+
+  fetch () {
+    this.props.dispatch(emailArrayFetch())
+  }
+
   render () {
     let callbacks = {
+      _emailArrayFetch : param => {
+        this.props.dispatch(emailArrayFetch(param))
+      },
+      _emailArrayFetchSuccess : param => {
+        this.props.dispatch(emalArrayFetchSuccess(param))
+      },
+      _emailArrayFetchError : param => {
+        this.props.dispatch(emailArrayFetchError(param))
+      },
       _emailShowOneFlag : emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
       },
@@ -74,7 +91,7 @@ export class DashboardView extends React.Component {
     }
     return (
       <div className='container text-center'>
-        <h1>Dage Dashboard</h1>
+        <h1 onClick={ this.fetch.bind(this) }>Dage Dashboard</h1>
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ callbacks }

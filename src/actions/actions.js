@@ -1,5 +1,8 @@
+import fetch from 'isomorphic-fetch';
+
 import {
   EMAIL_ARRAY_FETCH,
+  EMAIL_ARRAY_REQUEST,
   EMAIL_ARRAY_FETCH_SUCCESS,
   EMAIL_ARRAY_FETCH_ERROR,
   EMAIL_SHOW_ONE_FLAG,
@@ -8,20 +11,31 @@ import {
 } from 'constants/email';
 
 export function emailArrayFetch() {
-  return {
-    type: EMAIL_ARRAY_FETCH,
+  return dispatch => {
+    dispatch(emailArrayRequest())
+    return fetch('http://localhost:4000/tempEmailData')
+      .then(req => { return req.json() })
+      .then(json => { dispatch(emailArrayFetchSuccess(json)) })
   }
 }
-export function emailArrayFetchSuccess(response) {
+export function emailArrayRequest() {
+  return {
+    type: EMAIL_ARRAY_REQUEST,
+  }
+}
+export function emailArrayFetchSuccess(emailsArray) {
   return {
     type: EMAIL_ARRAY_FETCH_SUCCESS,
-    response,
+    payload: {
+      emailsArray,
+      receivedAt: Date.now(),
+    },
   }
 }
 export function emailArrayFetchError(error) {
   return {
     type: EMAIL_ARRAY_FETCH_ERROR,
-    error,
+    payload: { error },
   }
 }
 export function emailShowOneFlag(emailId) {
