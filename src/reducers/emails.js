@@ -7,7 +7,7 @@ import {
   EMAIL_SHOW_ONE_FLAG,
   EMAIL_SHOW_ALL_FLAGS,
   EMAIL_SHOW_COMPLETE,
-} from 'constants/email';
+} from 'constants/emails';
 
 const emailsArray = [
   {
