@@ -4,6 +4,9 @@ var FlaggedEmail = require('components/FlaggedEmail.jsx');
 var FlaggedEmailList = React.createClass({
 
   render: function(){
+    if(!_emailArrayFetch){
+      return (<img src="../loadingGif.gif">)
+    }
     var emailRows = [];
     // var emailList = /*EMAILARRAY props from state tree*/;
     var emailList = this.props.state.emailsArray;
