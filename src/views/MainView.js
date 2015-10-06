@@ -2,6 +2,10 @@ import React       from 'react';
 import { connect } from 'react-redux';
 import FlaggedEmailList from 'components/FlaggedEmailList';
 import Header from 'components/Header';
+import SideNav from 'components/SideNav';
+import Footer from 'components/Footer';
+import ScriptLoader from 'components/ScriptLoader';
+import MainContainer from 'components/MainContainer';
 // import {
 //   emailArrayFetch,
 //   emailArrayFetchSuccess,
@@ -35,9 +39,13 @@ export class MainView extends React.Component {
   render () {
     let callbacks = {};
     return (
-      <div className='container text-center'>
-        <h1>Dage MainView</h1>
+      <div>
         <Header />
+        <MainContainer />
+        <SideNav />
+        <Footer />
+        <ScriptLoader />
+        <div className="page-overlay"></div>
         <div
           state={ this.props.state }
           callbacks={ callbacks }
