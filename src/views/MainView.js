@@ -7,14 +7,14 @@ import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import MainContainer from 'components/MainContainer';
 
-// import {
-//   emailArrayFetch,
-//   emailArrayFetchSuccess,
-//   emailArrayFetchError,
-//   emailShowOneFlag,
-//   emailShowAllFlags,
-//   emailShowComplete,
-// } from 'actions/actions';
+import {
+  emailArrayFetch,
+  emailArrayFetchSuccess,
+  emailArrayFetchError,
+  emailShowOneFlag,
+  emailShowAllFlags,
+  emailShowComplete,
+} from 'actions/emails';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -22,28 +22,64 @@ import MainContainer from 'components/MainContainer';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  state: state,
+  emails : state.emails,
 });
 export class MainView extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func,
-
-    // emails : React.PropTypes.object,
+    emails : React.PropTypes.object,
   }
 
   constructor() {
     super();
+    this.callbacks = {
+      _emailArrayFetch : param => {
+        this.props.dispatch(emailArrayFetch(param))
+      },
+      _emailArrayFetchSuccess : param => {
+        this.props.dispatch(emailArrayFetchSuccess(param))
+      },
+      _emailArrayFetchError : param => {
+        this.props.dispatch(emailArrayFetchError(param))
+      },
+      _emailShowOneFlag : emailId => {
+        this.props.dispatch(emailShowOneFlag(emailId));
+      },
+      _emailShowAllFlags : emailId => {
+        this.props.dispatch(emailShowAllFlags(emailId));
+      },
+      _emailShowComplete : emailId => {
+        this.props.dispatch(emailShowComplete(emailId));
+      },
+    }
+  }
+
+  componentDidMount () {
+    this.props.dispatch(emailArrayFetch())
   }
 
   // normally you'd import an action creator, but I don't want to create
   // a file that you're just going to delete anyways!
+
+  flaggedEmailsViewRender () {
+    return (
+      <div className='container text-center'>
+        <h1>Dage Dashboard</h1>
+        <FlaggedEmailList
+          state={ this.props.emails }
+          callbacks={ this.callbacks }
+        />
+      </div>
+    );
+  }
+
 
   render() {
     let callbacks = {};
     return (
       <div>
         <Header />
-        <MainContainer />
+        { this.flaggedEmailsViewRender() }
         <SideNav />
         <Footer />
         <ScriptLoader />
