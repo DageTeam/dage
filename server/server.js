@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var mailListener = require('./mailListener');
+// var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 var bodyParser = require('body-parser');
@@ -44,6 +44,12 @@ app.get('/emailData', function(req, res) {
 
 });
 
+app.get('/filterData', function(req, res) {
+  db.getAllFilters(function(data) {
+    res.send(data);
+  })
+})
+
 const emailsArray = [
   {
     id: 'emailId',
@@ -81,14 +87,14 @@ app.post('/submitfilter', function(req, res) {
   // invoke the database function to insert into filtersTable, passing in the req.body
   //pass in cb that sends back a response
   //send back object with message
-  db.addFilter(req.body, function(message) {
+  db.insertFilter(req.body, function(message) {
     //TODO: define and udpate the message being sent back. Will have to look inside the function in database.js
     res.send(message);
   });
 });
 
 app.post('/submitkeyword', function(req, res) {
-  db.addKeyword(req.body, function(message) {
+  db.insertKeyword(req.body, function(message) {
     res.send(message);
   });
 });
