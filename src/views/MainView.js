@@ -5,7 +5,7 @@ import Header from 'components/Header';
 import SideNav from 'components/SideNav';
 import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
-import MainContainer from 'components/MainContainer';
+import MainContent from 'components/MainContent';
 
 import {
   emailArrayFetch,
@@ -15,6 +15,7 @@ import {
   emailShowAllFlags,
   emailShowComplete,
 } from 'actions/emails';
+
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -80,10 +81,12 @@ export class MainView extends React.Component {
       <div>
         <Header />
         { this.flaggedEmailsViewRender() }
+        <MainContent />
         <SideNav />
         <Footer />
         <ScriptLoader />
-        <div className='page-overlay'></div>
+        
+                                                                                                                                                                                                                                                                <div className='page-overlay'></div>
         <div
           state={ this.props.state }
           callbacks={ callbacks }

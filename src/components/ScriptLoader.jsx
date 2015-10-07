@@ -29,11 +29,11 @@ var ScriptLoader = React.createClass({
   render: function() {
     var message;
     if (this.state.scriptLoading) {
-      message = 'loading script...';
+      console.log('loading scriptLoader component...');
     } else if (this.state.scriptLoadError) {
-      message = 'loading failed';
+      console.log('loading scriptLoader component failed');
     } else {
-      message = 'loading succeeded';
+      console.log('loading scriptLoader component succeeded');
     }
 
     return <span>{message}</span>;

@@ -1,4 +1,5 @@
-import * as constants from '../constants';
+import * as constants from '../constants/emails.js';
+
 
 const initialState = {
   authenticated: false,
