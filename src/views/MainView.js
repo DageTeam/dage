@@ -16,6 +16,7 @@ import {
   emailShowComplete,
 } from 'actions/emails';
 
+
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -83,6 +84,7 @@ export class MainView extends React.Component {
         <SideNav />
         <Footer />
         <ScriptLoader />
+        
         <div className='page-overlay'></div>
         <div
           state={ this.props.state }

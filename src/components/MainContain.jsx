@@ -3,7 +3,7 @@ var FilterList = require('components/FilterList');
 var DashboardView = require('views/DashboardView');
 import Login from 'components/Login';
 
-var MainContainer = React.createClass({
+var MainContent = React.createClass({
 
   render: function() {
     return (
@@ -24,4 +24,4 @@ var MainContainer = React.createClass({
   },
 });
 
-module.exports = MainContainer;
+module.exports = MainContent;

@@ -4650,3 +4650,98 @@ http://flickity.metafizzy.co
 .fi-home {
     font-size: 36px;
 }
+
+/*##########  FORMS  ###############*/
+
+.form-update {
+
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signup {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+}
+/*
+.form-group {
+    max-width: 330px;
+    padding: 5px;
+    margin: 0 auto;
+}
+*/
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.form-signin input[type="radio"] {
+    margin-bottom: 10px;
+    padding-left: 0px;
+    width: 40px;
+    border-top: 0px;
+}
+.radio, .checkbox{
+    text-align: left;
+
+}
+
+input[type=radio], input[type=checkbox] {
+    margin: 0 0 0;
+    line-height: normal;
+
+}
+.checkbox-inline > input[type=checkbox]
+{
+    margin-top: 5px;
+}
+
+.small-textbox
+{
+    width: 70px;
+    border: solid 1px #646464; 
+    outline: none;
+    padding: 1px;
+    margin-top: -3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+}
+
+.licenseTextBox
+{
+    width:45px;
+}

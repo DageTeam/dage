@@ -7,17 +7,17 @@ var FilterList = React.createClass({
   },
   addFilter : function() {
     console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
-    this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
-  }
+    // this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
+  },
   render: function() {
     return (
       <div className='col-xs-5'>
-        <h3 className='col-xs-3'>Filter List</h3>
+        <h3 className='col-xs-5'>Filter List</h3>
         <Select
           allowCreate
           placeholder='Select or add your filter'
           options= {this.props.options}
-          onChange= {addFilter} />
+          onChange= {this.addFilter} />
       </div>
       )
   }
