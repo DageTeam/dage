@@ -220,6 +220,7 @@ var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
   });
 };
 
+//fx to get all filters
 var getAllFilters = exports.getAllFilters = function(cb) {
   var queryString = 'SELECT * FROM filterTable;';
   db.all(queryString, function(err, filterArray) {
@@ -261,11 +262,17 @@ var getAllFilters = exports.getAllFilters = function(cb) {
 
 //fx to return an array of keywords from the tagsTable (NOT the keyword table!)
 var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(tagName) {
-  var query = 'SELECT keyword FROM tagsTable WHERE tagName =' + tagName + ')' ;
-
-  return db.run(query);
+  var query = 'SELECT keyword FROM tagsTable WHERE tagName ="' + tagName + '"' ;
+  // var query = 'SELECT keyword FROM tagsTable WHERE tagName =' + tagName + ')' ;
+  db.all(query, function(err, result){
+    if (err){
+      console.log('There was an error getting keywordsArray with tagName =', tagName);
+    } else {
+      console.log('this is the result.....', result);
+      return result; //eg of result... [ { keyword: 'coolie' }, { keyword: 'gringo'} ]
+    }
+  });
 };
-
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
@@ -318,9 +325,9 @@ var createUserTable = function() {
 
 //fx to create tagsTable if it doesnt exist.  eg tagName=racist, harassment, corporate treason
 var createTagsTable = function createTagsTable() {
-  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30)'
+  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30))'
 
-  db.run(createTable);
+  db.run(query);
 };
 
 createEmailTable();
