@@ -5,7 +5,7 @@ import Header from 'components/Header';
 import SideNav from 'components/SideNav';
 import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
-import MainContainer from 'components/MainContainer';
+import MainContain from 'components/MainContain';
 
 import {
   emailArrayFetch,
@@ -80,12 +80,16 @@ export class MainView extends React.Component {
     return (
       <div>
         <Header />
+<<<<<<< HEAD
         { this.flaggedEmailsViewRender() }
+=======
+        <MainContain />
+>>>>>>> [cleanup](general): renamed maincontainer component to maincontent
         <SideNav />
         <Footer />
         <ScriptLoader />
         
-        <div className='page-overlay'></div>
+                                                                                                                                                                                                                                                                <div className='page-overlay'></div>
         <div
           state={ this.props.state }
           callbacks={ callbacks }
