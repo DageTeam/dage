@@ -99,6 +99,18 @@ app.post('/submitkeyword', function(req, res) {
   });
 });
 
+//route handing for checking if user login is correct
+//TODO: finish this
+app.post('/userLogin', function(req, res) {
+
+})
+
+//route handing for checking if user auth/token is valid
+//TODO: finish this
+app.get('/userAuth', function(req, res) {
+
+})
+
 app.post('/', function(req, res) {
   res.send('You posted!');
 });

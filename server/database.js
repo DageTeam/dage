@@ -227,7 +227,7 @@ var getAllFilters = exports.getAllFilters = function(cb) {
           } else {
             for (var i = 0; i < filterArray.length; i++) {
               var filter = filterArray[i];
-              filter.keyWord = filterArray[i].keyWord || [];
+              filter.keyword = filterArray[i].keyword || [];
               var filterID = filter.id;
               for (var j = 0; j < keywordArray.length; j++) {
                 var keyword = keywordArray[j];
