@@ -40,8 +40,8 @@ var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, from
 };
 
 //fx to insert into the contextTable
-var insertIntoContextTable = exports.insertIntoContextTable = function(userID, filterID, emailID, flaggedKeyWord, context) {
-  var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyWord, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyWord + '\',\'' + context +  '\')';
+var insertIntoContextTable = exports.insertIntoContextTable = function(userID, filterID, emailID, flaggedKeyword, context) {
+  var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyword, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyword + '\',\'' + context +  '\')';
 
   db.run(flaggedContent);
   console.log('insertIntoContextTable fx ran/////');
@@ -67,7 +67,7 @@ var insertEmail = exports.insertEmail = function(email) {
 };
 
 //fx to add a new filter into the database for the user
-var addFilter = exports.addFilter = function(body, cb) {
+var insertFilter = exports.insertFilter = function(body, cb) {
   console.log('this is body', body);
   var username = body.username;
   var filterName = body.filterName;
@@ -100,7 +100,7 @@ var addFilter = exports.addFilter = function(body, cb) {
 };
 
 //fx to add a new filter into the database for the user
-var addKeyword = exports.addKeyword = function(body, cb) {
+var insertKeyword = exports.insertKeyword = function(body, cb) {
   console.log('this is body', body);
   var username = body.username;
   var filterName = body.filterName;
@@ -166,7 +166,7 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(userID, isAdmin, cb) 
       console.log('err');
     } else {
       console.log('emails fetched, now getting all the flagged contexts for user');
-      var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyWord, context FROM contextTable' : 'SELECT emailID, flaggedKeyWord, context FROM contextTable WHERE userID=' + userID;
+      var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
       console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
@@ -211,6 +211,45 @@ var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
   });
 };
 
+var getAllFilters = exports.getAllFilters = function(cb) {
+  var queryString = 'SELECT * FROM filterTable;';
+  db.all(queryString, function(err, filterArray) {
+    if (err) {
+      console.log('There was an error getting filters');
+    } else {
+      console.log('this is the database response.....', filterArray);
+      var userQuery = 'SELECT * FROM userTable';
+      db.all(userQuery, function(err, userArray) {
+        var keywordQuery = 'SELECT * FROM keywordTable';
+        db.all(keywordQuery, function(error, keywordArray) {
+          if (error) {
+            console.log('There was an error getting keywords', error);
+          } else {
+            for (var i = 0; i < filterArray.length; i++) {
+              var filter = filterArray[i];
+              filter.keyWord = filterArray[i].keyWord || [];
+              var filterID = filter.id;
+              for (var j = 0; j < keywordArray.length; j++) {
+                var keyword = keywordArray[j];
+                if (filterID === keyword.filterID) {
+                  filter.keyWord.push(keyword.keyword)
+                }
+              }
+              for (var k = 0; k < userArray.length; k++) {
+                if (filter.userID === userArray[k].id) {
+                  filterArray[i].username = userArray[k].username;
+                }
+              }
+            }
+
+            cb(filterArray);
+          }
+        });
+      });
+    }
+  });
+};
+
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
 var printEmailTable = function() {
@@ -233,7 +272,7 @@ var createEmailTable = function() {
 
 //fx to create contextTable if it doesnt exit
 var createContextTable = function() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyWord char(100), context char(500))';
+  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyword char(100), context char(500))';
 
   db.run(createTable);
 };
