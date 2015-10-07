@@ -13,7 +13,7 @@ import {
 export function emailArrayFetch() {
   return dispatch => {
     dispatch(emailArrayRequest())
-    return fetch('http://localhost:4000/tempEmailData')
+    return fetch('http://localhost:4000/emailData')
       .then(req => { return req.json() })
       .then(json => { dispatch(emailArrayFetchSuccess(json)) })
   }

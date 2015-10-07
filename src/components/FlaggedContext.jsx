@@ -6,7 +6,7 @@ var FlaggedContext = React.createClass({
   render: function(){
    return (
     <div className='col-xs-10'>
-      <p>Type: {this.props.type}</p>
+      <p>Flagged Keyword: {this.props.flaggedKeyword}</p>
       <p>Context: {this.props.context}</p>
     </div>
     );

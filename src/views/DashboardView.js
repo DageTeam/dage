@@ -74,7 +74,7 @@ export class DashboardView extends React.Component {
         this.props.dispatch(emailArrayFetch(param))
       },
       _emailArrayFetchSuccess : param => {
-        this.props.dispatch(emalArrayFetchSuccess(param))
+        this.props.dispatch(emailArrayFetchSuccess(param))
       },
       _emailArrayFetchError : param => {
         this.props.dispatch(emailArrayFetchError(param))
