@@ -141,6 +141,15 @@ var insertKeyword = exports.insertKeyword = function(body, cb) {
   });
 };
 
+//fx to insert into tagsTable, eg tagName=racist, keyword=coolie
+var insertIntoTagsTable = exports.insertIntoTagsTable = function(tagName, keyword) {
+  var query = 'INSERT INTO tagsTable(tagName, keyword) VALUES (\'' +  tagName + '\',\'' + keyword +  '\')';
+
+  db.run(query);
+  console.log('insertIntoTagsTable fx ran/////');
+};
+
+
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
 var getFlaggedWords = exports.getFlaggedWords = function(cb) {
@@ -250,6 +259,14 @@ var getAllFilters = exports.getAllFilters = function(cb) {
   });
 };
 
+//fx to return an array of keywords from the tagsTable (NOT the keyword table!)
+var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(tagName) {
+  var query = 'SELECT keyword FROM tagsTable WHERE tagName =' + tagName + ')' ;
+
+  return db.run(query);
+};
+
+
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
 var printEmailTable = function() {
@@ -299,8 +316,16 @@ var createUserTable = function() {
   db.run(createUserTable);
 };
 
+//fx to create tagsTable if it doesnt exist.  eg tagName=racist, harassment, corporate treason
+var createTagsTable = function createTagsTable() {
+  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30)'
+
+  db.run(createTable);
+};
+
 createEmailTable();
 createUserTable();
 createFilterTable();
 createKeywordTable();
 createContextTable();
+createTagsTable();
