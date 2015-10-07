@@ -11,7 +11,7 @@ import {
   TOKEN_DELETED,
   TOKEN_DELETE_SUCCEEDED,
   TOKEN_DELETE_FAILED,
-} from 'constants/userConstants';
+} from 'constants/users';
 
 //invoked on application load. Assumes user is auth'd. Sends GET request to server for a given user--
 //if user is not auth'd, would ideally redirect to a login page (in this case, sense dispatch for userFetchError)

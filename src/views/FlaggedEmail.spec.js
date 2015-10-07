@@ -25,11 +25,11 @@ describe('(View) FlaggedEmailList', function() {
     rendered  = renderWithProps();
   });
 
-  it('(Meta) Should have a test that works with Chai expectations.', function () {
+  xit('(Meta) Should have a test that works with Chai expectations.', function () {
     expect(true).to.be.true;
   });
 
-  it('Should render as a <div>.', function () {
+  xit('Should render as a <div>.', function () {
     expect(component.type).to.equal('div');
   });
 
