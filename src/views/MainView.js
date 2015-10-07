@@ -5,7 +5,7 @@ import Header from 'components/Header';
 import SideNav from 'components/SideNav';
 import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
-import MainContain from 'components/MainContain';
+import MainContent from 'components/MainContent';
 
 import {
   emailArrayFetch,
@@ -80,11 +80,8 @@ export class MainView extends React.Component {
     return (
       <div>
         <Header />
-<<<<<<< HEAD
         { this.flaggedEmailsViewRender() }
-=======
-        <MainContain />
->>>>>>> [cleanup](general): renamed maincontainer component to maincontent
+        <MainContent />
         <SideNav />
         <Footer />
         <ScriptLoader />
