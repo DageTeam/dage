@@ -7,7 +7,7 @@ var db = exports.db = new sqlite3.Database(dbFile);
 
 /////FX's TO MODIFY DB
 //fx to update the emailTable to mark an email as checked
-var markChecked = exports.markChecked = function(emailID) {
+var markChecked = function markChecked(emailID) {
   var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
 
   db.run(checkString);
@@ -15,7 +15,7 @@ var markChecked = exports.markChecked = function(emailID) {
 };
 
 //fx to update the emailTable  to mark an email as flagged
-var markFlagged = exports.markFlagged = function(emailID) {
+var markFlagged = function markFlagged(emailID) {
   var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
 
   db.run(flagString);
@@ -23,7 +23,7 @@ var markFlagged = exports.markFlagged = function(emailID) {
 };
 
 //insert email into emailTable
-var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
+var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
   var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
@@ -40,15 +40,23 @@ var insertIntoEmailTable = exports.insertIntoEmailTable = function(toField, from
 };
 
 //fx to insert into the contextTable
-var insertIntoContextTable = exports.insertIntoContextTable = function(userID, filterID, emailID, flaggedKeyword, context) {
+var insertIntoContextTable = function insertIntoContextTable(userID, filterID, emailID, flaggedKeyword, context) {
   var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyword, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyword + '\',\'' + context +  '\')';
 
   db.run(flaggedContent);
   console.log('insertIntoContextTable fx ran/////');
 };
 
+//fx to insert into tagsTable, eg tagName=racist, keyword=coolie
+var insertIntoTagsTable = function insertIntoTagsTable(tagName, keyword) {
+  var query = 'INSERT INTO tagsTable(tagName, keyword) VALUES (\'' +  tagName + '\',\'' + keyword +  '\')';
+
+  db.run(query);
+  console.log('insertIntoTagsTable fx ran/////');
+};
+
 //setting up sqlite3 database w/ potential email schema
-var insertEmail = exports.insertEmail = function(email) {
+var insertEmail = function insertEmail(email) {
   var toField = email.to === undefined ? 'undefined' : email.to[0].address;
   var fromField = email.from === undefined ? 'undefined' : email.from[0].address;
   var cc = email.cc === undefined ? 'undefined' : email.cc[0].address;
@@ -67,7 +75,7 @@ var insertEmail = exports.insertEmail = function(email) {
 };
 
 //fx to add a new filter into the database for the user
-var insertFilter = exports.insertFilter = function(body, cb) {
+var insertFilter = function insertFilter(body, cb) {
   console.log('this is body', body);
   var username = body.username;
   var filterName = body.filterName;
@@ -100,7 +108,7 @@ var insertFilter = exports.insertFilter = function(body, cb) {
 };
 
 //fx to add a new filter into the database for the user
-var insertKeyword = exports.insertKeyword = function(body, cb) {
+var insertKeyword = function insertKeyword(body, cb) {
   console.log('this is body', body);
   var username = body.username;
   var filterName = body.filterName;
@@ -141,18 +149,9 @@ var insertKeyword = exports.insertKeyword = function(body, cb) {
   });
 };
 
-//fx to insert into tagsTable, eg tagName=racist, keyword=coolie
-var insertIntoTagsTable = exports.insertIntoTagsTable = function(tagName, keyword) {
-  var query = 'INSERT INTO tagsTable(tagName, keyword) VALUES (\'' +  tagName + '\',\'' + keyword +  '\')';
-
-  db.run(query);
-  console.log('insertIntoTagsTable fx ran/////');
-};
-
-
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
-var getFlaggedWords = exports.getFlaggedWords = function(cb) {
+var getFlaggedWords = function getFlaggedWords(cb) {
   var queryString = 'SELECT userID, filterID, keyword FROM keywordTable';
   db.all(queryString, function(err, flaggedWords) {
     if (err) {
@@ -166,7 +165,7 @@ var getFlaggedWords = exports.getFlaggedWords = function(cb) {
 };
 
 //fx to get an array of flagged emails.
-var getFlaggedEmails = exports.getFlaggedEmails = function(userID, isAdmin, cb) {
+var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
   console.log('triggered');
   var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
 
@@ -176,6 +175,7 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(userID, isAdmin, cb) 
     } else {
       console.log('emails fetched, now getting all the flagged contexts for user');
       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
+
       console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
@@ -194,19 +194,12 @@ var getFlaggedEmails = exports.getFlaggedEmails = function(userID, isAdmin, cb) 
           cb(flaggedEmails);
         }
       })
-
-      // for (var i = 0; i < flaggedEmails.length; i++) {
-      //   var email = flaggedEmails[i];
-
-      // }
-
-      // cb(flaggedEmails);
     }
   });
 };
 
 //fx to pull all unchecked emails from the db
-var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
+var getUncheckedEmails = function getUncheckedEmails(cb) {
   console.log('starting to get Unchecked Emails');
   var query = 'SELECT * FROM emailTable WHERE checked="0"';
 
@@ -221,7 +214,7 @@ var getUncheckedEmails = exports.getUncheckedEmails = function(cb) {
 };
 
 //fx to get all filters
-var getAllFilters = exports.getAllFilters = function(cb) {
+var getAllFilters = function getAllFilters(cb) {
   var queryString = 'SELECT * FROM filterTable;';
   db.all(queryString, function(err, filterArray) {
     if (err) {
@@ -245,6 +238,7 @@ var getAllFilters = exports.getAllFilters = function(cb) {
                   filter.keyWord.push(keyword.keyword)
                 }
               }
+
               for (var k = 0; k < userArray.length; k++) {
                 if (filter.userID === userArray[k].id) {
                   filterArray[i].username = userArray[k].username;
@@ -262,10 +256,11 @@ var getAllFilters = exports.getAllFilters = function(cb) {
 
 //fx to return an array of keywords from the tagsTable (NOT the keyword table!)
 var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(tagName) {
-  var query = 'SELECT keyword FROM tagsTable WHERE tagName ="' + tagName + '"' ;
+  var query = 'SELECT keyword FROM tagsTable WHERE tagName ="' + tagName + '"';
+
   // var query = 'SELECT keyword FROM tagsTable WHERE tagName =' + tagName + ')' ;
-  db.all(query, function(err, result){
-    if (err){
+  db.all(query, function(err, result) {
+    if (err) {
       console.log('There was an error getting keywordsArray with tagName =', tagName);
     } else {
       console.log('this is the result.....', result);
@@ -276,7 +271,7 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
-var printEmailTable = function() {
+var printEmailTable = function printEmailTable() {
   db.all('SELECT * FROM emailTable', function(err, rows) {
     if (err) {
       console.log('err');
@@ -288,35 +283,35 @@ var printEmailTable = function() {
 
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
-var createEmailTable = function() {
+var createEmailTable = function createEmailTable() {
   var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient char(100), sender char(100), cc char(100), bcc char(100), subject char(100), priority char(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
 
   db.run(createTable);
 };
 
 //fx to create contextTable if it doesnt exit
-var createContextTable = function() {
+var createContextTable = function createContextTable() {
   var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyword char(100), context char(500))';
 
   db.run(createTable);
 };
 
 //fx to create keywordTable  if it doesnt exit
-var createKeywordTable = function() {
+var createKeywordTable = function createKeywordTable() {
   var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword char(50))';
 
   db.run(createTable);
 };
 
 //fx to create contextTable if it doesnt exit
-var createFilterTable = function() {
+var createFilterTable = function createFilterTable() {
   var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
 
   db.run(createTable);
 };
 
 //fx to create userTable if it doesnt exit
-var createUserTable = function() {
+var createUserTable = function createUserTable() {
   var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username char(20))';
 
   //TODO: add user password and stuff
@@ -330,9 +325,27 @@ var createTagsTable = function createTagsTable() {
   db.run(query);
 };
 
+//FX CALLS
 createEmailTable();
 createUserTable();
 createFilterTable();
 createKeywordTable();
 createContextTable();
 createTagsTable();
+
+//MODULE.EXPORTS TO EXPORT REQUIRED FX
+module.exports = {
+  markChecked,
+  markFlagged,
+  insertIntoEmailTable,
+  insertIntoContextTable,
+  insertEmail,
+  insertFilter,
+  insertKeyword,
+  insertIntoTagsTable,
+  getFlaggedWords,
+  getFlaggedEmails,
+  getUncheckedEmails,
+  getAllFilters,
+  getArrayOfKeywordsFromTagsTable
+};
