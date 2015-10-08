@@ -238,7 +238,7 @@ var getAllFilters = function getAllFilters(cb) {
               for (var j = 0; j < keywordArray.length; j++) {
                 var keyword = keywordArray[j];
                 if (filterID === keyword.filterID) {
-                  filter.keyWord.push(keyword.keyword)
+                  filter.keyword.push(keyword.keyword)
                 }
               }
 
@@ -273,6 +273,21 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
   });
 };
 
+ //FX to get user data for authentication
+var getUser = function getUser(body, cb) {
+  var username = body.username
+  var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
+  db.all(queryString, function(error, response) {
+    if (error) {
+      cb(err);
+      console.log('no username found in table');
+    } else {
+      cb(response);
+    }
+  })
+};
+
+
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
 var printEmailTable = function printEmailTable() {
@@ -288,35 +303,35 @@ var printEmailTable = function printEmailTable() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function createEmailTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient char(100), sender char(100), cc char(100), bcc char(100), subject char(100), priority char(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
 
   db.run(createTable);
 };
 
 //fx to create contextTable if it doesnt exit
 var createContextTable = function createContextTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyword char(100), context char(500))';
+  var createTable = 'CREATE TABLE IF NOT EXISTS contextTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, emailID INTEGER, flaggedKeyword CHAR(100), context CHAR(500))';
 
   db.run(createTable);
 };
 
 //fx to create keywordTable  if it doesnt exit
 var createKeywordTable = function createKeywordTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword char(50))';
+  var createTable = 'CREATE TABLE IF NOT EXISTS keywordTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterID INTEGER, keyword CHAR(50))';
 
   db.run(createTable);
 };
 
 //fx to create contextTable if it doesnt exit
 var createFilterTable = function createFilterTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName char(50))';
+  var createTable = 'CREATE TABLE IF NOT EXISTS filterTable(id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, filterName CHAR(50))';
 
   db.run(createTable);
 };
 
 //fx to create userTable if it doesnt exit
 var createUserTable = function createUserTable() {
-  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username char(20))';
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20))';
 
   //TODO: add user password and stuff
   db.run(createUserTable);
@@ -329,6 +344,13 @@ var createTagsTable = function createTagsTable() {
   db.run(query);
 };
 
+//MAX'S temp userTable
+var createUserAuthTable = function createUserAuthTable(){
+    var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), level CHAR(50))';
+
+  db.run(createUserAuthTable);
+};
+
 //FX CALLS
 createEmailTable();
 createUserTable();
@@ -336,6 +358,7 @@ createFilterTable();
 createKeywordTable();
 createContextTable();
 createTagsTable();
+createUserAuthTable();
 
 //MODULE.EXPORTS TO EXPORT REQUIRED FX
 module.exports = {
@@ -347,6 +370,7 @@ module.exports = {
   insertFilter,
   insertKeyword,
   insertIntoTagsTable,
+  getUser,
   getFlaggedWords,
   getFlaggedEmails,
   getUncheckedEmails,
