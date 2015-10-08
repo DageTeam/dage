@@ -182,21 +182,22 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
       console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
-          console.log('fetch error', error)
+          console.log('fetch error', error);
         } else {
           console.log('emails and flagged contexts all fetched');
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
+              flaggedEmails[j].focusLevel = 'one';
               if (flaggedContext[i].emailID === flaggedEmails[j].id) {
-                flaggedEmails[j].flags.push(flaggedContext[i])
+                flaggedEmails[j].flags.push(flaggedContext[i]);
               }
             }
           }
 
           cb(flaggedEmails);
         }
-      })
+      });
     }
   });
 };
@@ -238,7 +239,7 @@ var getAllFilters = function getAllFilters(cb) {
               for (var j = 0; j < keywordArray.length; j++) {
                 var keyword = keywordArray[j];
                 if (filterID === keyword.filterID) {
-                  filter.keyword.push(keyword.keyword)
+                  filter.keyword.push({keywordID: keyword.id, keyword: keyword.keyword});
                 }
               }
 
@@ -273,9 +274,9 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
   });
 };
 
- //FX to get user data for authentication
+//FX to get user data for authentication
 var getUser = function getUser(body, cb) {
-  var username = body.username
+  var username = body.username;
   var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
   db.all(queryString, function(error, response) {
     if (error) {
@@ -284,9 +285,8 @@ var getUser = function getUser(body, cb) {
     } else {
       cb(response);
     }
-  })
+  });
 };
-
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
@@ -339,14 +339,14 @@ var createUserTable = function createUserTable() {
 
 //fx to create tagsTable if it doesnt exist.  eg tagName=racist, harassment, corporate treason
 var createTagsTable = function createTagsTable() {
-  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30))'
+  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30))';
 
   db.run(query);
 };
 
 //MAX'S temp userTable
-var createUserAuthTable = function createUserAuthTable(){
-    var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), level CHAR(50))';
+var createUserAuthTable = function createUserAuthTable() {
+  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), level CHAR(50))';
 
   db.run(createUserAuthTable);
 };
@@ -375,5 +375,5 @@ module.exports = {
   getFlaggedEmails,
   getUncheckedEmails,
   getAllFilters,
-  getArrayOfKeywordsFromTagsTable
+  getArrayOfKeywordsFromTagsTable,
 };
