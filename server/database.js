@@ -188,6 +188,7 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
+              flaggedEmails[j].focusLevel = 'one';
               if (flaggedContext[i].emailID === flaggedEmails[j].id) {
                 flaggedEmails[j].flags.push(flaggedContext[i])
               }
