@@ -53,8 +53,8 @@ export default createReducer(initialState, {
     let flagOptionsObject = {};
     payload.filtersArray.forEach(filter => {
       filterOptions.push({ value: filter.id, label: filter.filterName })
-      flagOptionsObject[filter.id] = filter.keyword.map(keyword => {
-        return { value: keyword, label: keyword };
+      flagOptionsObject[filter.id] = filter.keyword.map(keywordObj => {
+        return { value: keywordObj.keywordID, label: keywordObj.keyword };
       })
     })
     return { ...state,
