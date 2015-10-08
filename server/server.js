@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+
 // var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
@@ -51,8 +52,8 @@ app.get('/filterData', function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   db.getAllFilters(function(data) {
     res.send(data);
-  })
-})
+  });
+});
 
 const emailsArray = [
   {
@@ -106,51 +107,50 @@ app.post('/submitkeyword', function(req, res) {
 //route handing for checking if user login is correct
 //TODO: finish this
 app.post('/userLogin', function(req, res) {
-  db.getUser(req.body.username, function(data){
-    if(data){
+  db.getUser(req.body.username, function(data) {
+    if (data) {
       bcrypt.compare(req.body.password, data[0]['hash'], function(err, data) {
-        if(err) {
+        if (err) {
           res.status(401).end('Either username or password is incorrect');
         }
+
         //if typed in password checks out, create a token
-        if(data) {
+        if (data) {
           //creating token with username as payload
           var jwtSecret = secret;
           var token = jwt.sign({
             username: req.body.username,
-            level: data[0]['level']
+            level: data[0]['level'],
           }, jwtSecret);
           res.send({
             //sending back token for client processing
             token: token,
             username: req.body.username,
-            level: data[0]['level']
+            level: data[0]['level'],
           });
         }
-    })
+      });
+    } else {
+      res.status(401).end('User does not exist');
     }
-    else {
-      res.status(401).end('User does not exist')
-    }
-  })
+  });
 });
 
 //route handing for checking if user auth/token is valid
 //TODO: finish this
 app.post('/userAuth', function(req, res) {
-  jwt.verify(req.body.token, secret, function(err, decoded){
-    if(err){
-      res.status(401).end('bad token')
-    }
-    else{
+  jwt.verify(req.body.token, secret, function(err, decoded) {
+    if (err) {
+      res.status(401).end('bad token');
+    } else {
       var decoded = jwt.decode(req.body.token, {complete:true});
 
       res.send({
         username:decoded.payload.username,
-        level: decoded.payload.level
-      })
+        level: decoded.payload.level,
+      });
     }
-  })
+  });
 });
 
 app.post('/', function(req, res) {
