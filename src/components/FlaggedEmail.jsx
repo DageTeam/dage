@@ -44,8 +44,8 @@ var FlaggedEmail = React.createClass({
             <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
             <div className="heading" style={{'vertical-align':'middle'}}>Date: {cropTime}</div>
           </div>
-          <small><span className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
-          <small><span className="glyphicon glyphicon-menu-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
+          <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
+          <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-menu-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
           <div style={{'float':'right', width:'70%'}}>
             {contentRows}
           </div>
@@ -73,7 +73,7 @@ var FlaggedEmail = React.createClass({
                 </tr>
               </tbody>
 
-            </table>            
+            </table>
             <span className='input-group-btn' style={{'float':'left'}}>
                 <button id='showOneFlag' onClick={this.showOneFlag} className='btn btn-primary-outline'>Collapse</button>
             </span>
@@ -93,7 +93,7 @@ var FlaggedEmail = React.createClass({
           </div>
         )
     }
-  }, 
+  },
 
   styles:{
     table:{
