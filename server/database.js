@@ -141,6 +141,19 @@ var insertKeyword = exports.insertKeyword = function(body, cb) {
   });
 };
 
+//FX to get user data for authentication 
+var getUser = exports.getUser = function(body, cb) {
+    var username = body.username
+    var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
+    db.all(queryString, function(error, response){
+      if(error){
+        cb(err);
+      } else {
+        cb(response);
+      }
+    });
+  }
+
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
 var getFlaggedWords = exports.getFlaggedWords = function(cb) {
@@ -299,8 +312,15 @@ var createUserTable = function() {
   db.run(createUserTable);
 };
 
+var createUserAuthTable = function(){
+  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username char(20), hash char(50), level char(50))'
+
+  db.run(createUserAuthTable);
+};
+
 createEmailTable();
 createUserTable();
 createFilterTable();
 createKeywordTable();
 createContextTable();
+createUserAuthTable();
