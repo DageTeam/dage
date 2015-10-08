@@ -147,7 +147,7 @@ var getUser = exports.getUser = function(body, cb) {
     var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
     db.all(queryString, function(error, response){
       if(error){
-        cb(err);
+        console.log('no username found in table');
       } else {
         cb(response);
       }
