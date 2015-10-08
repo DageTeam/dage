@@ -45,6 +45,7 @@
     "koa-static": "^1.4.9",
     "mail-listener2": "^0.1.8",
     "mailparser": "^0.5.2",
+    "natural": "^0.2.1",
     "react": "^0.14.0-rc1",
     "react-dom": "^0.14.0-rc1",
     "react-input-autosize": "^0.5.3",
