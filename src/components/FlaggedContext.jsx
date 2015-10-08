@@ -5,11 +5,26 @@ var FlaggedContext = React.createClass({
 
   render: function(){
    return (
-    <div className='col-xs-10'>
-      <p>Flagged Keyword: {this.props.flaggedKeyword}</p>
-      <p>Context: {this.props.context}</p>
+    <div>
+      <table style={this.styles.table}>
+          <tr>
+            <th>Flagged Keyword</th>
+            <th>Context</th>
+          </tr>
+          <tr>
+            <td>{this.props.flaggedKeyword}</td>
+            <td>{this.props.context}</td>
+          </tr>
+      </table>
     </div>
     );
+  },
+
+  styles:{
+    table:{
+      'margin-top':'0',
+      'table-layout':'fixed'
+    }
   }
 });
 

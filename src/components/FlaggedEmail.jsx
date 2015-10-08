@@ -17,6 +17,8 @@ var FlaggedEmail = React.createClass({
   },
 
   render: function(){
+    var cropTime = this.props.sendTime.slice(0,this.props.sendTime.indexOf('G'));
+    console.log(cropTime);
     var contentRows = [];
     /*FLAGGEDCONTEXT props from email array from state tree*/
     var contentList = this.props.flags;
@@ -35,42 +37,73 @@ var FlaggedEmail = React.createClass({
 
     if (this.props.focusLevel !== 'complete'){
       return(
-        <div className='jumbotron'>
-          <div className='container'>
+        <div>
+          <div className='container' style={this.styles.rows}>
+          <div style={{'float':'left'}}>
+            <div className="heading" style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}>Date: {cropTime}</div>
+          </div>
+          <small><span className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
+          <small><span className="glyphicon glyphicon-menu-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
+          <div style={{'float':'right', width:'70%'}}>
+            {contentRows}
+          </div>
 
-            <div className='col-xs-10'>
-              <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
-            </div>
-            <div className='col-xs-10'>
-              <div> Flagged content:
-              { contentRows } </div>
-            </div>
-            <span className='input-group-btn'>
-              <button id='showAllFlags' onClick={this.showAllFlags} className='btn btn-success-outline'>Show All Flags</button>
-              <button id='showCompleteEmail' onClick={this.showCompleteEmail} className='btn btn-primary-outline'>Show Complete Email</button>
-            </span>
           </div>
         </div>
       )
     } else if (this.props.focusLevel === 'complete') {
       return (
           //TODO: fill in the complete email render
-          <div className='jumbotron'>
-            <div className='container'>
+          <div >
+              <table style={this.styles.table}>
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Sender</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{this.props.recipient}</td>
+                  <td>{this.props.sender}</td>
+                  <td>{this.props.sendTime}</td>
+                </tr>
+              </tbody>
 
-              <div className='col-xs-10'>
-                <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
-              </div>
-              <div className='col-xs-10'>
-                <p> Email Message:
-                {this.props.body}</p>
-              </div>
-              <span className='input-group-btn'>
+            </table>            
+            <span className='input-group-btn' style={{'float':'left'}}>
                 <button id='showOneFlag' onClick={this.showOneFlag} className='btn btn-primary-outline'>Collapse</button>
-              </span>
-            </div>
+            </span>
+            <table style={this.styles.table}>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{this.props.body}</td>
+                </tr>
+              </tbody>
+            </table>
+
           </div>
         )
+    }
+  }, 
+
+  styles:{
+    table:{
+      'margin-top':'0',
+      'position':'relative',
+      'width':'75%'
+    },
+    rows:{
+      'border-bottom':'3px solid purple',
+      'margin-bottom':'15px'
     }
   }
 });
