@@ -5,7 +5,9 @@ var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');
 var bodyParser = require('body-parser');
-
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+var secret = 'dageSecret';
 app.use(bodyParser.json());
 
 //Default route
@@ -104,14 +106,52 @@ app.post('/submitkeyword', function(req, res) {
 //route handing for checking if user login is correct
 //TODO: finish this
 app.post('/userLogin', function(req, res) {
-
-})
+  db.getUser(req.body.username, function(data){
+    if(data){
+      bcrypt.compare(req.body.password, data[0]['hash'], function(err, data) {
+        if(err) {
+          res.status(401).end('Either username or password is incorrect');
+        }
+        //if typed in password checks out, create a token
+        if(data) {
+          //creating token with username as payload
+          var jwtSecret = secret;
+          var token = jwt.sign({
+            username: req.body.username,
+            level: data[0]['level']
+          }, jwtSecret);
+          res.send({
+            //sending back token for client processing
+            token: token,
+            username: req.body.username,
+            level: data[0]['level']
+          });
+        }
+    })
+    }
+    else {
+      res.status(401).end('User does not exist')
+    }
+  })
+});
 
 //route handing for checking if user auth/token is valid
 //TODO: finish this
-app.get('/userAuth', function(req, res) {
+app.post('/userAuth', function(req, res) {
+  jwt.verify(req.body.token, secret, function(err, decoded){
+    if(err){
+      res.status(401).end('bad token')
+    }
+    else{
+      var decoded = jwt.decode(req.body.token, {complete:true});
 
-})
+      res.send({
+        username:decoded.payload.username,
+        level: decoded.payload.level
+      })
+    }
+  })
+});
 
 app.post('/', function(req, res) {
   res.send('You posted!');
