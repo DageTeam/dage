@@ -3,6 +3,7 @@ var app = express();
 // var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
+var classify = require('./classifyingAlgo.js');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
