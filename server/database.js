@@ -238,7 +238,7 @@ var getAllFilters = function getAllFilters(cb) {
               for (var j = 0; j < keywordArray.length; j++) {
                 var keyword = keywordArray[j];
                 if (filterID === keyword.filterID) {
-                  filter.keyword.push(keyword.keyword)
+                  filter.keyword.push({keywordID: keyword.id, keyword: keyword.keyword})
                 }
               }
 
