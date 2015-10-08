@@ -19,6 +19,7 @@ import {
 
 import {
   filterArrayFetch,
+  filterTypeSelect,
 } from 'actions/filters';
 
 // We define mapStateToProps where we'd normally use the @connect
@@ -29,6 +30,7 @@ import {
 const mapStateToProps = (state) => ({
   emails : state.emails,
   filters : state.filters,
+  state: state,
 });
 export class MainView extends React.Component {
   static propTypes = {
@@ -43,12 +45,6 @@ export class MainView extends React.Component {
       _emailArrayFetch : param => {
         this.props.dispatch(emailArrayFetch(param))
       },
-      _emailArrayFetchSuccess : param => {
-        this.props.dispatch(emailArrayFetchSuccess(param))
-      },
-      _emailArrayFetchError : param => {
-        this.props.dispatch(emailArrayFetchError(param))
-      },
       _emailShowOneFlag : emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
       },
@@ -57,6 +53,12 @@ export class MainView extends React.Component {
       },
       _emailShowComplete : emailId => {
         this.props.dispatch(emailShowComplete(emailId));
+      },
+      _filterArrayFetch : () => {
+        this.props.dispatch(filterArrayFetch());
+      },
+      _filterTypeSelect : filterId => {
+        this.props.dispatch(filterTypeSelect(filterId));
       },
     }
   }
@@ -89,7 +91,7 @@ export class MainView extends React.Component {
           callbacks={ this.callbacks }
         />
         <FlagList
-          state={ this.props.filters }
+          options={ this.props.filters.flagOptionsCurrent }
           callbacks={ this.callbacks }
         />
       </div>

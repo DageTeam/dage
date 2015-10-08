@@ -33,7 +33,10 @@ const filters = {
   lastUpdated: 0,
   fetchingEmailError: '',
   filterOptions: [],
+  filterTypeSelected: 1,
   filtersArray,
+  flagOptionsObject: {},
+  flagOptionsCurrent: [],
 }
 
 const initialState = filters;
@@ -47,14 +50,22 @@ export default createReducer(initialState, {
   },
   [FILTER_ARRAY_FETCH_SUCCESS]: (state, payload) => {
     let filterOptions = [];
+    let flagOptionsObject = {};
     payload.filtersArray.forEach(filter => {
       filterOptions.push({ value: filter.id, label: filter.filterName })
+      flagOptionsObject[filter.id] = filter.keyword.map(keyword => {
+        return { value: keyword, label: keyword };
+      })
     })
     return { ...state,
+      _console: flagOptionsObject[1],
       isFetchingFilters: false,
       lastUpdated: payload.receivedAt,
       filtersArray: payload.filtersArray,
       filterOptions,
+      flagOptionsObject,
+      // flagOptionsCurrent: flagOptionsObject[// selected filter.id],
+      flagOptionsCurrent: flagOptionsObject[state.filterTypeSelected],
     }
   },
   [FILTER_ARRAY_FETCH_ERROR]: (state, payload) => {
@@ -65,7 +76,7 @@ export default createReducer(initialState, {
 
   [FILTER_TYPE_SELECT]: (state, payload) => {
     return { ...state,
-
+      filterTypeSelected: payload.filterId,
     }
   },
 
