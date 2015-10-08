@@ -151,6 +151,9 @@ var insertKeyword = function insertKeyword(body, cb) {
 
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
+// eg [ { userID: 1, filterID: 2, keyword: 'hello' },
+//   { userID: 4, filterID: 3, keyword: 'wowza' },
+//   { userID: 5, filterID: 4, keyword: 'wtf' } ]
 var getFlaggedWords = function getFlaggedWords(cb) {
   var queryString = 'SELECT userID, filterID, keyword FROM keywordTable';
   db.all(queryString, function(err, flaggedWords) {
@@ -255,7 +258,7 @@ var getAllFilters = function getAllFilters(cb) {
 };
 
 //fx to return an array of keywords from the tagsTable (NOT the keyword table!)
-var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(tagName) {
+var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(tagName, cb) {
   var query = 'SELECT keyword FROM tagsTable WHERE tagName ="' + tagName + '"';
 
   // var query = 'SELECT keyword FROM tagsTable WHERE tagName =' + tagName + ')' ;
@@ -264,6 +267,7 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
       console.log('There was an error getting keywordsArray with tagName =', tagName);
     } else {
       console.log('this is the result.....', result);
+      cb(result);
       return result; //eg of result... [ { keyword: 'coolie' }, { keyword: 'gringo'} ]
     }
   });
