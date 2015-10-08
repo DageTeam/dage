@@ -71,8 +71,8 @@ export class MainView extends React.Component {
 
   flaggedEmailsViewRender () {
     return (
-      <div className='container text-center'>
-        <h1>Dage Flagged Emails</h1>
+      <div>
+        <h1 style={{'padding-top':'60px','text-align':'center'}}>You Have New Alerts</h1>
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ this.callbacks }
