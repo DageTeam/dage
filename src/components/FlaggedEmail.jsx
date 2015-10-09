@@ -2,7 +2,6 @@ var React = require('react');
 var FlaggedContext = require('components/FlaggedContext')
 
 var FlaggedEmail = React.createClass({
-
   showAllFlags: function(){
     // this.props./*CBFuncShowFlags*/('all');
     this.props.callbacks._emailShowAllFlags(this.props.emailId)
@@ -69,7 +68,7 @@ var FlaggedEmail = React.createClass({
           </div>
         </div>
       )
-    } else if (this.props.focusLevel === 'complete') {
+    }else if (this.props.focusLevel === 'complete') {
       return(
         <div>
           <div className='container' style={this.styles.rows}>
@@ -92,6 +91,7 @@ var FlaggedEmail = React.createClass({
                     <td>{this.props.body}</td>
                   </tr>
               </table>
+            </div>
             <div style={{'float':'right', width:'70%'}}>
               {contentRows}
             </div>
@@ -102,7 +102,6 @@ var FlaggedEmail = React.createClass({
       )
     }
   },
-
   styles:{
     table:{
       'margin-top':'0',
@@ -114,6 +113,6 @@ var FlaggedEmail = React.createClass({
       'margin-bottom':'15px'
     }
   }
-});
+}); /* end of flaggedEmail class*/
 
 module.exports = FlaggedEmail;
