@@ -95,7 +95,7 @@ export class MainView extends React.Component {
       <div className='container text-center'>
         <h1>Dage Customize Filters</h1>
         <FilterList
-          options={ this.props.filters.filterOptions }
+          options={ this.props.filters }
           callbacks={ this.callbacks }
         />
         <FlagList
