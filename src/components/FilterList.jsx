@@ -22,13 +22,18 @@ var FilterList = React.createClass({
     this.props.callbacks._filterArrayFetch();
   },
   render: function() {
+    let [ currentFilter ] = this.props.options.filterOptions.filter(filterObj => {
+      return filterObj.value === this.props.options.filterTypeSelected;
+    }).map(filterObj => {
+      return filterObj.label;
+    })
     return (
       <div className='col-xs-5'>
         <h3 className='col-xs-5'>Filter List</h3>
         <Select
           allowCreate
-          placeholder='Select or add your filter'
-          options= {this.props.options}
+          placeholder={ currentFilter }
+          options= {this.props.options.filterOptions}
           onChange= {this.selectFilter} />
       </div>
       )
