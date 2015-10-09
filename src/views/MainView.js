@@ -68,6 +68,22 @@ export class MainView extends React.Component {
       _filterTypeSelect : filterId => {
         this.props.dispatch(filterTypeSelect(filterId));
       },
+      _flagHighlightRender: (inputText, keyword) => {
+        function flatMap(array, fn) {
+          var result = [];
+          for (var i = 0; i < array.length; i++) {
+            var mapping = fn(array[i]);
+            result = result.concat(mapping);
+          }
+          return result;
+        }
+        var flagRE = new RegExp(keyword, 'g', 'i')
+        var result = flatMap(inputText.split(flagRE), function (part) {
+          return [part, <span style={{color: 'red'}}>{keyword}</span>];
+        });
+        result.pop();
+        return (result);
+      },
     }
   }
 
