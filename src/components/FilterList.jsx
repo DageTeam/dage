@@ -13,9 +13,6 @@ var FilterList = React.createClass({
     {value: 'Fifth Filter', label: 'Fifth FILTER'},
   ],
   addFilter : function() {
-    // console.log.apply('args', arguments)
-    // console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
-    // console.log.apply(console, Array.prototype.slice.apply(arguments));
     console.log(arguments[1][0], arguments[1][0].value, arguments[1][0].label);
     // this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
   },
