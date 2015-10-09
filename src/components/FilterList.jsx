@@ -16,8 +16,8 @@ var FilterList = React.createClass({
     console.log(arguments[1][0], arguments[1][0].value, arguments[1][0].label);
     // this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
   },
-  selectFilter : function() {
-    let filterId = arguments[1][0].value;
+  selectFilter : function(filterId) {
+    // let filterId = arguments[1][0].value;
     this.props.callbacks._filterTypeSelect(filterId);
     this.props.callbacks._filterArrayFetch();
   },
