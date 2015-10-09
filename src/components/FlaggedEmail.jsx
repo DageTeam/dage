@@ -29,7 +29,8 @@ var FlaggedEmail = React.createClass({
       contentRows.push(
           <FlaggedContext
             flaggedKeyword={ content.flaggedKeyword }
-            context={ content.context }/>
+            context={ content.context }
+            callbacks={ this.props.callbacks }/>
         )
     }
     if (this.props.focusLevel == 'one'){
