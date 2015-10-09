@@ -38,12 +38,12 @@ var FlaggedEmail = React.createClass({
         <div>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
-            <div className="heading" style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
-            <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
-            <div className="heading" style={{'vertical-align':'middle'}}>Date: {this.props.sendTime}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>To</span>: {this.props.recipient}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>From</span>: {this.props.sender}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
           </div>
-          <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
-          <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-menu-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
+          <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px','cursor':'pointer'}}>Full Email</span></small>
+          <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-chevron-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px','cursor':'pointer'}}>All Flags</span></small>
           <div style={{'float':'right', width:'70%'}}>
             {contentRows}
           </div>
@@ -52,44 +52,32 @@ var FlaggedEmail = React.createClass({
         </div>
       )
     } else if (this.props.focusLevel === 'complete') {
-      return (
-          //TODO: fill in the complete email render
-          <div >
-              <table style={this.styles.table}>
-              <thead>
-                <tr>
-                  <th>Recipient</th>
-                  <th>Sender</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{this.props.recipient}</td>
-                  <td>{this.props.sender}</td>
-                  <td>{this.props.sendTime}</td>
-                </tr>
-              </tbody>
-
-            </table>
-            <span className='input-group-btn' style={{'float':'left'}}>
-                <button id='showOneFlag' onClick={this.showOneFlag} className='btn btn-primary-outline'>Collapse</button>
-            </span>
-            <table style={this.styles.table}>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{this.props.body}</td>
-                </tr>
-              </tbody>
-            </table>
-
+      return(
+        <div>
+          <div className='container' style={this.styles.rows}>
+            <div style={{'float':'left', 'width':'25%'}}>
+              <div className="heading" style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
+              <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
+              <div className="heading" style={{'vertical-align':'middle'}}>Date: {this.props.sendTime}</div>
+            </div>
+            <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
+            <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>Only Flags</span></small>
+            <div style={{'float':'right', width:'70%'}}>
+              {contentRows}
+            </div>
+            <div style={{float:'left'}}>
+              <table style={{width:'100%', 'margin-top':'1%'}}>
+                  <tr>
+                    <th>Email Body</th>
+                  </tr>
+                  <tr>
+                    <td>{this.props.body}</td>
+                  </tr>
+              </table>
+            </div>
           </div>
-        )
+        </div>
+      )
     }
   },
 
