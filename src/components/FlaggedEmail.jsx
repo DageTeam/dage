@@ -92,9 +92,7 @@ var FlaggedEmail = React.createClass({
                   </tr>
               </table>
             </div>
-            <div style={{'float':'right', width:'70%'}}>
-              {contentRows}
-            </div>
+            
             <div style={{float:'left'}}>
             </div>
           </div>
