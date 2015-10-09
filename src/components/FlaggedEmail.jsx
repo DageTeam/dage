@@ -81,10 +81,6 @@ var FlaggedEmail = React.createClass({
             <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
             <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
             <small><span onClick={ this.showOneFlag } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>Minimize</span></small>
-            <div style={{'float':'right', width:'70%'}}>
-              {contentRows}
-            </div>
-            <div style={{float:'left'}}>
               <table style={{width:'100%', 'margin-top':'1%'}}>
                   <tr>
                     <th>Email Body</th>
@@ -93,6 +89,10 @@ var FlaggedEmail = React.createClass({
                     <td>{this.props.body}</td>
                   </tr>
               </table>
+            <div style={{'float':'right', width:'70%'}}>
+              {contentRows}
+            </div>
+            <div style={{float:'left'}}>
             </div>
           </div>
         </div>
