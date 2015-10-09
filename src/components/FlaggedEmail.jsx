@@ -17,8 +17,6 @@ var FlaggedEmail = React.createClass({
   },
 
   render: function(){
-    var cropTime = this.props.sendTime.slice(0,this.props.sendTime.indexOf('G'));
-    console.log(cropTime);
     var contentRows = [];
     /*FLAGGEDCONTEXT props from email array from state tree*/
     var contentList = this.props.flags;
@@ -39,10 +37,10 @@ var FlaggedEmail = React.createClass({
       return(
         <div>
           <div className='container' style={this.styles.rows}>
-          <div style={{'float':'left'}}>
+          <div style={{'float':'left', 'width':'25%'}}>
             <div className="heading" style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
             <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
-            <div className="heading" style={{'vertical-align':'middle'}}>Date: {cropTime}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}>Date: {this.props.sendTime}</div>
           </div>
           <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
           <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-menu-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
