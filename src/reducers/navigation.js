@@ -4,7 +4,7 @@ import {
 } from 'constants/navigation';
 
 const initialState = {
-  currentPage: 'flaggedEmails',
+  currentPage: 'alerts',
   history: [],
 }
 

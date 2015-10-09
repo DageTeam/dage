@@ -34,6 +34,7 @@ import {
 const mapStateToProps = (state) => ({
   emails : state.emails,
   filters : state.filters,
+  navigation: state.navigation,
   state: state,
 });
 export class MainView extends React.Component {
@@ -108,12 +109,16 @@ export class MainView extends React.Component {
 
   render() {
     let callbacks = {};
+    let mainComponent = {
+      'alerts': this.flaggedEmailsViewRender(),
+      'customize': this.customizeFiltersViewRender(),
+    };
+
     return (
       <div>
         <Header />
-        { this.flaggedEmailsViewRender() }
-        { this.customizeFiltersViewRender() }
-        <SideNav />
+        { mainComponent[this.props.navigation.currentPage] }
+        <SideNav callbacks={ this.callbacks }/>
         <Footer />
         <ScriptLoader />
 

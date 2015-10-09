@@ -2,6 +2,19 @@ var React = require('react');
 
 var SideNav = React.createClass({
 
+  navigateAlertsRoute: function(){
+    this.props.callbacks._navigationRouteSelect('alerts');
+  },
+  navigateDashboardRoute: function(){
+    this.props.callbacks._navigationRouteSelect('dashboard');
+  },
+  navigateCustomizeRoute: function(){
+    this.props.callbacks._navigationRouteSelect('customize');
+  },
+  navigateManageUserRoute: function(){
+    this.props.callbacks._navigationRouteSelect('manageUser');
+  },
+
   render: function() {
     return (
       <div className='page-wrapper'>
@@ -12,10 +25,10 @@ var SideNav = React.createClass({
             <nav className='site-nav' role='site-nav'>
               <div className='is-scrollable'>
                 <ul className='nav'>
-                  <li className='nav__item nav__item--has-child site-nav--products'><a >Alerts<i className='icon--products'></i></a></li>
-                  <li className='nav__item site-nav--platform'><a>Dashboard<i className='icon--support'></i></a></li>
-                  <li className='nav__item nav__item--has-child site-nav--company'><a>Company<i className='icon--company'></i></a></li>
-                  <li className='nav__item site-nav--contact'><a >Contact<i className='icon--contact'></i></a></li>
+                  <li className='nav__item nav__item--has-child site-nav--products'><a onClick={ this.navigateAlertsRoute }>Alerts<i className='icon--products'></i></a></li>
+                  <li className='nav__item site-nav--platform'><a onClick={ this.navigateDashboardRoute }>Dashboard<i className='icon--support'></i></a></li>
+                  <li className='nav__item nav__item--has-child site-nav--company'><a onClick={ this.navigateCustomizeRoute }>Customize<i className='icon--company'></i></a></li>
+                  <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li>
                 </ul>
                 <ul className='nav nav--social'>
                   <li className='nav__item site-nav--support'>
