@@ -4,6 +4,7 @@ var FlaggedContext = React.createClass({
 
 
   render: function(){
+  var context = this.props.context;
    return (
     <div>
       <table style={this.styles.table}>
@@ -13,7 +14,7 @@ var FlaggedContext = React.createClass({
           </tr>
           <tr>
             <td>{this.props.flaggedKeyword}</td>
-            <td>{this.props.context}</td>
+            <td>{context}</td>
           </tr>
       </table>
     </div>
