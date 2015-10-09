@@ -22,6 +22,10 @@ import {
   filterTypeSelect,
 } from 'actions/filters';
 
+import {
+  navigationRouteSelect,
+} from 'actions/navigation';
+
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -30,6 +34,7 @@ import {
 const mapStateToProps = (state) => ({
   emails : state.emails,
   filters : state.filters,
+  navigation: state.navigation,
   state: state,
 });
 export class MainView extends React.Component {
@@ -42,8 +47,11 @@ export class MainView extends React.Component {
   constructor() {
     super();
     this.callbacks = {
+      _navigationRouteSelect: route => {
+        this.props.dispatch(navigationRouteSelect(route));
+      },
       _emailArrayFetch : param => {
-        this.props.dispatch(emailArrayFetch(param))
+        this.props.dispatch(emailArrayFetch(param));
       },
       _emailShowOneFlag : emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
@@ -101,12 +109,16 @@ export class MainView extends React.Component {
 
   render() {
     let callbacks = {};
+    let mainComponent = {
+      'alerts': this.flaggedEmailsViewRender(),
+      'customize': this.customizeFiltersViewRender(),
+    };
+
     return (
       <div>
         <Header />
-        { this.flaggedEmailsViewRender() }
-        { this.customizeFiltersViewRender() }
-        <SideNav />
+        { mainComponent[this.props.navigation.currentPage] }
+        <SideNav callbacks={ this.callbacks }/>
         <Footer />
         <ScriptLoader />
 
