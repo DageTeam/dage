@@ -13,18 +13,28 @@ var FilterList = React.createClass({
     {value: 'Fifth Filter', label: 'Fifth FILTER'},
   ],
   addFilter : function() {
-    console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
+    console.log(arguments[1][0], arguments[1][0].value, arguments[1][0].label);
     // this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
   },
+  selectFilter : function(filterId) {
+    // let filterId = arguments[1][0].value;
+    this.props.callbacks._filterTypeSelect(filterId);
+    this.props.callbacks._filterArrayFetch();
+  },
   render: function() {
+    let [ currentFilter ] = this.props.options.filterOptions.filter(filterObj => {
+      return filterObj.value === this.props.options.filterTypeSelected;
+    }).map(filterObj => {
+      return filterObj.label;
+    })
     return (
       <div className='col-xs-5'>
         <h3 className='col-xs-5'>Filter List</h3>
         <Select
           allowCreate
-          placeholder='Select or add your filter'
-          options= {this.props.options}
-          onChange= {this.addFilter} />
+          placeholder={ currentFilter }
+          options= {this.props.options.filterOptions}
+          onChange= {this.selectFilter} />
       </div>
       )
   }
