@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-// var mailListener = require('./mailListener');
+var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');

@@ -142,13 +142,13 @@ var insertKeyword = function insertKeyword(body, cb) {
 //fx to insert a keyword into the keyword table
 var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, keyword, cb) {
   var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES('+ userID + ',' + filterID + ',\'' + keyword + '\')';
-  console.log('its inside the insertIntoKeywordTable now!')
+  // console.log('its inside the insertIntoKeywordTable now!')
   db.all(queryString, function(error, response) {
     if (error) {
       console.log('this is the error', error);
       cb(err);
     } else {
-      console.log('this is the insertIntoKeywordTable response', response);
+      // console.log('this is the insertIntoKeywordTable response', response);
       cb('YOUR KEYWORD HAS BEEN ADDED');
     }
   });
@@ -163,13 +163,13 @@ var bwa = badwords.badWordArray;
 var tempFX = function tempFX() {
   console.log('tempFX is running!!!')
   var cb = function cb(arg) {
-    console.log(arg);
+    // console.log(arg);
   };
   var userID = 999;
   var filterID = 999;
   console.log('this is bwa length', bwa.length);
   for (var i = 0; i < bwa.length-1; i++) {
-    console.log('hi');
+    // console.log('hi');
     insertIntoKeywordTable(userID, filterID, bwa[i], cb);
   };
 };

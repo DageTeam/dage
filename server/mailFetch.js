@@ -1,16 +1,17 @@
-var Imap = require('imap'),
-    inspect = require('util').inspect,
-    fs = require('fs');
+var authorization = require('../auth.js');
+var Imap = require('imap');
+var inspect = require('util').inspect;
+var fs = require('fs');
 var MailParser = require('mailparser').MailParser;
-var emailBuffer = [],
-    emailResults = [];
+var emailBuffer = [];
+var emailResults = [];
 var db = require('./database.js');
 var CronJob = require('cron').CronJob;
 
 //create new IMAP instance. Connect with gmail.
 var imap = new Imap({
   user: 'dageprotect@gmail.com',
-  password: 'node1234',
+  password: authorization.gmailPassword,
   host: 'imap.gmail.com',
   port: 993,
   tls: true,
@@ -23,7 +24,7 @@ function openInbox(cb) {
 
 
 var job = new CronJob({
-  cronTime: '*/10 * * * * * ', 
+  cronTime: '*/10 * * * * * ',
   onTick: function() {
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -41,14 +42,14 @@ imap.once('ready', function() {
         console.log('Nothing to fetch');
         return imap.end();
       }
-      
+
       var fetch = imap.fetch(results, {markSeen:true, bodies: ['']});
       //for every message that we fetch...
       fetch.on('message', function(msg) {
         //...create new instance of MailParser
         var mailparser = new MailParser();
         console.log('mailparser instance created...')
-        
+
         mailparser.on('end', function(mail_object){
           emailBuffer.push(mail_object)
         });
@@ -61,7 +62,7 @@ imap.once('ready', function() {
           //call mailparser 'end' event
           mailparser.end();
           console.log('message finished processing');
-        }); 
+        });
 
       });
 
@@ -71,7 +72,7 @@ imap.once('ready', function() {
 
       fetch.once('end', function() {
         console.log('Done fetching all messages!');
-        
+
         imap.end();
       });
 
@@ -84,7 +85,7 @@ imap.once('error', function(err) {
 });
 
 imap.once('end', function() {
-  //filter out the duplicate emails. 
+  //filter out the duplicate emails.
   for(var i = 0; i < emailBuffer.length; i+=2){
     emailResults.push(emailBuffer[i]);
   }
