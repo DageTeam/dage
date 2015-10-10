@@ -7,7 +7,7 @@ import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
-import Chartjs from 'components/Chartjs';
+import Dashboard from 'components/Dashboard';
 
 import {
   emailArrayFetch,
@@ -125,7 +125,7 @@ export class MainView extends React.Component {
 
   dashboardViewRender () {
     return(
-      <Chartjs />
+      <Dashboard />
     )
   }
 
