@@ -7,7 +7,7 @@ import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
-import Dashboard from 'components/Dashboard';
+import ManageUsers from 'components/ManageUsers'; 
 
 import {
   emailArrayFetch,
@@ -96,7 +96,7 @@ export class MainView extends React.Component {
   // normally you'd import an action creator, but I don't want to create
   // a file that you're just going to delete anyways!
 
-  flaggedEmailsViewRender () {
+  flaggedEmailsViewRender() {
     return (
       <div>
         <h1 style={{'padding-top':'60px','text-align':'center'}}>You Have New Alerts</h1>
@@ -107,25 +107,30 @@ export class MainView extends React.Component {
       </div>
     );
   }
-  customizeFiltersViewRender () {
+  customizeFiltersViewRender() {
     return (
       <div className='container text-center'>
-        <h1>Dage Customize Filters</h1>
+        <h1 style={{'padding-top':'60px','text-align':'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
-          callbacks={ this.callbacks }
-        />
+          callbacks={ this.callbacks } />
         <FlagList
           options={ this.props.filters.flagOptionsCurrent }
-          callbacks={ this.callbacks }
-        />
+          callbacks={ this.callbacks }  />
       </div>
     );
   }
-
-  dashboardViewRender () {
-    return(
+  dashboardViewRender() {
+    return (
       <Dashboard />
+    )
+  }
+  manageUserRender() {
+    return (
+      <div>
+        <h1 style={{'padding-top': '60px', 'text-align': 'center'}}>User Accounts</h1>
+        <ManageUsers state={this.props.emails} />
+      </div>
     )
   }
 
@@ -135,6 +140,7 @@ export class MainView extends React.Component {
       'alerts': this.flaggedEmailsViewRender(),
       'customize': this.customizeFiltersViewRender(),
       'dashboard': this.dashboardViewRender(),
+      'manageUser': this.manageUserRender()
     };
 
     return (
