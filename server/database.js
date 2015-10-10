@@ -191,7 +191,7 @@ var getFlaggedWords = function getFlaggedWords(cb) {
     if (err) {
       console.log('There was an error getting keywords', err);
     } else {
-      console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
+      // console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
 
       cb(flaggedWords);
     }
@@ -256,7 +256,7 @@ var getAllFilters = function getAllFilters(cb) {
       console.log('There was an error getting filters');
     } else {
       console.log('this is the database response.....', filterArray);
-      var userQuery = 'SELECT * FROM userTable';
+      var userQuery = 'SELECT id, username FROM userTable';
       db.all(userQuery, function(err, userArray) {
         var keywordQuery = 'SELECT * FROM keywordTable';
         db.all(keywordQuery, function(error, keywordArray) {
@@ -308,16 +308,50 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
 //FX to get user data for authentication
 var getUser = function getUser(body, cb) {
   var username = body.username;
-  var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
+  console.log('this is username', username);
+  var queryString = 'SELECT username, saltedHash, active FROM userTable WHERE username=\'' + username + '\'';
+  console.log('this is queryString', queryString);
   db.all(queryString, function(error, response) {
     if (error) {
-      cb(err);
+      cb(error);
       console.log('no username found in table');
     } else {
       cb(response);
     }
   });
 };
+
+var createAdmin = function createAdmin(body, cb) {
+  var username = body.username;
+  var saltedHash = body.hash;
+  var permissionGroup = 'admin';
+  var name = body.name;
+  var title = body.title;
+  var date = 'dateplaceholder';
+  var email = body.email;
+  var department = body.department;
+  //managerID currently not used for admin users, defaults to 0
+  var managerID = 0;
+  var active = 1;
+  var queryString = 'INSERT into userTable (username, saltedHash, permissionGroup, name, title, date, email, department, managerID, active) VALUES(\''
+    + username + '\',\''
+    + saltedHash + '\',\''
+    + permissionGroup + '\',\''
+    + name + '\',\''
+    + title + '\',\''
+    + date + '\',\''
+    + email + '\',\''
+    + department + '\','
+    + managerID + ','
+    + active + ');';
+  db.all(queryString, function(err, response) {
+    if (err) {
+      console.log('there was an error adding admin', err) 
+    } else {
+      cb(response);
+    }
+  })
+}
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
@@ -362,7 +396,7 @@ var createFilterTable = function createFilterTable() {
 
 //fx to create userTable if it doesnt exit
 var createUserTable = function createUserTable() {
-  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20))';
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(50), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
 
   //TODO: add user password and stuff
   db.run(createUserTable);
@@ -377,7 +411,7 @@ var createTagsTable = function createTagsTable() {
 
 //MAX'S temp userTable
 var createUserAuthTable = function createUserAuthTable() {
-  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), level CHAR(50))';
+  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), permissionGroup CHAR(50))';
 
   db.run(createUserAuthTable);
 };
@@ -389,7 +423,7 @@ createFilterTable();
 createKeywordTable();
 createContextTable();
 createTagsTable();
-createUserAuthTable();
+// createUserAuthTable();
 
 //MODULE.EXPORTS TO EXPORT REQUIRED FX
 module.exports = {
@@ -407,4 +441,5 @@ module.exports = {
   getUncheckedEmails,
   getAllFilters,
   getArrayOfKeywordsFromTagsTable,
+  createAdmin,
 };
