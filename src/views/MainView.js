@@ -7,6 +7,7 @@ import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
+import Dashboard from 'components/Dashboard';
 
 import {
   emailArrayFetch,
@@ -122,12 +123,18 @@ export class MainView extends React.Component {
     );
   }
 
+  dashboardViewRender () {
+    return(
+      <Dashboard />
+    )
+  }
 
   render() {
     let callbacks = {};
     let mainComponent = {
       'alerts': this.flaggedEmailsViewRender(),
       'customize': this.customizeFiltersViewRender(),
+      'dashboard': this.dashboardViewRender(),
     };
 
     return (
