@@ -1,14 +1,17 @@
 var express = require('express');
-var app = express();
+var bodyParser = require('body-parser');
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 
 var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');
-var bodyParser = require('body-parser');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-var secret = 'dageSecret';
+var authorization = require('../auth.js');
+
+var secret = authorization.jwtSecret;
+var app = express();
+
 app.use(bodyParser.json());
 
 //Default route
