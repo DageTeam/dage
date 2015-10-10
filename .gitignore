@@ -45,3 +45,7 @@ Thumbs.db
 ######################
 /client/dist/build/build.min.js
 dist
+
+# Secrets #
+######################
+auth.js
