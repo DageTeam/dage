@@ -346,7 +346,7 @@ var createAdmin = function createAdmin(body, cb) {
     + active + ');';
   db.all(queryString, function(err, response) {
     if (err) {
-      console.log('there was an error adding admin', err) 
+      console.log('there was an error adding admin', err);
     } else {
       cb(response);
     }
@@ -409,21 +409,13 @@ var createTagsTable = function createTagsTable() {
   db.run(query);
 };
 
-//MAX'S temp userTable
-var createUserAuthTable = function createUserAuthTable() {
-  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), permissionGroup CHAR(50))';
-
-  db.run(createUserAuthTable);
-};
-
 //FX CALLS
 createEmailTable();
-createUserTable();
-createFilterTable();
-createKeywordTable();
 createContextTable();
+createKeywordTable();
+createFilterTable();
+createUserTable();
 createTagsTable();
-// createUserAuthTable();
 
 //MODULE.EXPORTS TO EXPORT REQUIRED FX
 module.exports = {
