@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-var mailListener = require('./mailListener');
+// var mailListener = require('./mailListener');
 var db = require('./database.js');
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');
@@ -134,7 +134,7 @@ app.post('/userLogin', function(req, res) {
 
             //if typed in password checks out, create a token
               //creating token with username as payload
-              var jwtSecret = secret;
+              var jwtSecret = authorization.jwtSecret;
               var token = jwt.sign({
                 username: req.body.username,
                 // level: data[0]['level'],
