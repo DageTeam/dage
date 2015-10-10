@@ -29,48 +29,86 @@ var FlaggedEmail = React.createClass({
       contentRows.push(
           <FlaggedContext
             flaggedKeyword={ content.flaggedKeyword }
-            context={ content.context }/>
+            context={ content.context }
+            callbacks={ this.props.callbacks }/>
         )
     }
-
-    if (this.props.focusLevel !== 'complete'){
+    if (this.props.focusLevel == 'one'){
       return(
-        <div className='jumbotron'>
-          <div className='container'>
+        <div>
+          <div className='container' style={this.styles.rows}>
+          <div style={{'float':'left', 'width':'25%'}}>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>To</span>: {this.props.recipient}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>From</span>: {this.props.sender}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+          </div>
+          <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px','cursor':'pointer'}}>Full Email</span></small>
+          <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-chevron-down" style={{'float':'right','word-spacing':'-10px','margin-right':'10px','cursor':'pointer'}}>All Flags</span></small>
+          <div style={{'float':'right', width:'70%'}}>
+            {contentRows}
+          </div>
 
-            <div className='col-xs-10'>
-              <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
-            </div>
-            <div className='col-xs-10'>
-              <div> Flagged content:
-              { contentRows } </div>
-            </div>
-            <span className='input-group-btn'>
-              <button id='showAllFlags' onClick={this.showAllFlags} className='btn btn-success-outline'>Show All Flags</button>
-              <button id='showCompleteEmail' onClick={this.showCompleteEmail} className='btn btn-primary-outline'>Show Complete Email</button>
-            </span>
+          </div>
+        </div>
+      )
+    } else if (this.props.focusLevel == 'allFlags'){
+      return(
+        <div>
+          <div className='container' style={this.styles.rows}>
+          <div style={{'float':'left', 'width':'25%'}}>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>To</span>: {this.props.recipient}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>From</span>: {this.props.sender}</div>
+            <div className="heading" style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+          </div>
+          <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px','cursor':'pointer'}}>Full Email</span></small>
+          <small><span onClick={ this.showOneFlag } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px','cursor':'pointer'}}>Minimize</span></small>
+          <div style={{'float':'right', width:'70%'}}>
+            {contentRows}
+          </div>
+
           </div>
         </div>
       )
     } else if (this.props.focusLevel === 'complete') {
-      return (
-          //TODO: fill in the complete email render
-          <div className='jumbotron'>
-            <div className='container'>
-
-              <div className='col-xs-10'>
-                <p>To: {this.props.sender} From: {this.props.recipient} Date: {this.props.sendTime}</p>
-              </div>
-              <div className='col-xs-10'>
-                <p> Email Message:
-                {this.props.body}</p>
-              </div>
-              <span className='input-group-btn'>
-                <button id='showOneFlag' onClick={this.showOneFlag} className='btn btn-primary-outline'>Collapse</button>
-              </span>
+      return(
+        <div>
+          <div className='container' style={this.styles.rows}>
+            <div style={{'float':'left', 'width':'25%'}}>
+              <div className="heading" style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
+              <div className="heading" style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
+              <div className="heading" style={{'vertical-align':'middle'}}>Date: {this.props.sendTime}</div>
+            </div>
+            <small><span onClick={ this.showCompleteEmail } className="glyphicon glyphicon-plus" style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
+            <small><span onClick={ this.showAllFlags } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
+            <small><span onClick={ this.showOneFlag } className="glyphicon glyphicon-chevron-up" style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>Minimize</span></small>
+              <table style={{width:'100%', 'margin-top':'1%'}}>
+                  <tr>
+                    <th>Email Body</th>
+                  </tr>
+                  <tr>
+                    <td>{this.props.body}</td>
+                  </tr>
+              </table>
+            <div style={{'float':'right', width:'70%'}}>
+              {contentRows}
+            </div>
+            <div style={{float:'left'}}>
             </div>
           </div>
-        )
+        </div>
+      )
+    }
+  },
+
+  styles:{
+    table:{
+      'margin-top':'0',
+      'position':'relative',
+      'width':'75%'
+    },
+    rows:{
+      'border-bottom':'3px solid purple',
+      'margin-bottom':'15px'
     }
   }
 });

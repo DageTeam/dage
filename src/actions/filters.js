@@ -48,3 +48,10 @@ export function filterArrayFetchError(error) {
     payload: { error },
   }
 }
+
+export function filterTypeSelect(filterId) {
+  return {
+    type: FILTER_TYPE_SELECT,
+    payload: { filterId },
+  }
+}

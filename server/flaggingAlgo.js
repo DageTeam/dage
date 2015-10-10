@@ -30,7 +30,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
   console.log('filterEmailz emailArray argument is ///////.....', emailArray);
   if (emailArray.length) {
     getFlaggedWords(function(flaggedWords) {
-      
+
       //loop thru the responseArray
       for (var i = 0; i < emailArray.length; i++) {
         var email = emailArray[i];
@@ -40,10 +40,13 @@ var filterEmail = exports.filterEmail = function(emailArray) {
         markChecked(email.id);
 
         // loop thru the flaggedWords array from keywordTable
-      
+
         for (var j = 0; j < flaggedWords.length; j++) {
           var keyword = flaggedWords[j];
-          var subString = new RegExp(keyword.keyword, 'ig');
+          // var subString = new RegExp(keyword.keyword, 'ig');//OLD SUBSTRING
+
+          //this new subString should find whole words only. DELETE OLD IF WORK
+          var subString = new RegExp("\\b" + keyword.keyword + "\\b", 'ig');
 
           //if object's TEXT value contains that 'bad word'
           if (subString.test(email.body)) {
@@ -61,7 +64,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
       }
     });
   }
-  
+
 
   console.log('filterEmail fx is done running/////');
 };
