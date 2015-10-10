@@ -9,6 +9,7 @@ import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
 import ManageUsers from 'components/ManageUsers'; 
 import Dashboard from 'components/Dashboard';
+import Login from 'components/Login';
 
 import {
   emailArrayFetch,
@@ -28,6 +29,16 @@ import {
   navigationRouteSelect,
 } from 'actions/navigation';
 
+import {
+  applicationLoaded,
+  submitLogin,
+  loginFailed,
+  userFetchSuccess,
+  userFetchError,
+  deleteToken,
+  deleteTokenError,
+} from 'actions/users';
+
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -37,6 +48,7 @@ const mapStateToProps = (state) => ({
   emails : state.emails,
   filters : state.filters,
   navigation: state.navigation,
+  user: state.user,
   state: state,
 });
 export class MainView extends React.Component {
@@ -48,6 +60,7 @@ export class MainView extends React.Component {
 
   constructor() {
     super();
+    // this.props.dispatch(applicationLoaded());
     this.callbacks = {
       _navigationRouteSelect: route => {
         this.props.dispatch(navigationRouteSelect(route));
@@ -86,12 +99,15 @@ export class MainView extends React.Component {
         result.pop();
         return (result);
       },
+      _submitLogin: data => {
+        this.props.dispatch(submitLogin(data));
+      },
     }
   }
 
   componentDidMount () {
-    this.props.dispatch(emailArrayFetch())
-    this.props.dispatch(filterArrayFetch())
+    // this.props.dispatch(emailArrayFetch())
+    // this.props.dispatch(filterArrayFetch())
   }
 
   // normally you'd import an action creator, but I don't want to create
@@ -143,22 +159,30 @@ export class MainView extends React.Component {
       'dashboard': this.dashboardViewRender(),
       'manageUser': this.manageUserRender()
     };
+    if (true) {
+      return (
+        <div>
+          <Login callbacks={ this.callbacks }/>
+        </div>
+        )
+    } else {
+      return (
+        <div>
+          <Header />
+          { mainComponent[this.props.navigation.currentPage] }
+          <SideNav callbacks={ this.callbacks }/>
+          <Footer />
+          <ScriptLoader />
 
-    return (
-      <div>
-        <Header />
-        { mainComponent[this.props.navigation.currentPage] }
-        <SideNav callbacks={ this.callbacks }/>
-        <Footer />
-        <ScriptLoader />
-
-                                                                                                                                                                                                                                                                <div className='page-overlay'></div>
-        <div
-          state={ this.props.state }
-          callbacks={ callbacks }
-        />
-      </div>
-    );
+                                                                                                                                                                                                                                                                  <div className='page-overlay'></div>
+          <div
+            state={ this.props.state }
+            callbacks={ callbacks }
+          />
+        </div>
+      );
+    }
+    
   }
 }
 
