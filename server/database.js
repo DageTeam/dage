@@ -432,6 +432,51 @@ var createTagsTable = function createTagsTable() {
   db.run(query);
 };
 
+//fx to return the total number of users in the userTable
+var getNumOfUsers = function getNumOfUsers() {
+  var sqlQuery = 'SELECT COUNT(*) FROM userTable'
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('getNumOfUsers...', error);
+    } else {
+      for (var key in response[0]) {
+        console.log('successfully fetched getNumOfUsers');
+        return response[0][key];
+      }
+    }
+  };
+  return db.all(sqlQuery, cb);
+};
+
+//fx to reset user password to 'password', salted and hashed
+var resetPassword = function resetPassword(username) {
+  var salt = bcrypt.genSaltSync(10);
+  var password = bcrypt.hashSync('password', salt);
+  var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password +'\" WHERE username =\"' + username + '\"';
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('resetPassword error...', error);
+    } else {
+      console.log('Successful password reset!');
+    }
+  };
+
+  return db.all(sqlQuery, cb);
+};
+
+//fx to mark user as inactive.
+var markUserInactiveInUserTable = function markUserInactiveInUserTable(username) {
+  var sqlQuery = 'UPDATE userTable SET active=0 WHERE username =\'' + username + '\'';
+
+  db.all(sqlQuery, function cb(error, response) {
+    if (error) {
+      console.log('markUserInactiveInUserTable error...', error);
+    } else {
+      console.log('Successful marked user:',username,'as inactive!');
+    }
+  });
+};
+
 //FX CALLS
 createEmailTable();
 createContextTable();
@@ -458,4 +503,7 @@ module.exports = {
   getAllFilters,
   getArrayOfKeywordsFromTagsTable,
   createAdmin,
+  getNumOfUsers,
+  resetPassword,
+  markUserInactiveInUserTable
 };
