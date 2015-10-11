@@ -27,10 +27,14 @@ app.get('/', function(req, res) {
   res.send('Hello, world!');
 });
 
-//Test route TODO: get rid of
-app.get('/test', function(req, res) {
+//TEMP: use this to create multiple users.
+app.post('/test', function(req, res) {
+  console.log('sup');
   // db.insertEmail();
-  res.send('Test');
+  // console.log('!!THIS IS THE REQUEST....', req);
+  db.insertIntoUserTable(req.body.username, req.body.saltedHash, req.body.permissionGroup, req.body.name, req.body.title, req.body.email, req.body.department, req.body.managerID);
+
+  res.send('hello');
 });
 
 //dashboard is the placeholder url for the dashboard url for the client
