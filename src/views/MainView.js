@@ -8,6 +8,7 @@ import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
 import ManageUsers from 'components/ManageUsers'; 
+import Dashboard from 'components/Dashboard';
 
 import {
   emailArrayFetch,
