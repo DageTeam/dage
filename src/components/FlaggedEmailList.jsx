@@ -18,8 +18,7 @@ var FlaggedEmailList = React.createClass({
           flags = {email.flags}
           body = {email.body}
           focusLevel = {email.focusLevel}
-          callbacks = {this.props.callbacks}
-          />
+          callbacks = {this.props.callbacks}/>
       )
     }
 
