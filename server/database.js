@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var path = require('path');
+var bcrypt = require('bcryptjs');
 
 //create new database called emails.db
 var dbFile = path.join(__dirname + '/emails.db');
@@ -131,23 +132,76 @@ var insertKeyword = function insertKeyword(body, cb) {
         } else {
           console.log('found filter', filterInfo);
           var filterID = filterInfo[0].id;
-          var queryString = 'INSERT INTO keywordTable (userID, filterID, keyword) VALUES (' + userID + ',' +  filterID + ',\'' + keyword + '\')';
 
-          //insert keyword into the keywordTable
-          db.all(queryString, function(error, response) {
-            if (error) {
-              console.log('this is the error', error);
-              cb(err);
-            } else {
-              console.log('this is the response', response);
-              cb('YOUR KEYWORD HAS BEEN ADDED');
-            }
-          });
+          insertIntoKeywordTable(userID, filterID, keyword, cb);
         }
       });
     }
   });
 };
+
+//fx to insert a keyword into the keyword table
+var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, keyword, cb) {
+  var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES('+ userID + ',' + filterID + ',\'' + keyword + '\')';
+  // console.log('its inside the insertIntoKeywordTable now!')
+  db.all(queryString, function(error, response) {
+    if (error) {
+      console.log('this is the error', error);
+      cb(err);
+    } else {
+      // console.log('this is the insertIntoKeywordTable response', response);
+      cb('YOUR KEYWORD HAS BEEN ADDED');
+    }
+  });
+};
+
+
+//fx to insert new user into userTable
+var insertIntoUserTable = function insertIntoEmailTable(username, password, permissionGroup, name, title, email, department, managerID) {
+  var active = 1;
+  var salt = bcrypt.genSaltSync(10);
+  var saltedHash = bcrypt.hashSync(password, salt);
+  var sqlQuery = 'INSERT into userTable (username, saltedHash, permissionGroup, name, title, date, email, department, managerID, active) VALUES(\''
+    + username + '\',\''
+    + saltedHash + '\',\''
+    + permissionGroup + '\',\''
+    + name + '\',\''
+    + title + '\',\''
+    + new Date() + '\',\''
+    + email + '\',\''
+    + department + '\',\''
+    + managerID + '\',\''
+    + active + '\');';
+
+  db.run(sqlQuery);
+};
+
+
+//TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
+var badwords = require('./badWordsArray.js')
+// console.log('this is bwa.........', bwa);
+
+var bwa = badwords.badWordArray;
+
+var tempFX = function tempFX() {
+  console.log('tempFX is running!!!')
+  var cb = function cb(arg) {
+    // console.log(arg);
+  };
+  var userID = 999;
+  var filterID = 999;
+  console.log('this is bwa length', bwa.length);
+  for (var i = 0; i < bwa.length-1; i++) {
+    // console.log('hi');
+    insertIntoKeywordTable(userID, filterID, bwa[i], cb);
+  };
+};
+
+tempFX();
+//END TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
+
+
+
 
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
@@ -160,7 +214,7 @@ var getFlaggedWords = function getFlaggedWords(cb) {
     if (err) {
       console.log('There was an error getting keywords', err);
     } else {
-      console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
+      // console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
 
       cb(flaggedWords);
     }
@@ -182,21 +236,22 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
       console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
-          console.log('fetch error', error)
+          console.log('fetch error', error);
         } else {
           console.log('emails and flagged contexts all fetched');
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
+              flaggedEmails[j].focusLevel = 'one';
               if (flaggedContext[i].emailID === flaggedEmails[j].id) {
-                flaggedEmails[j].flags.push(flaggedContext[i])
+                flaggedEmails[j].flags.push(flaggedContext[i]);
               }
             }
           }
 
           cb(flaggedEmails);
         }
-      })
+      });
     }
   });
 };
@@ -224,7 +279,7 @@ var getAllFilters = function getAllFilters(cb) {
       console.log('There was an error getting filters');
     } else {
       console.log('this is the database response.....', filterArray);
-      var userQuery = 'SELECT * FROM userTable';
+      var userQuery = 'SELECT id, username FROM userTable';
       db.all(userQuery, function(err, userArray) {
         var keywordQuery = 'SELECT * FROM keywordTable';
         db.all(keywordQuery, function(error, keywordArray) {
@@ -238,7 +293,7 @@ var getAllFilters = function getAllFilters(cb) {
               for (var j = 0; j < keywordArray.length; j++) {
                 var keyword = keywordArray[j];
                 if (filterID === keyword.filterID) {
-                  filter.keyword.push(keyword.keyword)
+                  filter.keyword.push({keywordID: keyword.id, keyword: keyword.keyword});
                 }
               }
 
@@ -273,20 +328,53 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
   });
 };
 
- //FX to get user data for authentication
+//FX to get user data for authentication
 var getUser = function getUser(body, cb) {
-  var username = body.username
-  var queryString = 'SELECT username, hash FROM userAuthTable WHERE username =' + username;
+  var username = body.username;
+  console.log('this is username', username);
+  var queryString = 'SELECT username, saltedHash, active FROM userTable WHERE username=\'' + username + '\'';
+  console.log('this is queryString', queryString);
   db.all(queryString, function(error, response) {
     if (error) {
-      cb(err);
+      cb(error);
       console.log('no username found in table');
     } else {
       cb(response);
     }
-  })
+  });
 };
 
+var createAdmin = function createAdmin(body, cb) {
+  var username = body.username;
+  var saltedHash = body.hash;
+  var permissionGroup = 'admin';
+  var name = body.name;
+  var title = body.title;
+  var date = 'dateplaceholder';
+  var email = body.email;
+  var department = body.department;
+  //managerID currently not used for admin users, defaults to 0
+  var managerID = 0;
+  var active = 1;
+  var queryString = 'INSERT into userTable (username, saltedHash, permissionGroup, name, title, date, email, department, managerID, active) VALUES(\''
+    + username + '\',\''
+    + saltedHash + '\',\''
+    + permissionGroup + '\',\''
+    + name + '\',\''
+    + title + '\',\''
+    + date + '\',\''
+    + email + '\',\''
+    + department + '\','
+    + managerID + ','
+    + active + ');';
+  db.all(queryString, function(err, response) {
+    if (err) {
+      console.log('there was an error adding admin', err);
+    } else {
+      cb(response);
+    }
+  })
+}
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal
@@ -331,7 +419,7 @@ var createFilterTable = function createFilterTable() {
 
 //fx to create userTable if it doesnt exit
 var createUserTable = function createUserTable() {
-  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20))';
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(72), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
 
   //TODO: add user password and stuff
   db.run(createUserTable);
@@ -339,26 +427,63 @@ var createUserTable = function createUserTable() {
 
 //fx to create tagsTable if it doesnt exist.  eg tagName=racist, harassment, corporate treason
 var createTagsTable = function createTagsTable() {
-  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30))'
+  var query = 'CREATE TABLE IF NOT EXISTS tagsTable(id INTEGER PRIMARY KEY AUTOINCREMENT, tagName CHAR(30), keyword CHAR(30))';
 
   db.run(query);
 };
 
-//MAX'S temp userTable
-var createUserAuthTable = function createUserAuthTable(){
-    var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), level CHAR(50))';
+//fx to return the total number of users in the userTable
+var getNumOfUsers = function getNumOfUsers() {
+  var sqlQuery = 'SELECT COUNT(*) FROM userTable'
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('getNumOfUsers...', error);
+    } else {
+      for (var key in response[0]) {
+        console.log('successfully fetched getNumOfUsers');
+        return response[0][key];
+      }
+    }
+  };
+  return db.all(sqlQuery, cb);
+};
 
-  db.run(createUserAuthTable);
+//fx to reset user password to 'password', salted and hashed
+var resetPassword = function resetPassword(username) {
+  var salt = bcrypt.genSaltSync(10);
+  var password = bcrypt.hashSync('password', salt);
+  var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password +'\" WHERE username =\"' + username + '\"';
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('resetPassword error...', error);
+    } else {
+      console.log('Successful password reset!');
+    }
+  };
+
+  return db.all(sqlQuery, cb);
+};
+
+//fx to mark user as inactive.
+var markUserInactiveInUserTable = function markUserInactiveInUserTable(username) {
+  var sqlQuery = 'UPDATE userTable SET active=0 WHERE username =\'' + username + '\'';
+
+  db.all(sqlQuery, function cb(error, response) {
+    if (error) {
+      console.log('markUserInactiveInUserTable error...', error);
+    } else {
+      console.log('Successful marked user:',username,'as inactive!');
+    }
+  });
 };
 
 //FX CALLS
 createEmailTable();
-createUserTable();
-createFilterTable();
-createKeywordTable();
 createContextTable();
+createKeywordTable();
+createFilterTable();
+createUserTable();
 createTagsTable();
-createUserAuthTable();
 
 //MODULE.EXPORTS TO EXPORT REQUIRED FX
 module.exports = {
@@ -370,10 +495,15 @@ module.exports = {
   insertFilter,
   insertKeyword,
   insertIntoTagsTable,
+  insertIntoUserTable,
   getUser,
   getFlaggedWords,
   getFlaggedEmails,
   getUncheckedEmails,
   getAllFilters,
-  getArrayOfKeywordsFromTagsTable
+  getArrayOfKeywordsFromTagsTable,
+  createAdmin,
+  getNumOfUsers,
+  resetPassword,
+  markUserInactiveInUserTable
 };
