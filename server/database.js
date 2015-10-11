@@ -396,7 +396,7 @@ var createFilterTable = function createFilterTable() {
 
 //fx to create userTable if it doesnt exit
 var createUserTable = function createUserTable() {
-  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(50), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(72), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
 
   //TODO: add user password and stuff
   db.run(createUserTable);
