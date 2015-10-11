@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var path = require('path');
+var bcrypt = require('bcryptjs');
 
 //create new database called emails.db
 var dbFile = path.join(__dirname + '/emails.db');
@@ -153,6 +154,28 @@ var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, k
     }
   });
 };
+
+
+//fx to insert new user into userTable
+var insertIntoUserTable = function insertIntoEmailTable(username, password, permissionGroup, name, title, email, department, managerID) {
+  var active = 1;
+  var salt = bcrypt.genSaltSync(10);
+  var saltedHash = bcrypt.hashSync(password, salt);
+  var sqlQuery = 'INSERT into userTable (username, saltedHash, permissionGroup, name, title, date, email, department, managerID, active) VALUES(\''
+    + username + '\',\''
+    + saltedHash + '\',\''
+    + permissionGroup + '\',\''
+    + name + '\',\''
+    + title + '\',\''
+    + new Date() + '\',\''
+    + email + '\',\''
+    + department + '\',\''
+    + managerID + '\',\''
+    + active + '\');';
+
+  db.run(sqlQuery);
+};
+
 
 //TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
 var badwords = require('./badWordsArray.js')
@@ -427,6 +450,7 @@ module.exports = {
   insertFilter,
   insertKeyword,
   insertIntoTagsTable,
+  insertIntoUserTable,
   getUser,
   getFlaggedWords,
   getFlaggedEmails,
