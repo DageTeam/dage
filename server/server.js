@@ -106,11 +106,8 @@ app.post('/submitfilter', function(req, res) {
   // invoke the database function to insert into filtersTable, passing in the req.body
   //pass in cb that sends back a response
   //send back object with message
-  console.log(req.body)
-  db.insertFilter(req.body, function(message) {
-    //TODO: define and udpate the message being sent back. Will have to look inside the function in database.js
-    console.log(message);
-    res.send(message);
+  db.insertFilter(req.body, function(id, filterName) {    
+    res.send({id:id,filterName:filterName});
   });
 });
 

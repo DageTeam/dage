@@ -72,7 +72,7 @@ export function filterTypeAdd(filterName, username){
         if(err) {
           dispatch(filterTypePostError());
         }else {
-          dispatch(filterTypePostSuccess());
+          dispatch(filterTypePostSuccess(res.body.id, res.body.filterName));
         }
       })
     };
@@ -84,9 +84,13 @@ export function filterTypePostRequest(){
   }
 }
 
-export function filterTypePostSuccess(){
+export function filterTypePostSuccess(filterId, filterName){
   return{
     type: FILTER_TYPE_POST_SUCCESS,
+    payload:{
+      filterId: filterId,
+      filterName: filterName,
+    }
   }
 }
 

@@ -100,8 +100,15 @@ var insertFilter = function insertFilter(body, cb) {
           console.log('this is the error', error);
           cb(err);
         } else {
-          console.log('this is the response', response);
-          cb('YOUR FILTER HAS BEEN ADDED');
+          db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response){
+            if(error){
+              console.log('Error when selecting filterName row')
+              cb(error);
+            }
+            else{              
+              cb(response[0].id, response[0].filterName);
+            }
+          })
         }
       });
     }

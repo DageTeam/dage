@@ -87,6 +87,7 @@ export default createReducer(initialState, {
   [FILTER_TYPE_POST_SUCCESS]: (state, payload) => {
     return { ...state,
       isPostingFilters:false,
+      filterTypeSelected: payload.filterId
     }
   },
   [FILTER_TYPE_POST_REQUEST]: (state, payload) => {
