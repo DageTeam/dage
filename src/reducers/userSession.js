@@ -10,7 +10,7 @@ import {
   TOKEN_DELETED,
   TOKEN_DELETE_SUCCEEDED,
   TOKEN_DELETE_FAILED,
-} from 'constants/users';
+} from 'constants/userSession';
 
 const initialState = {
   authenticated: false,
@@ -20,11 +20,12 @@ const initialState = {
 export default createReducer(initialState, {
   [USER_FETCH_SUCCEEDED]: (state, payload) => {
     console.log('user fetched triggered');
+    console.log('this is payload', payload);
     return {
       ...state,
       authenticated: true,
-      username: payload.username,
-      level: payload.level,
+      username: payload.body.username,
+      permissionGroup: payload.body.permissionGroup,
     };
   },
 
