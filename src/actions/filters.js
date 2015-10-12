@@ -35,7 +35,6 @@ export function filterArrayRequest() {
 }
 
 export function filterArrayFetchSuccess(filtersArray) {
-  console.log('successed!!!!!!!!!!!')
   return {
     type: FILTER_ARRAY_FETCH_SUCCESS,
     payload: {
@@ -106,6 +105,7 @@ export function filterAddFlagKeyword(username, filterId, keyword){
         if(err){
           dispatch(filterFlagPostError())
         }else{
+          dispatch(filterArrayFetch());
           dispatch(filterFlagPostSuccess(res.body.keyword, res.body.keywordId))
         }
       });

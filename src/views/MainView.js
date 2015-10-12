@@ -147,7 +147,6 @@ export class MainView extends React.Component {
 
 
   customizeFiltersViewRender() {
-    console.log(this.props.state)
     return (
       <div className='container text-center'>
         <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>

@@ -8,7 +8,6 @@ var FlagDisplay = React.createClass({
     var newFlag = flags.split(',');
     newFlag = newFlag[newFlag.length-1];
     this.props.callbacks._filterAddFlagKeyword(newFlag);
-    this.props.callbacks._filterArrayFetch();
   },
   propTypes:{
           // allowCreate: React.propTypes.bool,
