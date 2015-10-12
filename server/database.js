@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var path = require('path');
+var bcrypt = require('bcryptjs');
 
 //create new database called emails.db
 var dbFile = path.join(__dirname + '/emails.db');
@@ -153,6 +154,28 @@ var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, k
     }
   });
 };
+
+
+//fx to insert new user into userTable
+var insertIntoUserTable = function insertIntoEmailTable(username, password, permissionGroup, name, title, email, department, managerID) {
+  var active = 1;
+  var salt = bcrypt.genSaltSync(10);
+  var saltedHash = bcrypt.hashSync(password, salt);
+  var sqlQuery = 'INSERT into userTable (username, saltedHash, permissionGroup, name, title, date, email, department, managerID, active) VALUES(\''
+    + username + '\',\''
+    + saltedHash + '\',\''
+    + permissionGroup + '\',\''
+    + name + '\',\''
+    + title + '\',\''
+    + new Date() + '\',\''
+    + email + '\',\''
+    + department + '\',\''
+    + managerID + '\',\''
+    + active + '\');';
+
+  db.run(sqlQuery);
+};
+
 
 //TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
 var badwords = require('./badWordsArray.js')
@@ -346,7 +369,7 @@ var createAdmin = function createAdmin(body, cb) {
     + active + ');';
   db.all(queryString, function(err, response) {
     if (err) {
-      console.log('there was an error adding admin', err) 
+      console.log('there was an error adding admin', err);
     } else {
       cb(response);
     }
@@ -396,7 +419,7 @@ var createFilterTable = function createFilterTable() {
 
 //fx to create userTable if it doesnt exit
 var createUserTable = function createUserTable() {
-  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(50), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
+  var createUserTable = 'CREATE TABLE IF NOT EXISTS userTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), saltedHash CHAR(72), permissionGroup CHAR(50), name CHAR(50), title CHAR(50), date DATE, email CHAR(50), department CHAR(50), managerID INTEGER, active INTEGER)';
 
   //TODO: add user password and stuff
   db.run(createUserTable);
@@ -409,21 +432,58 @@ var createTagsTable = function createTagsTable() {
   db.run(query);
 };
 
-//MAX'S temp userTable
-var createUserAuthTable = function createUserAuthTable() {
-  var createUserAuthTable = 'CREATE TABLE IF NOT EXISTS userAuthTable(id INTEGER PRIMARY KEY AUTOINCREMENT, username CHAR(20), hash CHAR(50), permissionGroup CHAR(50))';
+//fx to return the total number of users in the userTable
+var getNumOfUsers = function getNumOfUsers() {
+  var sqlQuery = 'SELECT COUNT(*) FROM userTable'
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('getNumOfUsers...', error);
+    } else {
+      for (var key in response[0]) {
+        console.log('successfully fetched getNumOfUsers');
+        return response[0][key];
+      }
+    }
+  };
+  return db.all(sqlQuery, cb);
+};
 
-  db.run(createUserAuthTable);
+//fx to reset user password to 'password', salted and hashed
+var resetPassword = function resetPassword(username) {
+  var salt = bcrypt.genSaltSync(10);
+  var password = bcrypt.hashSync('password', salt);
+  var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password +'\" WHERE username =\"' + username + '\"';
+  var cb = function cb(error, response) {
+    if (error) {
+      console.log('resetPassword error...', error);
+    } else {
+      console.log('Successful password reset!');
+    }
+  };
+
+  return db.all(sqlQuery, cb);
+};
+
+//fx to mark user as inactive.
+var markUserInactiveInUserTable = function markUserInactiveInUserTable(username) {
+  var sqlQuery = 'UPDATE userTable SET active=0 WHERE username =\'' + username + '\'';
+
+  db.all(sqlQuery, function cb(error, response) {
+    if (error) {
+      console.log('markUserInactiveInUserTable error...', error);
+    } else {
+      console.log('Successful marked user:',username,'as inactive!');
+    }
+  });
 };
 
 //FX CALLS
 createEmailTable();
-createUserTable();
-createFilterTable();
-createKeywordTable();
 createContextTable();
+createKeywordTable();
+createFilterTable();
+createUserTable();
 createTagsTable();
-// createUserAuthTable();
 
 //MODULE.EXPORTS TO EXPORT REQUIRED FX
 module.exports = {
@@ -435,6 +495,7 @@ module.exports = {
   insertFilter,
   insertKeyword,
   insertIntoTagsTable,
+  insertIntoUserTable,
   getUser,
   getFlaggedWords,
   getFlaggedEmails,
@@ -442,4 +503,7 @@ module.exports = {
   getAllFilters,
   getArrayOfKeywordsFromTagsTable,
   createAdmin,
+  getNumOfUsers,
+  resetPassword,
+  markUserInactiveInUserTable
 };
