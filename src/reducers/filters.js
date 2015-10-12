@@ -37,6 +37,8 @@ const filters = {
   filtersArray,
   flagOptionsObject: {},
   flagOptionsCurrent: [],
+  isPostingFilters: false,
+  isPostingFlags: false,
 }
 
 const initialState = filters;
@@ -97,28 +99,27 @@ export default createReducer(initialState, {
   },
   [FILTER_TYPE_POST_ERROR]: (state, payload) => {
     return { ...state,
-      isPostingFilters: true,
+      isPostingFilters: false,
     }
   },
 
   [FILTER_ADD_FLAG_KEYWORD]: (state, payload) => {
     return { ...state,
-
     }
   },
   [FILTER_FLAG_POST_SUCCESS]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag: false,
     }
   },
   [FILTER_FLAG_POST_REQUEST]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag: true,
     }
   },
   [FILTER_FLAG_POST_ERROR]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag:false,
     }
   },
 

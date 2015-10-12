@@ -21,6 +21,7 @@ import {
 } from 'constants/filters';
 
 export function filterArrayFetch() {
+  console.log('working here!!!!!!!!')
   return dispatch => {
     dispatch(filterArrayRequest());
     return fetch('http://localhost:4000/filterData')
@@ -28,11 +29,6 @@ export function filterArrayFetch() {
       .then(json => { dispatch(filterArrayFetchSuccess(json)) })
   }
 }
-
-  // return function(dispatch){
-  //   dispatch(filterArrayRequest());
-  // }
-  // function(req){ return req.json()}
 
 export function filterArrayRequest() {
   return { type: FILTER_ARRAY_REQUEST };
@@ -97,5 +93,43 @@ export function filterTypePostSuccess(filterId, filterName){
 export function filterTypePostError(){
   return{
     type: FILTER_TYPE_POST_ERROR,
+  }
+}
+export function filterAddFlagKeyword(username, filterId, keyword){
+  return dispatch => {
+    dispatch(filterFlagPostRequest());
+    return request
+      .post('http://127.0.0.1:4000/submitkeyword')
+      .send({username: username,filterId: filterId,keyword:keyword})
+      .end((err, res) => {
+        if(err){
+          dispatch(filterFlagPostError())
+        }else{
+          dispatch(filterArrayFetch());
+          dispatch(filterFlagPostSuccess(res.body.keyword, res.body.keywordId))
+        }
+      });
+  }
+}
+
+export function filterFlagPostRequest(){
+  return {
+    type: FILTER_FLAG_POST_REQUEST,
+  }
+}
+
+export function filterFlagPostSuccess(newFlag, Id){
+  return {
+    type: FILTER_FLAG_POST_SUCCESS,
+    payload:{
+      label: newFlag,
+      value: Id
+    }
+  }
+}
+
+export function filterFlagPostError(){
+  return{
+    type: FILTER_FLAG_POST_ERROR,
   }
 }

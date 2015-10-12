@@ -29,8 +29,8 @@ var FilterList = React.createClass({
       return filterObj.label;
     })
     return (
-      <div className='col-xs-5'>
-        <h3 className='col-xs-5'>Filter List</h3>
+      <div className='col-xs-10'>
+        <h3 className='col-xs-10'>Filter List</h3>
         <Select
           allowCreate
           placeholder={ currentFilter }
