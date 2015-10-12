@@ -79,7 +79,7 @@ var insertEmail = function insertEmail(email) {
 var insertFilter = function insertFilter(body, cb) {
   console.log('this is body', body);
   var username = body.username;
-  var filterName = body.filterName;
+  var filterName = body.filter;
   var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
 
   //get user id from database

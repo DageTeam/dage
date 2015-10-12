@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import request from '../_config/superagent';
 
 import {
   FILTER_ARRAY_FETCH,
@@ -28,6 +29,11 @@ export function filterArrayFetch() {
   }
 }
 
+  // return function(dispatch){
+  //   dispatch(filterArrayRequest());
+  // }
+  // function(req){ return req.json()}
+
 export function filterArrayRequest() {
   return { type: FILTER_ARRAY_REQUEST };
 }
@@ -53,5 +59,39 @@ export function filterTypeSelect(filterId) {
   return {
     type: FILTER_TYPE_SELECT,
     payload: { filterId },
+  }
+}
+
+export function filterTypeAdd(filterName, username){
+  return dispatch => {
+    dispatch(filterTypePostRequest());
+    return request
+      .post('http://127.0.0.1:4000/submitfilter')
+      .send({username: username, filter:filterName})
+      .end((err, res) => {
+        if(err) {
+          dispatch(filterTypePostError());
+        }else {
+          dispatch(filterTypePostSuccess());
+        }
+      })
+    };
+}
+
+export function filterTypePostRequest(){
+  return{
+    type: FILTER_TYPE_POST_REQUEST,
+  }
+}
+
+export function filterTypePostSuccess(){
+  return{
+    type: FILTER_TYPE_POST_SUCCESS,
+  }
+}
+
+export function filterTypePostError(){
+  return{
+    type: FILTER_TYPE_POST_ERROR,
   }
 }

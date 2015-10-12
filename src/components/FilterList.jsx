@@ -12,12 +12,12 @@ var FilterList = React.createClass({
     {value: 'Fourth Filter', label: 'Fourth FILTER'},
     {value: 'Fifth Filter', label: 'Fifth FILTER'},
   ],
-  addFilter : function() {
-    console.log(arguments[1][0], arguments[1][0].value, arguments[1][0].label);
-    // this.props./*CBNewFilter*/(Array.prototype.slice.apply(arguments));
-  },
   selectFilter : function(filterId) {
     // let filterId = arguments[1][0].value;
+    //add filter if filterId is a string. Maybe warn the users to pick a string for new filters.
+    if(typeof filterId !== 'number'){
+      this.props.callbacks._filterTypeAdd(filterId, this.props.user);
+    }
     this.props.callbacks._filterTypeSelect(filterId);
     this.props.callbacks._filterArrayFetch();
   },
