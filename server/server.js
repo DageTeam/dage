@@ -186,6 +186,14 @@ app.post('/userAuth', function(req, res) {
   });
 });
 
+//fx to return all users
+//TODO: modify db code to return only active users
+app.get('/getAllUsers', function(req, res){
+  db.getAllActiveUsers(function(usersArray){
+    res.send(usersArray);
+  });
+});
+
 //temp url to create admin users, only via postman. not accessible from client
 app.post('/createAdmin', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
