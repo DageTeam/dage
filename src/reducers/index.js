@@ -4,6 +4,8 @@ import emails from './emails';
 import userSession from './userSession';
 import filters from './filters';
 import navigation from './navigation';
+import manageUsers from './manageUsers';
+
 
 export default combineReducers({
   counter,
@@ -11,4 +13,5 @@ export default combineReducers({
   userSession,
   filters,
   navigation,
+  manageUsers,
 });

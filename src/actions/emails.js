@@ -18,6 +18,17 @@ export function emailArrayFetch() {
       .then(json => { dispatch(emailArrayFetchSuccess(json)) })
   }
 }
+
+//TODO: modify
+export function userArrayFetch() {
+  return dispatch => {
+    dispatch(emailArrayRequest())
+    return fetch('http://localhost:4000/getNumOfUsers')
+      .then(req => { return req.json() })
+      .then(json => { dispatch(emailArrayFetchSuccess(json)) })
+  }
+}
+
 export function emailArrayRequest() {
   return {
     type: EMAIL_ARRAY_REQUEST,
