@@ -23,6 +23,7 @@ import {
 import {
   filterArrayFetch,
   filterTypeSelect,
+  filterTypeAdd,
 } from 'actions/filters';
 
 import {
@@ -91,7 +92,9 @@ export class MainView extends React.Component {
       _filterTypeSelect: filterId => {
         this.props.dispatch(filterTypeSelect(filterId));
       },
-
+      _filterTypeAdd: (filterId, username) => {
+        this.props.dispatch(filterTypeAdd(filterId,username));
+      },
       _flagHighlightRender: (inputText, keyword) => {
         function flatMap(array, fn) {
           var result = [];
@@ -138,16 +141,18 @@ export class MainView extends React.Component {
     );
   }
 
+
   customizeFiltersViewRender() {
-    console.log('this is props', this.props);
+    console.log(this.props.state)
     return (
       <div className='container text-center'>
         <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
+          user={this.props.userSession.username}
           callbacks={ this.callbacks } />
         <FlagList
-          options={ this.props.filters.flagOptionsCurrent }
+          options={ this.props.filters. flagOptionsCurrent }
           callbacks={ this.callbacks }  />
       </div>
     );

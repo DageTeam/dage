@@ -82,22 +82,22 @@ export default createReducer(initialState, {
 
   [FILTER_TYPE_ADD]: (state, payload) => {
     return { ...state,
-
     }
   },
   [FILTER_TYPE_POST_SUCCESS]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters:false,
+      filterTypeSelected: payload.filterId
     }
   },
   [FILTER_TYPE_POST_REQUEST]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters: true,
     }
   },
   [FILTER_TYPE_POST_ERROR]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters: true,
     }
   },
 
