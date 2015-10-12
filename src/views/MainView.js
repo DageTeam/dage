@@ -211,7 +211,7 @@ export class MainView extends React.Component {
         <div>
           <Header />
           { mainComponent[this.props.navigation.currentPage] }
-          <SideNav callbacks={ this.callbacks }/>
+          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession }/>
           <Footer />
           <ScriptLoader />
           <div

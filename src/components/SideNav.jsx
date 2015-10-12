@@ -16,6 +16,11 @@ var SideNav = React.createClass({
   },
 
   render: function() {
+    var userPermissionGroup = this.props.userSession.permissionGroup;
+
+    const manageUserBlock = (userPermissionGroup === "admin") ?
+      <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li> : <div/>;
+
     return (
       <div className='page-wrapper'>
           <div className='wrap'>
@@ -28,7 +33,7 @@ var SideNav = React.createClass({
                   <li className='nav__item nav__item--has-child site-nav--products'><a onClick={ this.navigateAlertsRoute }>Alerts<i className='icon--products'></i></a></li>
                   <li className='nav__item site-nav--platform'><a onClick={ this.navigateDashboardRoute }>Dashboard<i className='icon--support'></i></a></li>
                   <li className='nav__item nav__item--has-child site-nav--company'><a onClick={ this.navigateCustomizeRoute }>Customize<i className='icon--company'></i></a></li>
-                  <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li>
+                  { manageUserBlock }
                 </ul>
                 <ul className='nav nav--social'>
                   <li className='nav__item site-nav--support'>
