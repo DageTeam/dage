@@ -19,6 +19,7 @@ const initialState = {
 
 export default createReducer(initialState, {
   [USER_FETCH_SUCCEEDED]: (state, payload) => {
+    console.log('user fetched triggered');
     return {
       ...state,
       authenticated: true,
@@ -31,37 +32,37 @@ export default createReducer(initialState, {
     return {
       ...state,
       authenticated: false,
-      fetchingUserError: payload.error
-    }
+      fetchingUserError: payload.error,
+    };
   },
 
   [LOGIN_SUBMITTED]: (state, payload) => {
     return {
       ...state,
-      isLoggingIn: true
-    }
+      isLoggingIn: true,
+    };
   },
 
   [LOGIN_SUCCEEDED]: (state, payload) => {
     return {
       ...state,
       isLoggingIn: false,
-    }
+    };
   },
 
   [LOGIN_FAILED]: (state, payload) => {
     return {
       ...state,
       isLoggingIn: false,
-      loggingInError: payload.error
-    }
+      loggingInError: payload.error,
+    };
   },
 
   [TOKEN_DELETED]: (state, payload) => {
     return {
       ...state,
       authenticated: false,
-      isDeletingToken: true
+      isDeletingToken: true,
     };
   },
 
@@ -70,15 +71,15 @@ export default createReducer(initialState, {
       ...state,
       authenticated: false,
       isDeletingToken: false,
-    }
+    };
   },
 
   [TOKEN_DELETE_FAILED]: (state, payload) => {
     return {
       ...state,
       isDeletingToken: false,
-      deleteTokenError: payload.error
-    }
-  }
+      deleteTokenError: payload.error,
+    };
+  },
 
 });

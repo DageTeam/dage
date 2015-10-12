@@ -26,13 +26,17 @@ export function applicationLoaded(data) {
     });
 
     var token = window.localStorage.getItem('dage-token');
+    console.log('this is token', JSON.stringify(token));
     return request
       .post(serverUrl + '/userAuth')
-      .send(JSON.stringify(token))
+      .send({
+        token: token,
+      })
       .end((err, res={}) => {
         const { body } = res;
+        console.log('res.body', res);
 
-        err ?
+        err || res.body.error ?
           dispatch(userFetchError()) :
           dispatch(userFetchSuccess(body));
       });
@@ -51,12 +55,18 @@ export function submitLogin(data) {
       .post(serverUrl + '/userLogin')
       .send(data)
       .end((err, res) => {
-        err ?
-          dispatch(loginFailed()) :
+        if (err) {
+          dispatch(loginFailed());
+        } else {
+          if (res.body.token) {
+            window.localStorage.setItem('dage-token', res.body.token);
+            window.location.reload();
+          } else {
+            dispatch(loginFailed());
+          }
+        }
 
-          //TODO: change token to body.token or whatever the server sends back
-          window.localStorage.setItem('dage-token', res.body.token);
-          // window.location.reload();
+        // window.location.reload();
       });
   };
 }
@@ -70,6 +80,7 @@ export function loginFailed(error) {
 
 //body should be server response from
 export function userFetchSuccess(body) {
+  console.log('user fetch success');
   return {
     type: USER_FETCH_SUCCEEDED,
     payload: {
@@ -80,6 +91,7 @@ export function userFetchSuccess(body) {
 }
 
 export function userFetchError(error) {
+  console.log('user fetch error');
   return {
     type: USER_FETCH_FAILED,
     payload: { error },

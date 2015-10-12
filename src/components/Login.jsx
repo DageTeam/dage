@@ -1,13 +1,13 @@
-var React = require('react')
+var React = require('react');
 
 var Login = React.createClass({
-  
+
   handleFormSubmit: function(event) {
     event.preventDefault();
 
     this.props.callbacks._submitLogin({
-        username: this.refs.username.value,
-        password: this.refs.password.value
+      username: this.refs.username.value,
+      password: this.refs.password.value,
     });
 
   },
@@ -21,12 +21,12 @@ var Login = React.createClass({
                 <label htmlFor='password'>Password</label>
                 <input type='password' id='password' ref='password' />
 
-                <input type='submit' style={{textAlign: 'right',}}  />
+                <input type='submit' style={{textAlign: 'right', }}  />
 
                 
-            </form>
-      )
-  }
-})
+                                                                                                                                                                                                                                                                                                                                                                                                </form>
+      );
+  },
+});
 
 module.exports = Login;
