@@ -117,12 +117,10 @@ var insertFilter = function insertFilter(body, cb) {
 
 //fx to add a new filter into the database for the user
 var insertKeyword = function insertKeyword(body, cb) {
-  console.log('this is body', body);
   var username = body.username;
-  var filterName = body.filterName;
+  var filterId = body.filterId;
   var keyword = body.keyword;
   var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
-
   //get user id from database
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
@@ -130,37 +128,24 @@ var insertKeyword = function insertKeyword(body, cb) {
     } else {
       console.log('found username', userInfo);
       var userID = userInfo[0].id;
-      var getFilterIDString = 'SELECT * FROM filterTable WHERE userID="' + userID + '" AND filterName="' + filterName + '"';
-
-      //get filter id from database
-      db.all(getFilterIDString, function(err, filterInfo) {
-        if (err) {
-          console.log('There was an error finding the filterID for filter', filterName, 'and user', username);
+      var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterId + ',\'' + keyword + '\')';
+      db.all(queryString, function(error, response){
+        if (error) {
+          console.log('this is the error', error);
+          cb(err);
         } else {
-          console.log('found filter', filterInfo);
-          var filterID = filterInfo[0].id;
-
-          insertIntoKeywordTable(userID, filterID, keyword, cb);
+          // console.log('this is the insertIntoKeywordTable response', response);
+          db.all('SELECT id from keywordTable where filterID="'+filterId+'"and keyword="'+keyword+'"', function(err, resp){
+            if(err){
+              console.log('there was an error TITO')
+            }else{
+              cb(keyword, resp[0].id);
+            }
+          })
         }
-      });
+      })
     }
-  });
-};
-
-//fx to insert a keyword into the keyword table
-var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, keyword, cb) {
-  var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterID + ',\'' + keyword + '\')';
-
-  // console.log('its inside the insertIntoKeywordTable now!')
-  db.all(queryString, function(error, response) {
-    if (error) {
-      console.log('this is the error', error);
-      cb(err);
-    } else {
-      // console.log('this is the insertIntoKeywordTable response', response);
-      cb('YOUR KEYWORD HAS BEEN ADDED');
-    }
-  });
+    });   
 };
 
 
@@ -203,7 +188,7 @@ var tempFX = function tempFX() {
   console.log('this is bwa length', bwa.length);
   for (var i = 0; i < bwa.length - 1; i++) {
     // console.log('hi');
-    insertIntoKeywordTable(userID, filterID, bwa[i], cb);
+    // insertIntoKeywordTable(userID, filterID, bwa[i], cb);
   };
 };
 

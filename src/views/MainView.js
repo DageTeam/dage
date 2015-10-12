@@ -24,6 +24,7 @@ import {
   filterArrayFetch,
   filterTypeSelect,
   filterTypeAdd,
+  filterAddFlagKeyword,
 } from 'actions/filters';
 
 import {
@@ -95,6 +96,9 @@ export class MainView extends React.Component {
       _filterTypeAdd: (filterId, username) => {
         this.props.dispatch(filterTypeAdd(filterId,username));
       },
+      _filterAddFlagKeyword: (keyword) => {
+        this.props.dispatch(filterAddFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected,keyword));
+      },
       _flagHighlightRender: (inputText, keyword) => {
         function flatMap(array, fn) {
           var result = [];
@@ -152,8 +156,9 @@ export class MainView extends React.Component {
           user={this.props.userSession.username}
           callbacks={ this.callbacks } />
         <FlagList
-          options={ this.props.filters. flagOptionsCurrent }
-          callbacks={ this.callbacks }  />
+          options={ this.props.filters.flagOptionsCurrent }
+          callbacks={ this.callbacks }
+          allowCreate  />
       </div>
     );
   }

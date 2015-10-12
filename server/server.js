@@ -112,8 +112,8 @@ app.post('/submitfilter', function(req, res) {
 });
 
 app.post('/submitkeyword', function(req, res) {
-  db.insertKeyword(req.body, function(message) {
-    res.send(message);
+  db.insertKeyword(req.body, function(keyword, keywordId) {
+    res.send({keyword:keyword, keywordId:keywordId});
   });
 });
 
