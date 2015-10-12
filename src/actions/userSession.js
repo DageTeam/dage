@@ -11,7 +11,7 @@ import {
   TOKEN_DELETED,
   TOKEN_DELETE_SUCCEEDED,
   TOKEN_DELETE_FAILED,
-} from 'constants/users';
+} from 'constants/userSession';
 
 //invoked on application load. Assumes user is auth'd. Sends GET request to server for a given user--
 //if user is not auth'd, would ideally redirect to a login page (in this case, sense dispatch for userFetchError)
@@ -34,7 +34,7 @@ export function applicationLoaded(data) {
       })
       .end((err, res={}) => {
         const { body } = res;
-        console.log('res.body', res);
+        console.log('res.body', body);
 
         err || res.body.error ?
           dispatch(userFetchError()) :

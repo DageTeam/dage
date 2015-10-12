@@ -37,7 +37,7 @@ import {
   userFetchError,
   deleteToken,
   deleteTokenError,
-} from 'actions/users';
+} from 'actions/userSession';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -48,7 +48,7 @@ const mapStateToProps = (state) => ({
   emails: state.emails,
   filters: state.filters,
   navigation: state.navigation,
-  user: state.user,
+  userSession: state.userSession,
   state: state,
 });
 export class MainView extends React.Component {
@@ -56,7 +56,7 @@ export class MainView extends React.Component {
     dispatch: React.PropTypes.func,
     emails: React.PropTypes.object,
     filters: React.PropTypes.object,
-    user: React.PropTypes.object,
+    userSession: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -139,6 +139,7 @@ export class MainView extends React.Component {
   }
 
   customizeFiltersViewRender() {
+    console.log('this is props', this.props);
     return (
       <div className='container text-center'>
         <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
@@ -177,7 +178,7 @@ export class MainView extends React.Component {
     };
 
     // this.props.dispatch(applicationLoaded())
-    if (!this.props.state.users.authenticated) {
+    if (!this.props.userSession.authenticated) {
       console.log('this is state,', this.props);
       return (
         <div>
