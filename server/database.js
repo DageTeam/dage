@@ -142,7 +142,8 @@ var insertKeyword = function insertKeyword(body, cb) {
 
 //fx to insert a keyword into the keyword table
 var insertIntoKeywordTable = function insertIntoKeywordTable(userID, filterID, keyword, cb) {
-  var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES('+ userID + ',' + filterID + ',\'' + keyword + '\')';
+  var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterID + ',\'' + keyword + '\')';
+
   // console.log('its inside the insertIntoKeywordTable now!')
   db.all(queryString, function(error, response) {
     if (error) {
@@ -178,30 +179,30 @@ var insertIntoUserTable = function insertIntoEmailTable(username, password, perm
 
 
 //TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
-var badwords = require('./badWordsArray.js')
+var badwords = require('./badWordsArray.js');
+
 // console.log('this is bwa.........', bwa);
 
 var bwa = badwords.badWordArray;
 
 var tempFX = function tempFX() {
-  console.log('tempFX is running!!!')
+  console.log('tempFX is running!!!');
   var cb = function cb(arg) {
     // console.log(arg);
   };
+
   var userID = 999;
   var filterID = 999;
   console.log('this is bwa length', bwa.length);
-  for (var i = 0; i < bwa.length-1; i++) {
+  for (var i = 0; i < bwa.length - 1; i++) {
     // console.log('hi');
     insertIntoKeywordTable(userID, filterID, bwa[i], cb);
   };
 };
 
 tempFX();
+
 //END TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
-
-
-
 
 /////FX's TO GET DATA FROM DB
 //fx to get an array of flagged keywords.
@@ -332,7 +333,7 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
 var getUser = function getUser(body, cb) {
   var username = body.username;
   console.log('this is username', username);
-  var queryString = 'SELECT username, saltedHash, active FROM userTable WHERE username=\'' + username + '\'';
+  var queryString = 'SELECT username, saltedHash, active, permissionGroup FROM userTable WHERE username=\'' + username + '\'';
   console.log('this is queryString', queryString);
   db.all(queryString, function(error, response) {
     if (error) {
@@ -353,6 +354,7 @@ var createAdmin = function createAdmin(body, cb) {
   var date = 'dateplaceholder';
   var email = body.email;
   var department = body.department;
+
   //managerID currently not used for admin users, defaults to 0
   var managerID = 0;
   var active = 1;
@@ -373,8 +375,8 @@ var createAdmin = function createAdmin(body, cb) {
     } else {
       cb(response);
     }
-  })
-}
+  });
+};
 
 /////FX FOR DEBUGGING PURPOSES
 //fx to print email table to the terminal

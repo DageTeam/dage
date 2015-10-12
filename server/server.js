@@ -3,8 +3,9 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-// var mailListener = require('./mailListener');
+var mailListener = require('./mailListener');
 var db = require('./database.js');
+
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');
 var authorization = require('../auth.js');
@@ -15,9 +16,9 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3000");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
@@ -124,41 +125,44 @@ app.post('/userLogin', function(req, res) {
   // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getUser(req.body, function(data) {
     console.log('this is data', data);
-    if (data) {
+    if (data && data[0]) {
       bcrypt.compare(req.body.password, data[0]['saltedHash'], function(err, userAuthed) {
         if (err) {
           res.status(401).end('Either username or password is incorrect');
         } else if (userAuthed) {
-          console.log('this is active status', data[0]['active]'])
+          console.log('this is active status', data[0]['active']);
           if (data[0]['active'] === 0) {
             console.log('user has been deactivated');
-            res.send('user was deactivated');
+            res.send({error: 'user was deactivated'});
           } else {
-              console.log('user authenticated successfully');
+            console.log('user authenticated successfully');
 
             //if typed in password checks out, create a token
-              //creating token with username as payload
-              var jwtSecret = authorization.jwtSecret;
-              var token = jwt.sign({
-                username: req.body.username,
-                // level: data[0]['level'],
-              }, jwtSecret);
-              res.send({
-                //sending back token for client processing
-                token: token,
-                username: req.body.username,
-                // level: data[0]['level'],
-              });
+            //creating token with username as payload
+            var jwtSecret = authorization.jwtSecret;
+            var token = jwt.sign({
+              username: req.body.username,
+              permissionGroup: data[0]['permissionGroup'],
+            }, jwtSecret);
+
+            // console.log('this is the token', token);
+            // console.log('this is the user permission group', data[0]['permissionGroup']);
+            res.send({
+              //sending back token for client processing
+              token: token,
+              username: req.body.username,
+              permissionGroup: data[0]['permissionGroup'],
+            });
           }
 
         } else {
           console.log('password was incorrect');
-          res.send('password was incorrect');
+          res.send({error: 'password was incorrect'});
         }
       });
     } else {
       console.log('user does not exist');
-      res.status(401).end('User does not exist');
+      res.status(401).send({error: 'User does not exist'});
     }
   });
 });
@@ -166,16 +170,19 @@ app.post('/userLogin', function(req, res) {
 //route handing for checking if user auth/token is valid
 //TODO: finish this
 app.post('/userAuth', function(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  console.log('userAuth triggered');
+  console.log('this is req.body', req.body);
+
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   jwt.verify(req.body.token, secret, function(err, decoded) {
     if (err) {
-      res.status(401).end('bad token');
+      res.status(401).send({error: 'bad token'});
     } else {
       var decoded = jwt.decode(req.body.token, {complete:true});
-
+      console.log('user was authd');
       res.send({
         username:decoded.payload.username,
-        level: decoded.payload.level,
+        permissionGroup: decoded.payload.permissionGroup,
       });
     }
   });
@@ -188,8 +195,8 @@ app.post('/createAdmin', function(req, res) {
   db.createAdmin(req.body, function() {
     console.log('admin created');
     res.send('success');
-  })
-})
+  });
+});
 
 app.post('/', function(req, res) {
   res.send('You posted!');

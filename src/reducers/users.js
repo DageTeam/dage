@@ -1,31 +1,85 @@
-import * as constants from '../constants/emails.js';
-
+import { createReducer } from 'utils';
+import {
+  APPLICATION_LOADED,
+  LOGIN_SUBMITTED,
+  LOGIN_SUCCEEDED,
+  LOGIN_FAILED,
+  USER_FETCHED,
+  USER_FETCH_SUCCEEDED,
+  USER_FETCH_FAILED,
+  TOKEN_DELETED,
+  TOKEN_DELETE_SUCCEEDED,
+  TOKEN_DELETE_FAILED,
+} from 'constants/users';
 
 const initialState = {
   authenticated: false,
-  username: null
+  username: null,
 };
 
-export default function (state = initialState, action = {}) {
+export default createReducer(initialState, {
+  [USER_FETCH_SUCCEEDED]: (state, payload) => {
+    console.log('user fetched triggered');
+    return {
+      ...state,
+      authenticated: true,
+      username: payload.username,
+      level: payload.level,
+    };
+  },
 
-  const { data, type } = action;
+  [USER_FETCH_FAILED]: (state, payload) => {
+    return {
+      ...state,
+      authenticated: false,
+      fetchingUserError: payload.error,
+    };
+  },
 
-  switch (type) {
-    case constants.USER_FETCH_SUCCEEDED:
-      return {
-        ...state,
-        authenticated: true,
-        username: data.username,
-      };
+  [LOGIN_SUBMITTED]: (state, payload) => {
+    return {
+      ...state,
+      isLoggingIn: true,
+    };
+  },
 
-    case constants.TOKEN_DELETE_FAILED:
-      return {
-        ...state,
-        authenticated: false,
-      };
+  [LOGIN_SUCCEEDED]: (state, payload) => {
+    return {
+      ...state,
+      isLoggingIn: false,
+    };
+  },
 
-    default:
-      return state;
-  }
+  [LOGIN_FAILED]: (state, payload) => {
+    return {
+      ...state,
+      isLoggingIn: false,
+      loggingInError: payload.error,
+    };
+  },
 
-}
+  [TOKEN_DELETED]: (state, payload) => {
+    return {
+      ...state,
+      authenticated: false,
+      isDeletingToken: true,
+    };
+  },
+
+  [TOKEN_DELETE_SUCCEEDED]: (state, payload) => {
+    return {
+      ...state,
+      authenticated: false,
+      isDeletingToken: false,
+    };
+  },
+
+  [TOKEN_DELETE_FAILED]: (state, payload) => {
+    return {
+      ...state,
+      isDeletingToken: false,
+      deleteTokenError: payload.error,
+    };
+  },
+
+});
