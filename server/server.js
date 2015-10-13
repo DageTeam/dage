@@ -106,7 +106,7 @@ app.post('/submitfilter', function(req, res) {
   // invoke the database function to insert into filtersTable, passing in the req.body
   //pass in cb that sends back a response
   //send back object with message
-  db.insertFilter(req.body, function(id, filterName) {    
+  db.insertFilter(req.body, function(id, filterName) {
     res.send({id:id,filterName:filterName});
   });
 });
@@ -189,8 +189,11 @@ app.post('/userAuth', function(req, res) {
 //fx to return all users
 //TODO: modify db code to return only active users
 app.get('/getAllUsers', function(req, res){
-  db.getAllActiveUsers(function(usersArray){
-    res.send(usersArray);
+  db.getAllActiveUsers(function(userArray){
+    res.send({
+      message: 'got all active users',
+      userArray: userArray
+    });
   });
 });
 

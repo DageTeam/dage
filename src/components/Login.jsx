@@ -21,7 +21,8 @@ var Login = React.createClass({
                 <label htmlFor='password'>Password</label>
                 <input type='password' id='password' ref='password' />
 
-                <input type='submit' style={{textAlign: 'right', }}  />
+                <input type='submit' style={{textAlign: 'right'}}  />
+              </form>
       );
   },
 });
