@@ -39,16 +39,16 @@ export function userAdd(data) {
     });
 
     return request
-      .post(serverUrl + '/getAllUsers')
+      .post(serverUrl + '/userAdd')
       .send(data)
       .end((err, res) => {
         if (err) {
           dispatch(userAddFailed(err));
         } else {
           //if the server responds back with message='userAdded'
-          //TODO: fix this
+          //TODO: ADD SERVER CODE...
           if (res.body.message === 'user added') {
-            dispatch(userAddSuccess(res.body));
+            dispatch(userAddSuccess(data));
           } else {
             console.log('Failed to add user');
             dispatch(userAddFailed(err));
