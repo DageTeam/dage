@@ -41,6 +41,11 @@ import {
   deleteTokenError,
 } from 'actions/userSession';
 
+import {
+  userAdd,
+  userArrayRequest
+} from 'actions/manageUsers'
+
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -60,6 +65,7 @@ export class MainView extends React.Component {
     emails: React.PropTypes.object,
     filters: React.PropTypes.object,
     userSession: React.PropTypes.object,
+    manageUsers: React.PropTypes.object
   }
 
   constructor(props) {
@@ -131,6 +137,7 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(userArrayRequest())
     this.props.dispatch(emailArrayFetch());
     this.props.dispatch(filterArrayFetch());
   }
