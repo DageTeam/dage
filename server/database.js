@@ -343,7 +343,7 @@ var createUser = function createUser(body, cb) {
   var permissionGroup = body.permissionGroup;
   var name = body.name;
   var title = body.title;
-  var date = 'dateplaceholder';
+  var date = new Date();
   var email = body.email;
   var department = body.department;
 
