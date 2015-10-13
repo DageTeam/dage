@@ -1,3 +1,5 @@
+import * as constants from '../constants/emails.js';
+
 import { createReducer } from 'utils';
 import {
   APPLICATION_LOADED,
@@ -84,3 +86,4 @@ export default createReducer(initialState, {
   },
 
 });
+

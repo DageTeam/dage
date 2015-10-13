@@ -471,6 +471,19 @@ var markUserInactiveInUserTable = function markUserInactiveInUserTable(username)
   });
 };
 
+//FX to get all active users in the userTable
+var getAllActiveUsers = function getAllActiveUsers(cb) {
+  var queryString = 'SELECT * FROM userTable WHERE active = "1"';
+  console.log('this is queryString', queryString);
+  db.all(queryString, function(error, response) {
+    if (error) {
+      console.log('error getting all active users');
+    } else {
+      cb(response);
+    }
+  });
+};
+
 //FX CALLS
 createEmailTable();
 createContextTable();
@@ -499,5 +512,6 @@ module.exports = {
   createAdmin,
   getNumOfUsers,
   resetPassword,
-  markUserInactiveInUserTable
+  markUserInactiveInUserTable,
+  getAllActiveUsers
 };

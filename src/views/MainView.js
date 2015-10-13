@@ -52,6 +52,7 @@ const mapStateToProps = (state) => ({
   navigation: state.navigation,
   userSession: state.userSession,
   state: state,
+  manageUsers: state.manageUsers,
 });
 export class MainView extends React.Component {
   static propTypes = {
@@ -74,7 +75,11 @@ export class MainView extends React.Component {
         this.props.dispatch(emailArrayFetch(param));
       },
 
-      _emailShowOneFlag: emailId => {
+      _userArrayFetch : param => {
+        this.props.dispatch(userArrayFetch(param));
+      },
+
+      _emailShowOneFlag : emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
       },
 
