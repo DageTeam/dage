@@ -117,6 +117,14 @@ app.post('/submitkeyword', function(req, res) {
   });
 });
 
+app.post('/removekeyword', function(req, res){
+  db.removeKeyword(req.body, function(message){
+    console.log(message);
+    res.send(message);
+  })
+
+});
+
 //route handing for checking if user login is correct
 //TODO: finish this
 app.post('/userLogin', function(req, res) {

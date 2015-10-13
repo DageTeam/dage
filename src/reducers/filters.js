@@ -16,6 +16,11 @@ import {
   FILTER_FLAG_POST_SUCCESS,
   FILTER_FLAG_POST_REQUEST,
   FILTER_FLAG_POST_ERROR,
+
+  FILTER_REMOVE_FLAG_KEYWORD,
+  FILTER_FLAG_REMOVE_SUCCESS,
+  FILTER_FLAG_REMOVE_REQUEST,
+  FILTER_FLAG_REMOVE_ERROR,
 } from 'constants/filters';
 
 const filtersArray = [
@@ -120,6 +125,25 @@ export default createReducer(initialState, {
   [FILTER_FLAG_POST_ERROR]: (state, payload) => {
     return { ...state,
       isPostingFlag:false,
+    }
+  },
+    [FILTER_REMOVE_FLAG_KEYWORD]: (state, payload) => {
+    return { ...state,
+    }
+  },
+  [FILTER_FLAG_REMOVE_SUCCESS]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag: false,
+    }
+  },
+  [FILTER_FLAG_REMOVE_REQUEST]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag: true,
+    }
+  },
+  [FILTER_FLAG_REMOVE_ERROR]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag:false,
     }
   },
 
