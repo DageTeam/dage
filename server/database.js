@@ -131,7 +131,7 @@ var insertFilter = function insertFilter(body, cb) {
   });
 };
 
-//fx to add a new filter into the database for the user
+//fx to add a new flag into the database for the user
 var insertKeyword = function insertKeyword(body, cb) {
   var username = body.username;
   var filterId = body.filterId;
@@ -165,6 +165,30 @@ var insertKeyword = function insertKeyword(body, cb) {
   });
 };
 
+//fx to remove flag from the database for the user
+var removeKeyword = function removeKeyword(body, cb){
+  var username = body.username;
+  var filterId = body.filterId;
+  var keyword = body.keyword;
+  var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
+  //get user id from database
+  db.all(getUserIDString, function(err, userInfo) {
+    if (err) {
+      console.log('There was an error finding the userID for username', username);
+    } else {
+      console.log('found username', userInfo);
+      var userID = userInfo[0].id;
+      var queryString = 'DELETE from keywordTable where userID="' + userID + '" AND filterID=' + filterId + ' AND keyword="' + keyword + '"';
+      db.all(queryString,function(error, response){
+        if (error) {
+          cb(err);
+        } else {
+          cb('removed keyword');
+        }
+      })
+    }
+  })
+}
 //fx to insert new user into userTable
 var insertIntoUserTable = function insertIntoUserTable(username, password, permissionGroup, name, title, email, department, managerID) {
   var active = 1;
@@ -518,6 +542,7 @@ module.exports = {
   insertEmail,
   insertFilter,
   insertKeyword,
+  removeKeyword,
   insertIntoTagsTable,
   insertIntoUserTable,
   getUser,

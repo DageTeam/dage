@@ -144,7 +144,16 @@ export function filterRemoveFlagKeyword(username, filterId, keyword){
     return request
       .post('http://127.0.0.1:4000/removekeyword')
       .send({username: username,filterId: filterId,keyword:keyword})
-      .
+      .end((err, res) => {
+        if(err){
+          // dispatch(filterFlagPostError())
+          console.log('error')
+        }else{
+          // dispatch(filterArrayFetch());
+          // dispatch(filterFlagPostSuccess(res.body.keyword, res.body.keywordId))
+          console.log('success')
+        }
+      });
   }
 }
 
