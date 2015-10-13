@@ -105,7 +105,7 @@ var insertFilter = function insertFilter(body, cb) {
               console.log('Error when selecting filterName row')
               cb(error);
             }
-            else{              
+            else{
               cb(response[0].id, response[0].filterName);
             }
           })
@@ -145,12 +145,12 @@ var insertKeyword = function insertKeyword(body, cb) {
         }
       })
     }
-    });   
+    });
 };
 
 
 //fx to insert new user into userTable
-var insertIntoUserTable = function insertIntoEmailTable(username, password, permissionGroup, name, title, email, department, managerID) {
+var insertIntoUserTable = function insertIntoUserTable(username, password, permissionGroup, name, title, email, department, managerID) {
   var active = 1;
   var salt = bcrypt.genSaltSync(10);
   var saltedHash = bcrypt.hashSync(password, salt);
