@@ -18,6 +18,7 @@ import {
   emailShowOneFlag,
   emailShowAllFlags,
   emailShowComplete,
+  unflagEmail,
 } from 'actions/emails';
 
 import {
@@ -89,6 +90,10 @@ export class MainView extends React.Component {
 
       _emailShowComplete: emailId => {
         this.props.dispatch(emailShowComplete(emailId));
+      },
+
+      _unflagEmail: emailId => {
+        this.props.dispatch(unflagEmail(emailId));
       },
 
       _filterArrayFetch: () => {

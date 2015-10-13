@@ -49,7 +49,7 @@ app.get('/emailData', function(req, res) {
     //TODO: placeholder userID until authentication is complete
     var userID = 1;
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     //get the flagged emails via a db query
     db.getFlaggedEmails(userID, isAdmin, function(emails) {
@@ -62,6 +62,14 @@ app.get('/emailData', function(req, res) {
   }
 
 });
+
+app.post('/unflagEmail', function(req, res) {
+  var emailID = req.body.emailID;
+  console.log('this is the emailID', emailID);
+  db.unflagEmail(emailID, function(message) {
+    res.send(message)
+  })
+})
 
 app.get('/filterData', function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -95,7 +103,7 @@ const emailsArray = [
 
 app.get('/tempEmailData', function(req, res) {
   //get the flagged emails via a db query
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getFlaggedEmails(function(emails) {
     res.send(emailsArray);
   });

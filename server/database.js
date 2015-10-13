@@ -12,7 +12,7 @@ var markChecked = function markChecked(emailID) {
   var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
 
   db.run(checkString);
-  console.log('markChecked fx ran/////');
+  // console.log('markChecked fx ran/////');
 };
 
 //fx to update the emailTable  to mark an email as flagged
@@ -20,8 +20,21 @@ var markFlagged = function markFlagged(emailID) {
   var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
 
   db.run(flagString);
-  console.log('markFlagged fx ran/////');
+  // console.log('markFlagged fx ran/////');
 };
+
+var unflagEmail = function unflagEmail(emailID, cb) {
+  var flagString = 'UPDATE emailTable SET flagged="0" WHERE id=' + emailID;
+
+  db.all(flagString, function(error, response) {
+    if (error) {
+      console.log('error triggered', error) 
+      cb('there was an error');
+    } else {
+      cb('success');
+    }
+  });
+}
 
 //insert email into emailTable
 var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
@@ -45,7 +58,7 @@ var insertIntoContextTable = function insertIntoContextTable(userID, filterID, e
   var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyword, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyword + '\',\'' + context +  '\')';
 
   db.run(flaggedContent);
-  console.log('insertIntoContextTable fx ran/////');
+  // console.log('insertIntoContextTable fx ran/////');
 };
 
 //fx to insert into tagsTable, eg tagName=racist, keyword=coolie
@@ -53,7 +66,7 @@ var insertIntoTagsTable = function insertIntoTagsTable(tagName, keyword) {
   var query = 'INSERT INTO tagsTable(tagName, keyword) VALUES (\'' +  tagName + '\',\'' + keyword +  '\')';
 
   db.run(query);
-  console.log('insertIntoTagsTable fx ran/////');
+  // console.log('insertIntoTagsTable fx ran/////');
 };
 
 //setting up sqlite3 database w/ potential email schema
@@ -496,6 +509,7 @@ createTagsTable();
 module.exports = {
   markChecked,
   markFlagged,
+  unflagEmail,
   insertIntoEmailTable,
   insertIntoContextTable,
   insertEmail,
