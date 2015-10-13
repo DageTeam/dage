@@ -17,9 +17,17 @@ import {
 const initialState = {
   authenticated: false,
   username: null,
+  applicationLoading: false
 };
 
 export default createReducer(initialState, {
+  [APPLICATION_LOADED]: (state, payload) => {
+    return {
+      ...state,
+      applicationLoading: true
+    }
+  },
+
   [USER_FETCH_SUCCEEDED]: (state, payload) => {
     console.log('user fetched triggered');
     console.log('this is payload', payload);
@@ -28,6 +36,7 @@ export default createReducer(initialState, {
       authenticated: true,
       username: payload.body.username,
       permissionGroup: payload.body.permissionGroup,
+      applicationLoading: false
     };
   },
 
