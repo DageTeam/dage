@@ -43,7 +43,9 @@ import {
 
 import {
   userAdd,
-  userArrayRequest
+  userToggleActive,
+  userPasswordReset,
+  userArrayRequest,
 } from 'actions/manageUsers'
 
 // We define mapStateToProps where we'd normally use the @connect

@@ -3,34 +3,40 @@ import request from '../_config/superagent';
 //todo: add user add success
 import {
   USER_ADD,
-  USER_ADD_FAILED,
-  USER_TOGGLE_ACTIVE,
-  USER_TOGGLE_FAILED,
-  USER_PASSSWORD_RESET,
-  USER_PASSSWORD_RESET_FAILED,
-  USER_ARRAY_REQUEST,
-  USER_ARRAY_FETCH_SUCCESS,
-  USER_ARRAY_FETCH_ERROR,
-  USER_ARRAY_REQUEST_SUCCESS,
   USER_ADD_SUCCESS,
+  USER_ADD_FAILED,
+
+  USER_TOGGLE_ACTIVE,
+  USER_TOGGLE_ACTIVE_SUCCESS,
+  USER_TOGGLE_ACTIVE_FAILED,
+
+  USER_PASSSWORD_RESET,
+  USER_PASSSWORD_RESET_SUCCESS,
+  USER_PASSSWORD_RESET_FAILED,
+
+  USER_ARRAY_REQUEST,
+  USER_ARRAY_REQUEST_SUCCESS,
+  USER_ARRAY_REQUEST_FAILED,
 } from 'constants/manageUsers';
 
 //username, permissionGroup, name, title, email, department, managerID, active
-/* data =
-  username,
-  permissionGroup,
-  name,
-  title,
-  email,
-  department,
-  managerID,
-  active
-*/
+
+// var data = {
+//   username: 'gt',
+//   permissionGroup: 'admin',
+//   password: 'plaintext',
+//   name: 'g t',
+//   title: 'administrator' ,
+//   email: 'gtd@gt.com',
+//   department: 'sales',
+//   managerID: '001',
+// };
 
 //TODO: CHANGE SERVERURL
 var serverUrl = 'http://127.0.0.1:4000';
 
 //TODO: fixme. refer to get user array function below
+//userAdd
 export function userAdd(data) {
   return dispatch => {
     dispatch({
@@ -72,7 +78,7 @@ export function userAddFailed(error) {
   };
 }
 
-
+//userToggleActive
 export function userToggleActive(username) {
   return dispatch => {
     dispatch({
@@ -81,7 +87,7 @@ export function userToggleActive(username) {
     });
 
     return request
-      .post(serverUrl + 'toggleUser')
+      .post(serverUrl + '/toggleUser')
       .send(data)
       .end((err, res) => {
         if (err) {
@@ -90,7 +96,7 @@ export function userToggleActive(username) {
           //if the server responds back with message='userToggled'
           if (res.body.message === 'userAdded') {
             //reload the page, which should rerun get All Active Users.?????
-            window.location.reload();
+            dispatch(userToggleActiveSuccess(res.body.data))
           } else {
             console.log('Failed to toggle user');
             dispatch(userToggleActiveFailed(err));
@@ -100,14 +106,21 @@ export function userToggleActive(username) {
   };
 }
 
-export function userToggleFailed(error) {
+export function userToggleActiveSuccess(data) {
   return {
-    type: USER_TOGGLE_FAILED,
+    type: USER_TOGGLE_ACTIVE_SUCCESS,
+    payload: { data },
+  }
+}
+
+export function userToggleActiveFailed(error) {
+  return {
+    type: USER_TOGGLE_ACTIVE_FAILED,
     payload: { error },
   };
 }
 
-
+//userPasswordReset
 export function userPasswordReset(username) {
   return dispatch => {
     dispatch({
@@ -116,15 +129,14 @@ export function userPasswordReset(username) {
     });
 
     return request
-      .post(serverUrl + 'passwordReset')
-      .send(username)
+      .post(serverUrl + '/passwordReset')
+      .send({ username })
       .end((err, res) => {
         if (err) {
           dispatch(userPasswordResetFailed(err));
         } else {
-          //if the server responds back with message = 'passwordResetted'
-          if (res.body.message === 'passwordResetted') {
-            window.location.reload();
+          if (res.body.message === 'Password Successfully Resetted') {
+            dispatch(userPasswordResetSuccess(data));
           } else {
             console.log('Failed to reset user password');
             dispatch(userPasswordResetFailed(err));
@@ -134,6 +146,13 @@ export function userPasswordReset(username) {
   };
 }
 
+export function userPasswordResetSuccess(data) {
+  return {
+    type: USER_PASSSWORD_RESET_SUCCESS,
+    payload: { data },
+  }
+}
+
 export function userPasswordResetFailed(error) {
   return {
     type: USER_PASSSWORD_RESET_FAILED,
@@ -141,6 +160,7 @@ export function userPasswordResetFailed(error) {
   };
 }
 
+//userArrayRequest
 export function userArrayRequest() {
   console.log('userArrayRequest triggered')
   return dispatch => {
@@ -151,7 +171,6 @@ export function userArrayRequest() {
     return request
       .get(serverUrl + '/getAllUsers')
       .end((err, res) => {
-        console.log('this is the server response', res.body);
         if(err){
           dispatch(userArrayRequestFailed(err));
         }else {
@@ -176,7 +195,7 @@ export function userArrayRequestSuccess(data) {
 
 export function userArrayRequestFailed(error) {
   return {
-    type: USER_ARRAY_REQUEST_ERROR,
+    type: USER_ARRAY_REQUEST_FAILED,
     payload: { error },
   };
 }
