@@ -135,10 +135,11 @@ export class MainView extends React.Component {
 
         var flagRE = new RegExp(keyword, 'g', 'i');
         var result = flatMap(inputText.split(flagRE), function(part) {
-          return [part, <span style={{color: 'red'}}>{keyword}</span>];
+          return [part, <span style={{'color': 'red', 'fontWeight':'bolder'}}>{keyword}</span>];
         });
 
         result.pop();
+        // console.log('result', result);
         return (result);
       },
 
@@ -152,22 +153,29 @@ export class MainView extends React.Component {
     this.props.dispatch(userArrayRequest());
     this.props.dispatch(emailArrayFetch());
     this.props.dispatch(filterArrayFetch());
+    this.props.dispatch(navigationRouteSelect('alerts'))
   }
 
   // normally you'd import an action creator, but I don't want to create
   // a file that you're just going to delete anyways!
 
+
+
   flaggedEmailsViewRender() {
-    return (
-      <div>
-        <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have New Alerts</h1>
-        <FlaggedEmailList
-          state={ this.props.emails }
-          callbacks={ this.callbacks }
-          userSession={ this.props.userSession }
-        />
-      </div>
-    );
+    if (this.props.emails.isFetchingEmail && this.props.emails.emailsArray.length===0) {
+      this.loadingViewRender();
+    } else {
+      return (
+        <div>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have New Alerts</h1>
+          <FlaggedEmailList
+            state={ this.props.emails }
+            callbacks={ this.callbacks }
+            userSession={ this.props.userSession }
+          />
+        </div>
+      );
+    }
   }
 
   customizeFiltersViewRender() {
@@ -212,6 +220,15 @@ export class MainView extends React.Component {
     );
   }
 
+  loadingViewRender() {
+    if (this.props.userSession) {
+      return (
+        <div style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}}>loading...
+          <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}} />
+        </div>)
+    }
+  }
+
   manageUserRender() {
     console.log('manage user triggered');
     console.log(this.props)
@@ -230,20 +247,27 @@ export class MainView extends React.Component {
       customize: this.customizeFiltersViewRender(),
       dashboard: this.dashboardViewRender(),
       manageUser: this.manageUserRender(),
+      loading: this.loadingViewRender(),
     };
 
     // this.props.dispatch(applicationLoaded())
     if (!this.props.userSession.authenticated) {
-      return (
-        <div>
-        <Header />
-          <div style={{'marginTop':'20%', 'marginLeft':'30%'}}>
-            <Login callbacks={ this.callbacks }/>
-            <Footer />
-            <ScriptLoader />
+      if (this.props.emails.isFetchingEmail) {
+        console.log('loading');
+        return this.loadingViewRender();
+      } else {
+        console.log('login')
+        return (
+          <div>
+          <Header />
+            <div style={{'marginTop':'20%', 'marginLeft':'30%'}}>
+              <Login callbacks={ this.callbacks }/>
+              <Footer />
+              <ScriptLoader />
+            </div>
           </div>
-        </div>
-        );
+          );
+      };
     } else {
       return (
         <div>
