@@ -174,7 +174,7 @@ export class MainView extends React.Component {
     if(this.props.state.filters.isFetchingFilters || this.props.state.filters.isPostingFlag){
       return(
         <div className='container text-center'>
-          <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
+          <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>Dage Customize Filters</h1>
           <FilterList
             options={ this.props.filters }
             user={this.props.userSession.username}
@@ -237,7 +237,7 @@ export class MainView extends React.Component {
       return (
         <div>
         <Header />
-          <div style={{'margin-top':'20%', 'margin-left':'30%'}}>
+          <div style={{'marginTop':'20%', 'marginLeft':'30%'}}>
             <Login callbacks={ this.callbacks }/>
             <Footer />
             <ScriptLoader />
