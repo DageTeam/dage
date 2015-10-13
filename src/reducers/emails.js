@@ -12,34 +12,34 @@ import {
   EMAIL_UNFLAG_SUCCESS,
 } from 'constants/emails';
 
-const emailsArray = [
-  {
-    id: 'emailId',
-    sender: 'emailSender',
-    recipient: 'emailRecipient',
-    subject: 'subjectString',
-    body: 'bodyString',
-    sendTime: 1000,
-    focusLevel: 'complete',
-    flags:
-      [
-        {
-          type: 'flagTypeString1',
-          context: 'contextString1',
-        },
-        {
-          type: 'flagTypeString2',
-          context: 'contextString2',
-        },
-      ],
-  },
-];
+// const emailsArray = [
+//   {
+//     id: 'emailId',
+//     sender: 'emailSender',
+//     recipient: 'emailRecipient',
+//     subject: 'subjectString',
+//     body: 'bodyString',
+//     sendTime: 1000,
+//     focusLevel: 'complete',
+//     flags:
+//       [
+//         {
+//           type: 'flagTypeString1',
+//           context: 'contextString1',
+//         },
+//         {
+//           type: 'flagTypeString2',
+//           context: 'contextString2',
+//         },
+//       ],
+//   },
+// ];
 
 const emails = {
-  isFetchingEmail: false,
+  isFetchingEmail: true,
   lastUpdated: 0,
   fetchingEmailError: '',
-  emailsArray,
+  emailsArray: [],
 };
 
 const initialState = emails;
