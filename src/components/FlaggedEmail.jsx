@@ -23,6 +23,7 @@ var FlaggedEmail = React.createClass({
     /*FLAGGEDCONTEXT props from email array from state tree*/
     var contentList = this.props.flags;
     var displayLength = contentList.length;
+    var userPermissionGroup = this.props.userSession.permissionGroup;
     if (this.props.focusLevel === 'one') {
       displayLength = 1;
     }
@@ -37,17 +38,29 @@ var FlaggedEmail = React.createClass({
         )
     }
 
+    const fullEmailButton = <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>Full Email</span></small>;
+    const allFlagsButton = (this.props.flags.length === 1) ? 
+      <div/> : <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
+    const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
+
+    const oneFLButtonsBlock = (userPermissionGroup === "admin") ? 
+        <div>{ fullEmailButton } { allFlagsButton } </div> : 
+        <div>{ allFlagsButton } </div>;
+    const allFLButtonsBlock = (userPermissionGroup === "admin") ? 
+        <div>{ fullEmailButton } { collapseButton } </div> : 
+        <div>{ collapseButton } </div>;
+    const fullEmailButtonsBlock = <div> { collapseButton } </div>;
+
     if (this.props.focusLevel == 'one') {
       return (
         <div>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>To</span>: {this.props.recipient}</div>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>From</span>: {this.props.sender}</div>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>To</span>: {this.props.recipient}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>From</span>: {this.props.sender}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
           </div>
-          <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','word-spacing':'-10px','cursor':'pointer'}}>Full Email</span></small>
-          <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','word-spacing':'-10px','margin-right':'10px','cursor':'pointer'}}>All Flags</span></small>
+          { oneFLButtonsBlock }
           <div style={{'float':'right', width:'70%'}}>
             {contentRows}
           </div>
@@ -60,12 +73,11 @@ var FlaggedEmail = React.createClass({
         <div>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>To</span>: {this.props.recipient}</div>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>From</span>: {this.props.sender}</div>
-            <div className='heading' style={{'vertical-align':'middle'}}><span style={{'font-weight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>To</span>: {this.props.recipient}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>From</span>: {this.props.sender}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
           </div>
-          <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','word-spacing':'-10px','cursor':'pointer'}}>Full Email</span></small>
-          <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','word-spacing':'-10px','margin-right':'10px','cursor':'pointer'}}>Minimize</span></small>
+          { allFLButtonsBlock }
           <div style={{'float':'right', width:'70%'}}>
             {contentRows}
           </div>
@@ -78,21 +90,19 @@ var FlaggedEmail = React.createClass({
         <div>
           <div className='container' style={this.styles.rows}>
             <div style={{'float':'left', 'width':'25%'}}>
-              <div className='heading' style={{'vertical-align':'middle'}}>To: {this.props.recipient}</div>
-              <div className='heading' style={{'vertical-align':'middle'}}>From: {this.props.sender}</div>
-              <div className='heading' style={{'vertical-align':'middle'}}>Date: {this.props.sendTime}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}>To: {this.props.recipient}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}>From: {this.props.sender}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}>Date: {this.props.sendTime}</div>
             </div>
-            <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','word-spacing':'-10px'}}>Full Email</span></small>
-            <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-up' style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>All Flags</span></small>
-            <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','word-spacing':'-10px','margin-right':'10px'}}>Minimize</span></small>
-              <table style={{width:'100%', 'margin-top':'1%'}}>
-                  <tr>
-                    <th>Email Body</th>
-                  </tr>
-                  <tr>
-                    <td>{this.props.body}</td>
-                  </tr>
-              </table>
+            { fullEmailButtonsBlock }
+            <table style={{width:'100%', 'marginTop':'1%'}}>
+                <tr>
+                  <th>Email Body</th>
+                </tr>
+                <tr>
+                  <td>{this.props.body}</td>
+                </tr>
+            </table>
             <div style={{'float':'right', width:'70%'}}>
               {contentRows}
             </div>
@@ -106,13 +116,13 @@ var FlaggedEmail = React.createClass({
 
   styles:{
     table:{
-      'margin-top':'0',
+      'marginTop':'0',
       'position':'relative',
       'width':'75%',
     },
     rows:{
-      'border-bottom':'3px solid purple',
-      'margin-bottom':'15px',
+      'borderBottom':'3px solid purple',
+      'marginBottom':'15px',
     },
   },
 });

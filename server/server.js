@@ -198,11 +198,11 @@ app.get('/getAllUsers', function(req, res){
 });
 
 //temp url to create admin users, only via postman. not accessible from client
-app.post('/createAdmin', function(req, res) {
+app.post('/createUser', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
   req.body.hash = bcrypt.hashSync(req.body.password, salt);
-  db.createAdmin(req.body, function() {
-    console.log('admin created');
+  db.createUser(req.body, function() {
+    console.log('user created');
     res.send('success');
   });
 });

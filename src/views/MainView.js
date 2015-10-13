@@ -148,10 +148,11 @@ export class MainView extends React.Component {
   flaggedEmailsViewRender() {
     return (
       <div>
-        <h1 style={{'padding-top':'60px', 'text-align':'center'}}>You Have New Alerts</h1>
+        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>You Have New Alerts</h1>
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ this.callbacks }
+          userSession={ this.props.userSession }
         />
       </div>
     );
@@ -161,10 +162,10 @@ export class MainView extends React.Component {
   customizeFiltersViewRender() {
     return (
       <div className='container text-center'>
-        <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
+        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
-          user={this.props.userSession.username}
+          userSession={this.props.userSession}
           callbacks={ this.callbacks } />
         <FlagList
           options={ this.props.filters.flagOptionsCurrent }
@@ -183,7 +184,7 @@ export class MainView extends React.Component {
   manageUserRender() {
     return (
       <div>
-        <h1 style={{'padding-top': '60px', 'text-align': 'center'}}>User Accounts</h1>
+        <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
         <ManageUsers state={this.props.emails} />
       </div>
     );
@@ -211,7 +212,7 @@ export class MainView extends React.Component {
         <div>
           <Header />
           { mainComponent[this.props.navigation.currentPage] }
-          <SideNav callbacks={ this.callbacks }/>
+          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession }/>
           <Footer />
           <ScriptLoader />
           <div

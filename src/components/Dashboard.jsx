@@ -87,20 +87,20 @@ var Dashboard = React.createClass({
     };
 
     return(
-      <div style={{'margin-top':'8%','margin-left':'15%', 'width':'75%'}}>
-        <h3 style={{'margin-bottom':'2%','text-align':'left'}}>Flagged Emails by month</h3>
-        <BarChart data={barData} options={barOptions} width={'1000px'} height={'200px'} redraw={true} style={{'margin-left':'2%'}}/>
-        <div style={{'margin-top': '3%', 'margin-left':'7%', float:'left'}}>
+      <div style={{'marginTop':'8%','marginLeft':'15%', 'width':'75%'}}>
+        <h3 style={{'marginBottom':'2%','textAlign':'left'}}>Flagged Emails by month</h3>
+        <BarChart data={barData} options={barOptions} width={'1000px'} height={'200px'} redraw={true} style={{'marginLeft':'2%'}}/>
+        <div style={{'marginTop': '3%', 'marginLeft':'7%', float:'left'}}>
         <h3>Flags by Filters (this week)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'margin-left':'20px'}}/>
+        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
         </div>
-        <div style={{'margin-top': '3%', 'margin-left':'5%', float:'left'}}>
+        <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
         <h3>Flags by Filters (this month)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'margin-left':'20px'}}/>
+        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
         </div>
-        <div style={{'margin-top': '3%', 'margin-left':'5%', float:'left'}}>
+        <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
         <h3>Flags by Filters (this year)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'margin-left':'20px'}}/>
+        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
         </div>
       </div>
       

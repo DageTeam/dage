@@ -337,10 +337,10 @@ var getUser = function getUser(body, cb) {
   });
 };
 
-var createAdmin = function createAdmin(body, cb) {
+var createUser = function createUser(body, cb) {
   var username = body.username;
   var saltedHash = body.hash;
-  var permissionGroup = 'admin';
+  var permissionGroup = body.permissionGroup;
   var name = body.name;
   var title = body.title;
   var date = 'dateplaceholder';
@@ -509,7 +509,7 @@ module.exports = {
   getUncheckedEmails,
   getAllFilters,
   getArrayOfKeywordsFromTagsTable,
-  createAdmin,
+  createUser,
   getNumOfUsers,
   resetPassword,
   markUserInactiveInUserTable,

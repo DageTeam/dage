@@ -23,8 +23,8 @@ var FlaggedContext = React.createClass({
 
   styles:{
     table:{
-      'margin-top':'0',
-      'table-layout':'fixed'
+      'marginTop':'0',
+      'tableLayout':'fixed'
     }
   }
 });
