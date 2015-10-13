@@ -146,11 +146,11 @@ export function filterRemoveFlagKeyword(username, filterId, keyword){
       .send({username: username,filterId: filterId,keyword:keyword})
       .end((err, res) => {
         if(err){
-          // dispatch(filterFlagPostError())
+          dispatch(filterFlagRemoveError())
           console.log('error')
         }else{
-          // dispatch(filterArrayFetch());
-          // dispatch(filterFlagPostSuccess(res.body.keyword, res.body.keywordId))
+          dispatch(filterArrayFetch());
+          dispatch(filterFlagPostSuccess())
           console.log('success')
         }
       });
@@ -164,9 +164,13 @@ export function filterFlagRemoveRequest(){
 }
 
 export function filterFlagRemoveSuccess(){
-
+  return{
+    type:FILTER_FLAG_REMOVE_SUCCESS
+  }
 }
 
 export function filterFlagRemoveError(){
-
+  return{
+    type:FILTER_FLAG_REMOVE_ERROR
+  }
 }
