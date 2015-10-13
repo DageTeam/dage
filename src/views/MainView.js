@@ -207,8 +207,6 @@ export class MainView extends React.Component {
           <SideNav callbacks={ this.callbacks }/>
           <Footer />
           <ScriptLoader />
-
-                                                                                                                                                                                                                                                                  <div className='page-overlay'></div>
           <div
             state={ this.props.state }
             callbacks={ callbacks }
