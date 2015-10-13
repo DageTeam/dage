@@ -31,6 +31,7 @@ app.get('/', function(req, res) {
 //TEMP: use this to create multiple users.
 app.post('/test', function(req, res) {
   console.log('sup');
+
   // db.insertEmail();
   // console.log('!!THIS IS THE REQUEST....', req);
   db.insertIntoUserTable(req.body.username, req.body.saltedHash, req.body.permissionGroup, req.body.name, req.body.title, req.body.email, req.body.department, req.body.managerID);
@@ -49,7 +50,7 @@ app.get('/emailData', function(req, res) {
     //TODO: placeholder userID until authentication is complete
     var userID = 1;
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     //get the flagged emails via a db query
     db.getFlaggedEmails(userID, isAdmin, function(emails) {
@@ -61,6 +62,14 @@ app.get('/emailData', function(req, res) {
     res.send('user is not authenticated');
   }
 
+});
+
+app.post('/unflagEmail', function(req, res) {
+  var emailID = req.body.emailID;
+  console.log('this is the emailID', emailID);
+  db.unflagEmail(emailID, function(message) {
+    res.send(message);
+  });
 });
 
 app.get('/filterData', function(req, res) {
@@ -95,7 +104,7 @@ const emailsArray = [
 
 app.get('/tempEmailData', function(req, res) {
   //get the flagged emails via a db query
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getFlaggedEmails(function(emails) {
     res.send(emailsArray);
   });
@@ -107,7 +116,7 @@ app.post('/submitfilter', function(req, res) {
   //pass in cb that sends back a response
   //send back object with message
   db.insertFilter(req.body, function(id, filterName) {
-    res.send({id:id,filterName:filterName});
+    res.send({id:id, filterName:filterName});
   });
 });
 
@@ -188,11 +197,11 @@ app.post('/userAuth', function(req, res) {
 
 //fx to return all users
 //TODO: modify db code to return only active users
-app.get('/getAllUsers', function(req, res){
-  db.getAllActiveUsers(function(userArray){
+app.get('/getAllUsers', function(req, res) {
+  db.getAllActiveUsers(function(userArray) {
     res.send({
       message: 'got all active users',
-      userArray: userArray
+      userArray: userArray,
     });
   });
 });
