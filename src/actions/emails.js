@@ -25,7 +25,7 @@ export function emailArrayFetch() {
       .get(serverUrl + '/emailData')
       .end((err, res={}) => {
         dispatch(emailArrayFetchSuccess(res.body));
-      })
+      });
 
     // fetch('http://localhost:4000/emailData')
     //   .then(req => { console.log('this is req', req);
@@ -52,7 +52,7 @@ export function emailArrayRequest() {
 }
 
 export function emailArrayFetchSuccess(emailsArray) {
-  console.log('triggered emailarrayfetchsuccess')
+  console.log('triggered emailarrayfetchsuccess');
   return {
     type: EMAIL_ARRAY_FETCH_SUCCESS,
     payload: {
@@ -110,16 +110,15 @@ export function unflagEmail(emailID) {
 export function unflagEmailRequest(emailID) {
   return {
     type: REQUESTING_EMAIL_UNFLAG,
-    payload: { emailID }
-  }
+    payload: { emailID },
+  };
 }
-
 
 export function emailUnflagError(error) {
   return {
     type: EMAIL_UNFLAG_ERROR,
-    payload: {error}
-  }
+    payload: {error},
+  };
 }
 
 export function emailUnflagSuccess() {
@@ -127,7 +126,7 @@ export function emailUnflagSuccess() {
   return dispatch => {
     dispatch(emailArrayFetch());
     return {
-      type: EMAIL_UNFLAG_SUCCESS
-    }
+      type: EMAIL_UNFLAG_SUCCESS,
+    };
   };
 }

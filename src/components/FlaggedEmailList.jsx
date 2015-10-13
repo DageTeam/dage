@@ -6,7 +6,6 @@ var FlaggedEmailList = React.createClass({
   render: function(){
     var emailRows = [];
     var emailList = this.props.state.emailsArray;
-    console.log('this is emailList length', emailList.length)
     for (var i = 0; i < emailList.length; i++) {
       var email = emailList[i];
       emailRows.push(

@@ -40,7 +40,7 @@ const emails = {
   lastUpdated: 0,
   fetchingEmailError: '',
   emailsArray,
-}
+};
 
 const initialState = emails;
 
@@ -62,7 +62,7 @@ export default createReducer(initialState, {
       isFetchingEmail: false,
       lastUpdated: payload.receivedAt,
       emailsArray: payload.emailsArray,
-    })
+    });
   },
 
   [EMAIL_ARRAY_FETCH_ERROR]: (state, payload) => {
@@ -73,7 +73,7 @@ export default createReducer(initialState, {
     let newState = Object.assign({}, state);
     let { emailId } = payload;
     newState.emailsArray.forEach((email, index, list) => {
-      if(emailId === email.id){
+      if (emailId === email.id) {
         list[index].focusLevel = 'one';
       }
     });
@@ -84,7 +84,7 @@ export default createReducer(initialState, {
     let newState = Object.assign({}, state);
     let { emailId } = payload;
     newState.emailsArray.forEach((email, index, list) => {
-      if(emailId === email.id){
+      if (emailId === email.id) {
         list[index].focusLevel = 'allFlags';
       }
     });
@@ -95,7 +95,7 @@ export default createReducer(initialState, {
     let newState = Object.assign({}, state);
     let { emailId } = payload;
     newState.emailsArray.forEach((email, index, list) => {
-      if(emailId === email.id){
+      if (emailId === email.id) {
         list[index].focusLevel = 'complete';
       }
     });
@@ -105,14 +105,14 @@ export default createReducer(initialState, {
   [REQUESTING_EMAIL_UNFLAG]: (state, payload) => {
     return {
       ...state,
-      unflaggingEmailID: payload.emailID
+      unflaggingEmailID: payload.emailID,
     };
   },
 
   [EMAIL_UNFLAG_ERROR]: (state, payload) => {
     return {
       ...state,
-      unflaggingEmailError: payload.error
+      unflaggingEmailError: payload.error,
     };
   },
 
