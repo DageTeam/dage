@@ -26,6 +26,7 @@ import {
   filterTypeSelect,
   filterTypeAdd,
   filterAddFlagKeyword,
+  filterRemoveFlagKeyword,
 } from 'actions/filters';
 
 import {
@@ -115,7 +116,9 @@ export class MainView extends React.Component {
       _filterAddFlagKeyword: (keyword) => {
         this.props.dispatch(filterAddFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected, keyword));
       },
-
+      _filterRemoveFlagKeyword: (keyword) => {
+        this.props.dispatch(filterRemoveFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected, keyword));
+      },
       _flagHighlightRender: (inputText, keyword) => {
         function flatMap(array, fn) {
           var result = [];
