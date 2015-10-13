@@ -28,17 +28,19 @@ var FilterList = React.createClass({
     }).map(filterObj => {
       return filterObj.label;
     })
+
     return (
-      <div className='col-xs-10'>
-        <h3 className='col-xs-10'>Filter List</h3>
+      <div className='col-xs-6'>
+        <h3>Filter List</h3>
+        <h6>Select a Filter or To Add a New Filter, Start Typing Then Hit Enter </h6>
         <Select
           allowCreate
           placeholder={ currentFilter }
           options= {this.props.options.filterOptions}
-          onChange= {this.selectFilter} />
+          onChange= {this.selectFilter} />          
       </div>
       )
-  }
+    }
 });
 
 

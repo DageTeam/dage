@@ -15,7 +15,7 @@ import {
 
 const initialState = {
   authenticated: false,
-  username: null
+  username: nulle
 };
 
 export default createReducer(initialState, {

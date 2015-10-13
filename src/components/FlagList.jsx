@@ -17,9 +17,9 @@ var FlagDisplay = React.createClass({
   },
   render: function(){
     return(
-      <div className = 'col-xs-10'>
-        <h3 className = 'col-xs-5'>Selected Flags</h3>
-        <h6 className = 'col-xs-5'>Enter a keyword not in the list, then hit enter</h6>
+      <div className = 'col-xs-6'>
+        <h3>Selected Flags</h3>
+        <h6>To Enter A New KeyWord, Start Typing and Hit Enter</h6>
         <Select
           allowCreate={this.props.allowCreate} //passed down from parent Component. set allowCreate to true.(example didn't have '=true') eg. 'allowcreate'
           value={this.props.options}//passed down from parent Component (Customize). Need to be in array of objects eg. [{label:'chocolate', value:'chocolate'}, ...]
