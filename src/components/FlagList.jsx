@@ -4,7 +4,7 @@ var Select = require('react-select');
 
 
 var FlagDisplay = React.createClass({
-  AddFlag: function(flags){
+  ManageFlag: function(flags){
     var removeFlag;
     var checkFlag ={};
     var flagsArr = flags.split(',');
@@ -20,10 +20,17 @@ var FlagDisplay = React.createClass({
         removeFlag=key;
       }
     }
-    // var newFlag = flags.split(',');
-    // newFlag = newFlag[newFlag.length-1];
-    // this.props.callbacks._filterAddFlagKeyword(newFlag);
-  },
+    if(removeFlag){
+      // this.props.callbacks._filterRemoveFlagKeyword(removeFlag);
+      console.log('removing this keyword: '+removeFlag)
+      // console.log(this.props.filters)
+    }
+    else{
+    var newFlag = flags.split(',');
+    newFlag = newFlag[newFlag.length-1];
+    this.props.callbacks._filterAddFlagKeyword(newFlag);
+    } 
+    },
   propTypes:{
           // allowCreate: React.propTypes.bool,
           hint: React.PropTypes.string,
@@ -41,7 +48,7 @@ var FlagDisplay = React.createClass({
           multi //test if this is needed
           placeholder="Add keywords here"
           options={this.props.options} //won't need. Test.
-          onChange={this.AddFlag} />
+          onChange={this.ManageFlag} />
       </div>
     )
   }
