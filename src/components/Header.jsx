@@ -18,15 +18,15 @@ var Header = React.createClass({
   },
   styles:{
     banner:{
-      'text-align':'center',
+      'textAlign':'center',
       'color':'#fff',
-      'font-size':'30px',
+      'fontSize':'30px',
       'font':'Avenir sans-serif',
       'padding':'auto'
     },
     header:{
       'top':'0',
-      'background-color':'rgb(40,32,40)'
+      'backgroundColor':'rgb(40,32,40)'
     }
   }
 });

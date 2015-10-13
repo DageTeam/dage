@@ -27,7 +27,7 @@ var FlaggedEmailList = React.createClass({
   },
   styles:{
     emailListBox:{
-      'margin-left': '5%',
+      'marginLeft': '5%',
       'width': '90%',
       'height': '600px',
       'overflow': 'scroll',

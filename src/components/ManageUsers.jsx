@@ -81,13 +81,13 @@ var ManageUsers = React.createClass({
 
   styles:{
     table:{
-      'margin-top':'0',
+      'marginTop':'0',
       'position':'relative',
       'width':'75%',
     },
     rows:{
-      'border-bottom':'3px solid purple',
-      'margin-bottom':'15px',
+      'borderBottom':'3px solid purple',
+      'marginBottom':'15px',
     },
   },
 });

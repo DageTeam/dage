@@ -148,7 +148,7 @@ export class MainView extends React.Component {
   flaggedEmailsViewRender() {
     return (
       <div>
-        <h1 style={{'padding-top':'60px', 'text-align':'center'}}>You Have New Alerts</h1>
+        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>You Have New Alerts</h1>
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ this.callbacks }
@@ -162,7 +162,7 @@ export class MainView extends React.Component {
   customizeFiltersViewRender() {
     return (
       <div className='container text-center'>
-        <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
+        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
           userSession={this.props.userSession}
@@ -184,7 +184,7 @@ export class MainView extends React.Component {
   manageUserRender() {
     return (
       <div>
-        <h1 style={{'padding-top': '60px', 'text-align': 'center'}}>User Accounts</h1>
+        <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
         <ManageUsers state={this.props.emails} />
       </div>
     );
