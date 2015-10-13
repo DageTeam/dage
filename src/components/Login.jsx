@@ -22,9 +22,6 @@ var Login = React.createClass({
                 <input type='password' id='password' ref='password' />
 
                 <input type='submit' style={{textAlign: 'right', }}  />
-
-                
-                                                                                                                                                                                                                                                                                                                                                                                                </form>
       );
   },
 });
