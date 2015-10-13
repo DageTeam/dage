@@ -69,7 +69,7 @@ var ManageUsers = React.createClass({
   // ],
 
   render: function() {
-    console.log(this.props.userArray);
+    console.log('testdsfsdfsadfdsffdssdfasdaf',this.props.userArray);
     return (
       <div className='container'>
         <Griddle results={this.props.userArray}

@@ -18,10 +18,14 @@ import {
   FILTER_FLAG_POST_SUCCESS,
   FILTER_FLAG_POST_REQUEST,
   FILTER_FLAG_POST_ERROR,
+
+  FILTER_REMOVE_FLAG_KEYWORD,
+  FILTER_FLAG_REMOVE_SUCCESS,
+  FILTER_FLAG_REMOVE_REQUEST,
+  FILTER_FLAG_REMOVE_ERROR,
 } from 'constants/filters';
 
 export function filterArrayFetch() {
-  console.log('working here!!!!!!!!')
   return dispatch => {
     dispatch(filterArrayRequest());
     return fetch('http://localhost:4000/filterData')
@@ -131,5 +135,42 @@ export function filterFlagPostSuccess(newFlag, Id){
 export function filterFlagPostError(){
   return{
     type: FILTER_FLAG_POST_ERROR,
+  }
+}
+
+export function filterRemoveFlagKeyword(username, filterId, keyword){
+  return dispatch => {
+    dispatch(filterFlagRemoveRequest());
+    return request
+      .post('http://127.0.0.1:4000/removekeyword')
+      .send({username: username,filterId: filterId,keyword:keyword})
+      .end((err, res) => {
+        if(err){
+          dispatch(filterFlagRemoveError())
+          console.log('error')
+        }else{
+          dispatch(filterArrayFetch());
+          dispatch(filterFlagPostSuccess())
+          console.log('success')
+        }
+      });
+  }
+}
+
+export function filterFlagRemoveRequest(){
+  return {
+    type:FILTER_FLAG_REMOVE_REQUEST
+  }
+}
+
+export function filterFlagRemoveSuccess(){
+  return{
+    type:FILTER_FLAG_REMOVE_SUCCESS
+  }
+}
+
+export function filterFlagRemoveError(){
+  return{
+    type:FILTER_FLAG_REMOVE_ERROR
   }
 }

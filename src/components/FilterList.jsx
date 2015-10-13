@@ -5,13 +5,7 @@ var FilterList = React.createClass({
   propTypes: {
     label: React.PropTypes.string
   },
-  options: [
-    {value: 'First Filter', label: 'FIRST FILTER'},
-    {value: 'Second Filter', label: 'Second FILTER'},
-    {value: 'Third Filter', label: 'Third FILTER'},
-    {value: 'Fourth Filter', label: 'Fourth FILTER'},
-    {value: 'Fifth Filter', label: 'Fifth FILTER'},
-  ],
+
   selectFilter : function(filterId) {
     // let filterId = arguments[1][0].value;
     //add filter if filterId is a string. Maybe warn the users to pick a string for new filters.
@@ -28,17 +22,19 @@ var FilterList = React.createClass({
     }).map(filterObj => {
       return filterObj.label;
     })
+
     return (
-      <div className='col-xs-10'>
-        <h3 className='col-xs-10'>Filter List</h3>
+      <div className='col-xs-6'>
+        <h3>Filter List</h3>
+        <h6>Select a Filter or To Add a New Filter, Start Typing Then Hit Enter </h6>
         <Select
           allowCreate
           placeholder={ currentFilter }
           options= {this.props.options.filterOptions}
-          onChange= {this.selectFilter} />
+          onChange= {this.selectFilter} />          
       </div>
       )
-  }
+    }
 });
 
 

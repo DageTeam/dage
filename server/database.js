@@ -12,7 +12,8 @@ var markChecked = function markChecked(emailID) {
   var checkString = 'UPDATE emailTable SET checked="1" WHERE id=' + emailID;
 
   db.run(checkString);
-  console.log('markChecked fx ran/////');
+
+  // console.log('markChecked fx ran/////');
 };
 
 //fx to update the emailTable  to mark an email as flagged
@@ -20,7 +21,21 @@ var markFlagged = function markFlagged(emailID) {
   var flagString = 'UPDATE emailTable SET flagged="1" WHERE id=' + emailID;
 
   db.run(flagString);
-  console.log('markFlagged fx ran/////');
+
+  // console.log('markFlagged fx ran/////');
+};
+
+var unflagEmail = function unflagEmail(emailID, cb) {
+  var flagString = 'UPDATE emailTable SET flagged="0" WHERE id=' + emailID;
+
+  db.all(flagString, function(error, response) {
+    if (error) {
+      console.log('error triggered', error);
+      cb('there was an error');
+    } else {
+      cb('success');
+    }
+  });
 };
 
 //insert email into emailTable
@@ -45,7 +60,8 @@ var insertIntoContextTable = function insertIntoContextTable(userID, filterID, e
   var flaggedContent = 'INSERT INTO contextTable (userID, filterID, emailID, flaggedKeyword, context) VALUES (' + userID + ',' + filterID + ',' + emailID + ',\'' +  flaggedKeyword + '\',\'' + context +  '\')';
 
   db.run(flaggedContent);
-  console.log('insertIntoContextTable fx ran/////');
+
+  // console.log('insertIntoContextTable fx ran/////');
 };
 
 //fx to insert into tagsTable, eg tagName=racist, keyword=coolie
@@ -53,7 +69,8 @@ var insertIntoTagsTable = function insertIntoTagsTable(tagName, keyword) {
   var query = 'INSERT INTO tagsTable(tagName, keyword) VALUES (\'' +  tagName + '\',\'' + keyword +  '\')';
 
   db.run(query);
-  console.log('insertIntoTagsTable fx ran/////');
+
+  // console.log('insertIntoTagsTable fx ran/////');
 };
 
 //setting up sqlite3 database w/ potential email schema
@@ -100,23 +117,56 @@ var insertFilter = function insertFilter(body, cb) {
           console.log('this is the error', error);
           cb(err);
         } else {
-          db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response){
-            if(error){
-              console.log('Error when selecting filterName row')
+          db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response) {
+            if (error) {
+              console.log('Error when selecting filterName row');
               cb(error);
-            }
-            else{
+            } else {
               cb(response[0].id, response[0].filterName);
             }
-          })
+          });
         }
       });
     }
   });
 };
 
-//fx to add a new filter into the database for the user
+//fx to add a new flag into the database for the user
 var insertKeyword = function insertKeyword(body, cb) {
+  var username = body.username;
+  var filterId = body.filterId;
+  var keyword = body.keyword;
+  var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
+
+  //get user id from database
+  db.all(getUserIDString, function(err, userInfo) {
+    if (err) {
+      console.log('There was an error finding the userID for username', username);
+    } else {
+      console.log('found username', userInfo);
+      var userID = userInfo[0].id;
+      var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterId + ',\'' + keyword + '\')';
+      db.all(queryString, function(error, response) {
+        if (error) {
+          console.log('this is the error', error);
+          cb(err);
+        } else {
+          // console.log('this is the insertIntoKeywordTable response', response);
+          db.all('SELECT id from keywordTable where filterID="' + filterId + '"and keyword="' + keyword + '"', function(err, resp) {
+            if (err) {
+              console.log('there was an error TITO');
+            }else {
+              cb(keyword, resp[0].id);
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
+//fx to remove flag from the database for the user
+var removeKeyword = function removeKeyword(body, cb){
   var username = body.username;
   var filterId = body.filterId;
   var keyword = body.keyword;
@@ -128,27 +178,17 @@ var insertKeyword = function insertKeyword(body, cb) {
     } else {
       console.log('found username', userInfo);
       var userID = userInfo[0].id;
-      var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterId + ',\'' + keyword + '\')';
-      db.all(queryString, function(error, response){
+      var queryString = 'DELETE from keywordTable where userID="' + userID + '" AND filterID=' + filterId + ' AND id=' + parseInt(keyword) + '';
+      db.all(queryString,function(error, response){
         if (error) {
-          console.log('this is the error', error);
           cb(err);
         } else {
-          // console.log('this is the insertIntoKeywordTable response', response);
-          db.all('SELECT id from keywordTable where filterID="'+filterId+'"and keyword="'+keyword+'"', function(err, resp){
-            if(err){
-              console.log('there was an error TITO')
-            }else{
-              cb(keyword, resp[0].id);
-            }
-          })
+          cb('removed keyword');
         }
       })
     }
-    });
-};
-
-
+  })
+}
 //fx to insert new user into userTable
 var insertIntoUserTable = function insertIntoUserTable(username, password, permissionGroup, name, title, email, department, managerID) {
   var active = 1;
@@ -168,7 +208,6 @@ var insertIntoUserTable = function insertIntoUserTable(username, password, permi
 
   db.run(sqlQuery);
 };
-
 
 //TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
 var badwords = require('./badWordsArray.js');
@@ -428,7 +467,7 @@ var createTagsTable = function createTagsTable() {
 
 //fx to return the total number of users in the userTable
 var getNumOfUsers = function getNumOfUsers() {
-  var sqlQuery = 'SELECT COUNT(*) FROM userTable'
+  var sqlQuery = 'SELECT COUNT(*) FROM userTable';
   var cb = function cb(error, response) {
     if (error) {
       console.log('getNumOfUsers...', error);
@@ -439,6 +478,7 @@ var getNumOfUsers = function getNumOfUsers() {
       }
     }
   };
+
   return db.all(sqlQuery, cb);
 };
 
@@ -446,7 +486,7 @@ var getNumOfUsers = function getNumOfUsers() {
 var resetPassword = function resetPassword(username, callback) {
   var salt = bcrypt.genSaltSync(10);
   var password = bcrypt.hashSync('password', salt);
-  var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password +'\" WHERE username =\"' + username + '\"';
+  var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password + '\" WHERE username =\"' + username + '\"';
   var cb = function cb(error, response) {
     if (error) {
       console.log('resetPassword error...', error);
@@ -467,7 +507,7 @@ var markUserInactiveInUserTable = function markUserInactiveInUserTable(username)
     if (error) {
       console.log('markUserInactiveInUserTable error...', error);
     } else {
-      console.log('Successful marked user:',username,'as inactive!');
+      console.log('Successful marked user:', username, 'as inactive!');
     }
   });
 };
@@ -497,11 +537,13 @@ createTagsTable();
 module.exports = {
   markChecked,
   markFlagged,
+  unflagEmail,
   insertIntoEmailTable,
   insertIntoContextTable,
   insertEmail,
   insertFilter,
   insertKeyword,
+  removeKeyword,
   insertIntoTagsTable,
   insertIntoUserTable,
   getUser,
@@ -514,5 +556,5 @@ module.exports = {
   getNumOfUsers,
   resetPassword,
   markUserInactiveInUserTable,
-  getAllActiveUsers
+  getAllActiveUsers,
 };

@@ -97,7 +97,6 @@ export default createReducer(initialState, {
     }
   },
   [USER_ARRAY_REQUEST_FAILED]: (state, payload) => {
-    console.log('fuck you');
     return {
       ...state,
       userArrayRequestError: payload.error,

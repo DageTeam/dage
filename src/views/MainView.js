@@ -18,6 +18,7 @@ import {
   emailShowOneFlag,
   emailShowAllFlags,
   emailShowComplete,
+  unflagEmail,
 } from 'actions/emails';
 
 import {
@@ -25,6 +26,7 @@ import {
   filterTypeSelect,
   filterTypeAdd,
   filterAddFlagKeyword,
+  filterRemoveFlagKeyword,
 } from 'actions/filters';
 
 import {
@@ -58,8 +60,8 @@ const mapStateToProps = (state) => ({
   filters: state.filters,
   navigation: state.navigation,
   userSession: state.userSession,
-  state: state,
   manageUsers: state.manageUsers,
+  state: state,
 });
 export class MainView extends React.Component {
   static propTypes = {
@@ -67,12 +69,11 @@ export class MainView extends React.Component {
     emails: React.PropTypes.object,
     filters: React.PropTypes.object,
     userSession: React.PropTypes.object,
-    manageUsers: React.PropTypes.object
+    manageUsers: React.PropTypes.object,
   }
 
   constructor(props) {
     super();
-    console.log('this is props,', props);
     props.dispatch(applicationLoaded());
     this.callbacks = {
       _navigationRouteSelect: route => {
@@ -83,11 +84,11 @@ export class MainView extends React.Component {
         this.props.dispatch(emailArrayFetch(param));
       },
 
-      _userArrayFetch : param => {
+      _userArrayFetch: param => {
         this.props.dispatch(userArrayFetch(param));
       },
 
-      _emailShowOneFlag : emailId => {
+      _emailShowOneFlag: emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
       },
 
@@ -99,6 +100,10 @@ export class MainView extends React.Component {
         this.props.dispatch(emailShowComplete(emailId));
       },
 
+      _unflagEmail: emailId => {
+        this.props.dispatch(unflagEmail(emailId));
+      },
+
       _filterArrayFetch: () => {
         this.props.dispatch(filterArrayFetch());
       },
@@ -106,11 +111,16 @@ export class MainView extends React.Component {
       _filterTypeSelect: filterId => {
         this.props.dispatch(filterTypeSelect(filterId));
       },
+
       _filterTypeAdd: (filterId, username) => {
-        this.props.dispatch(filterTypeAdd(filterId,username));
+        this.props.dispatch(filterTypeAdd(filterId, username));
       },
+
       _filterAddFlagKeyword: (keyword) => {
-        this.props.dispatch(filterAddFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected,keyword));
+        this.props.dispatch(filterAddFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected, keyword));
+      },
+      _filterRemoveFlagKeyword: (keyword) => {
+        this.props.dispatch(filterRemoveFlagKeyword(this.props.state.userSession.username, this.props.state.filters.filterTypeSelected, keyword));
       },
       _flagHighlightRender: (inputText, keyword) => {
         function flatMap(array, fn) {
@@ -150,7 +160,7 @@ export class MainView extends React.Component {
   flaggedEmailsViewRender() {
     return (
       <div>
-        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>You Have New Alerts</h1>
+        <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have New Alerts</h1>
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ this.callbacks }
@@ -160,11 +170,28 @@ export class MainView extends React.Component {
     );
   }
 
-
   customizeFiltersViewRender() {
+    if(this.props.state.filters.isFetchingFilters || this.props.state.filters.isPostingFlag){
+      return(
+        <div className='container text-center'>
+          <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
+          <FilterList
+            options={ this.props.filters }
+            user={this.props.userSession.username}
+            callbacks={ this.callbacks }
+            filters={this.props.state.filters} />
+          <FlagList
+            options={ this.props.filters.flagOptionsCurrent }
+            callbacks={ this.callbacks }
+            allowCreate
+            filters={this.props.state.filters} />
+          <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}} />
+        </div>
+      )
+    }else{
     return (
       <div className='container text-center'>
-        <h1 style={{'paddingTop':'60px', 'textAlign':'center'}}>Dage Customize Filters</h1>
+        <h1 style={{paddingTop:'60px', textAlign:'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
           userSession={this.props.userSession}
@@ -172,9 +199,11 @@ export class MainView extends React.Component {
         <FlagList
           options={ this.props.filters.flagOptionsCurrent }
           callbacks={ this.callbacks }
-          allowCreate  />
+          allowCreate
+          filters={this.props.state.filters} />
       </div>
     );
+    }
   }
 
   dashboardViewRender() {
@@ -184,7 +213,8 @@ export class MainView extends React.Component {
   }
 
   manageUserRender() {
-    console.log('manageruser triggered');
+    console.log('manage user triggered');
+    console.log(this.props)
     return (
       <div>
         <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
@@ -204,10 +234,14 @@ export class MainView extends React.Component {
 
     // this.props.dispatch(applicationLoaded())
     if (!this.props.userSession.authenticated) {
-      console.log('this is state,', this.props);
       return (
         <div>
-          <Login callbacks={ this.callbacks }/>
+        <Header />
+          <div style={{'margin-top':'20%', 'margin-left':'30%'}}>
+            <Login callbacks={ this.callbacks }/>
+            <Footer />
+            <ScriptLoader />
+          </div>
         </div>
         );
     } else {
