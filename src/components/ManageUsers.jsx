@@ -69,12 +69,12 @@ var ManageUsers = React.createClass({
   ],
 
   render: function() {
-    console.log(this.props.state.emailsArray);
+    console.log(this.props.userArray);
     return (
       <div className='container'>
-        <Griddle results={this.props.state.emailsArray} columnMetadata={this.exampleMetadata}
+        <Griddle results={this.props.userArray} columnMetadata={this.exampleMetadata}
         showFilter={true} showSettings={true}  className={this.styles.table}
-        columns={['sender','recipient','focusLevel']} noDataMessage={'No data could be found.'}/>
+        columns={['username','active','title']} noDataMessage={'No data could be found.'}/>
       </div>
       );
   },
