@@ -219,6 +219,15 @@ app.post('/userAdd', function(req, res) {
   });
 });
 
+//url to reset password
+app.post('/passwordReset', function(req, res) {
+  db.resetPassword(req.body.username, function() {
+    res.send({
+      message: 'Password Successfully Resetted',
+    });
+  });
+});
+
 app.post('/', function(req, res) {
   res.send('You posted!');
 });

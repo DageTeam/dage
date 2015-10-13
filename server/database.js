@@ -443,7 +443,7 @@ var getNumOfUsers = function getNumOfUsers() {
 };
 
 //fx to reset user password to 'password', salted and hashed
-var resetPassword = function resetPassword(username) {
+var resetPassword = function resetPassword(username, callback) {
   var salt = bcrypt.genSaltSync(10);
   var password = bcrypt.hashSync('password', salt);
   var sqlQuery = 'UPDATE userTable SET saltedHash=\"' + password +'\" WHERE username =\"' + username + '\"';
@@ -452,10 +452,11 @@ var resetPassword = function resetPassword(username) {
       console.log('resetPassword error...', error);
     } else {
       console.log('Successful password reset!');
+      callback();
     }
   };
 
-  return db.all(sqlQuery, cb);
+  db.all(sqlQuery, cb);
 };
 
 //fx to mark user as inactive.
