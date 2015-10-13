@@ -45,8 +45,10 @@ import {
 
 import {
   userAdd,
-  userArrayRequest
-} from 'actions/manageUsers';
+  userToggleActive,
+  userPasswordReset,
+  userArrayRequest,
+} from 'actions/manageUsers'
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -58,6 +60,7 @@ const mapStateToProps = (state) => ({
   filters: state.filters,
   navigation: state.navigation,
   userSession: state.userSession,
+  manageUsers: state.manageUsers,
   state: state,
 });
 export class MainView extends React.Component {
@@ -180,7 +183,7 @@ export class MainView extends React.Component {
           <FlagList
             options={ this.props.filters.flagOptionsCurrent }
             callbacks={ this.callbacks }
-            allowCreate  
+            allowCreate
             filters={this.props.state.filters} />
           <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}} />
         </div>
@@ -196,7 +199,7 @@ export class MainView extends React.Component {
         <FlagList
           options={ this.props.filters.flagOptionsCurrent }
           callbacks={ this.callbacks }
-          allowCreate  
+          allowCreate
           filters={this.props.state.filters} />
       </div>
     );
@@ -210,10 +213,12 @@ export class MainView extends React.Component {
   }
 
   manageUserRender() {
+    console.log('manage user triggered');
+    console.log(this.props)
     return (
       <div>
-        <h1 style={{paddingTop: '60px', textAlign: 'center'}}>User Accounts</h1>
-        <ManageUsers state={this.props.emails} />
+        <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
+        <ManageUsers userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }

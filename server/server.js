@@ -224,6 +224,27 @@ app.post('/createUser', function(req, res) {
   });
 });
 
+//url to create admin users, accessible from client
+app.post('/userAdd', function(req, res) {
+  var salt = bcrypt.genSaltSync(10);
+  console.log('userAdd triggered')
+  req.body.hash = bcrypt.hashSync(req.body.password, salt);
+  db.createUser(req.body, function() {
+    res.send({
+      message: 'user added',
+    });
+  });
+});
+
+//url to reset password
+app.post('/passwordReset', function(req, res) {
+  db.resetPassword(req.body.username, function() {
+    res.send({
+      message: 'Password Successfully Resetted',
+    });
+  });
+});
+
 app.post('/', function(req, res) {
   res.send('You posted!');
 });
