@@ -16,7 +16,7 @@ var FilterList = React.createClass({
     // let filterId = arguments[1][0].value;
     //add filter if filterId is a string. Maybe warn the users to pick a string for new filters.
     if(typeof filterId !== 'number'){
-      this.props.callbacks._filterTypeAdd(filterId, this.props.user);
+      this.props.callbacks._filterTypeAdd(filterId, this.props.userSession.username);
       this.props.callbacks._filterArrayFetch();
     }
     this.props.callbacks._filterTypeSelect(filterId);

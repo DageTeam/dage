@@ -152,6 +152,7 @@ export class MainView extends React.Component {
         <FlaggedEmailList
           state={ this.props.emails }
           callbacks={ this.callbacks }
+          userSession={ this.props.userSession }
         />
       </div>
     );
@@ -164,7 +165,7 @@ export class MainView extends React.Component {
         <h1 style={{'padding-top':'60px', 'text-align':'center'}}>Dage Customize Filters</h1>
         <FilterList
           options={ this.props.filters }
-          user={this.props.userSession.username}
+          userSession={this.props.userSession}
           callbacks={ this.callbacks } />
         <FlagList
           options={ this.props.filters.flagOptionsCurrent }
