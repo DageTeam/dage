@@ -27,54 +27,60 @@ var ManageUsers = React.createClass({
     },
   ],
 
-  exampleMetadata: [
-    {
-        'columnName': 'name',
-        'order': 9,
-        'locked': false,
-        'visible': true,
-        'displayName': 'Employee Name',
-      },
-      {
-        'columnName': 'city',
-        'order': 8,
-        'locked': false,
-        'visible': true,
-      },
-      {
-        'columnName': 'state',
-        'order': 7,
-        'locked': false,
-        'visible': true,
-      },
-      {
-        'columnName': 'country',
-        'order': 6,
-        'locked': false,
-        'visible': true,
-      },
-      {
-        'columnName': 'company',
-        'order': 5,
-        'locked': false,
-        'visible': true,
-      },
-      {
-        'columnName': 'favoriteNumber',
-        'order':  4,
-        'locked': false,
-        'visible': true,
-        'displayName': 'Favorite Number',
-      },
-  ],
+  // exampleMetadata: [
+  //   {
+  //       'columnName': 'name',
+  //       'order': 9,
+  //       'locked': false,
+  //       'visible': true,
+  //       'displayName': 'Employee Name',
+  //     },
+  //     {
+  //       'columnName': 'city',
+  //       'order': 8,
+  //       'locked': false,
+  //       'visible': true,
+  //     },
+  //     {
+  //       'columnName': 'state',
+  //       'order': 7,
+  //       'locked': false,
+  //       'visible': true,
+  //     },
+  //     {
+  //       'columnName': 'country',
+  //       'order': 6,
+  //       'locked': false,
+  //       'visible': true,
+  //     },
+  //     {
+  //       'columnName': 'company',
+  //       'order': 5,
+  //       'locked': false,
+  //       'visible': true,
+  //     },
+  //     {
+  //       'columnName': 'favoriteNumber',
+  //       'order':  4,
+  //       'locked': false,
+  //       'visible': true,
+  //       'displayName': 'Favorite Number',
+  //     },
+  // ],
 
   render: function() {
     console.log(this.props.userArray);
     return (
       <div className='container'>
-        <Griddle results={this.props.userArray} columnMetadata={this.exampleMetadata}
+        <Griddle results={this.props.userArray}
         showFilter={true} showSettings={true}  className={this.styles.table}
-        columns={['username','active','title']} noDataMessage={'No data could be found.'}/>
+        columns={['username',
+                  'title',
+                  'email',
+                  'department',
+                  'managerID',
+                  'active'
+                  ]} noDataMessage={'No data could be found.'}/>
       </div>
       );
   },
