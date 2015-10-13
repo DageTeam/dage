@@ -29,8 +29,6 @@ export default createReducer(initialState, {
   },
 
   [USER_FETCH_SUCCEEDED]: (state, payload) => {
-    console.log('user fetched triggered');
-    console.log('this is payload', payload);
     return {
       ...state,
       authenticated: true,

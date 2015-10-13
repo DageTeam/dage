@@ -38,7 +38,7 @@ const filters = {
   flagOptionsObject: {},
   flagOptionsCurrent: [],
   isPostingFilters: false,
-  isPostingFlags: false,
+  isPostingFlag: false,
 }
 
 const initialState = filters;

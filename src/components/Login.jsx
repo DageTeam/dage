@@ -14,15 +14,16 @@ var Login = React.createClass({
 
   render: function() {
     return (
+      <div>
         <form onSubmit={this.handleFormSubmit}>
                 <label htmlFor='username'>Username</label>
                 <input type='username' id='username' defaultValue='' ref='username' />
 
                 <label htmlFor='password'>Password</label>
                 <input type='password' id='password' ref='password' />
-
-                <input type='submit' style={{textAlign: 'right'}}  />
-              </form>
+                <input type='submit' style={{textAlign: 'right' }}  />
+        </form>
+      </div>
       );
   },
 });

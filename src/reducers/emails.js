@@ -55,7 +55,7 @@ export default createReducer(initialState, {
 
   [EMAIL_ARRAY_FETCH_SUCCESS]: (state, payload) => {
     return Object.assign({}, state, {
-      isFetching: false,
+      isFetchingEmail: false,
       lastUpdated: payload.receivedAt,
       emailsArray: payload.emailsArray,
     })

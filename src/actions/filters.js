@@ -18,10 +18,14 @@ import {
   FILTER_FLAG_POST_SUCCESS,
   FILTER_FLAG_POST_REQUEST,
   FILTER_FLAG_POST_ERROR,
+
+  FILTER_DELETE_FLAG_KEYWORD,
+  FILTER_FLAG_REMOVE_SUCCESS,
+  FILTER_FLAG_REMOVE_REQUEST,
+  FILTER_FLAG_REMOVE_ERROR,
 } from 'constants/filters';
 
 export function filterArrayFetch() {
-  console.log('working here!!!!!!!!')
   return dispatch => {
     dispatch(filterArrayRequest());
     return fetch('http://localhost:4000/filterData')
@@ -132,4 +136,20 @@ export function filterFlagPostError(){
   return{
     type: FILTER_FLAG_POST_ERROR,
   }
+}
+
+export function filterDeleteFlagKeyword(){
+
+}
+
+export function filterFlagRemoveRequest(){
+
+}
+
+export function filterFlagRemoveSuccess(){
+
+}
+
+export function filterFlagRemoveError(){
+
 }
