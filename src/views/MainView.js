@@ -154,7 +154,6 @@ export class MainView extends React.Component {
 
 
   customizeFiltersViewRender() {
-    console.log(this.props.state.filters)
     if(this.props.state.filters.isFetchingFilters || this.props.state.filters.isPostingFlag){
       return(
         <div className='container text-center'>
@@ -164,12 +163,12 @@ export class MainView extends React.Component {
             user={this.props.userSession.username}
             callbacks={ this.callbacks }
             filters={this.props.state.filters} />
-          <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'0','left':'37%','z-index':'1'}} />
           <FlagList
             options={ this.props.filters.flagOptionsCurrent }
             callbacks={ this.callbacks }
             allowCreate  
             filters={this.props.state.filters} />
+          <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}} />
         </div>
       )
     }else{

@@ -5,9 +5,24 @@ var Select = require('react-select');
 
 var FlagDisplay = React.createClass({
   AddFlag: function(flags){
-    var newFlag = flags.split(',');
-    newFlag = newFlag[newFlag.length-1];
-    this.props.callbacks._filterAddFlagKeyword(newFlag);
+    var removeFlag;
+    var checkFlag ={};
+    var flagsArr = flags.split(',');
+    for(var i = 0; i < this.props.options.length; i ++){
+      if(flagsArr.indexOf(this.props.options[i].value.toString())===-1){
+        checkFlag[this.props.options[i].value]=false;
+      }else{
+        checkFlag[this.props.options[i].value]=true;
+      }
+    }
+    for(var key in checkFlag){
+      if(checkFlag[key]===false){
+        removeFlag=key;
+      }
+    }
+    // var newFlag = flags.split(',');
+    // newFlag = newFlag[newFlag.length-1];
+    // this.props.callbacks._filterAddFlagKeyword(newFlag);
   },
   propTypes:{
           // allowCreate: React.propTypes.bool,
