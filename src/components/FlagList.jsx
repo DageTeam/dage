@@ -21,9 +21,7 @@ var FlagDisplay = React.createClass({
       }
     }
     if(removeFlag){
-      // this.props.callbacks._filterRemoveFlagKeyword(removeFlag);
-      console.log('removing this keyword: '+removeFlag)
-      // console.log(this.props.filters)
+      this.props.callbacks._filterRemoveFlagKeyword(removeFlag);
     }
     else{
     var newFlag = flags.split(',');

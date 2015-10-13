@@ -118,7 +118,10 @@ app.post('/submitkeyword', function(req, res) {
 });
 
 app.post('/removekeyword', function(req, res){
-  
+  db.removeKeyword(req.body, function(message){
+    console.log(message);
+    res.send(message);
+  })
 
 });
 

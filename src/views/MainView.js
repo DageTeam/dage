@@ -25,6 +25,7 @@ import {
   filterTypeSelect,
   filterTypeAdd,
   filterAddFlagKeyword,
+  filterRemoveFlagKeyword,
 } from 'actions/filters';
 
 import {
