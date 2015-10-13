@@ -137,7 +137,7 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(userArrayRequest())
+    this.props.dispatch(userArrayRequest());
     this.props.dispatch(emailArrayFetch());
     this.props.dispatch(filterArrayFetch());
   }
@@ -182,10 +182,11 @@ export class MainView extends React.Component {
   }
 
   manageUserRender() {
+    console.log('manageruser triggered');
     return (
       <div>
         <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
-        <ManageUsers state={this.props.emails} />
+        <ManageUsers userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }
