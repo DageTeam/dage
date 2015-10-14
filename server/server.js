@@ -245,6 +245,16 @@ app.post('/passwordReset', function(req, res) {
   });
 });
 
+//url to mark user active/inactive password
+app.post('/toggleUser', function(req, res) {
+  console.log('hello there. toggleing user')
+  db.toggleUserActive(req.body.username, req.body.active, function() {
+      res.send({
+        message: 'User Successfully Toggled',
+      });
+  });
+});
+
 app.post('/', function(req, res) {
   res.send('You posted!');
 });
