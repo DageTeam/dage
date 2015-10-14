@@ -79,7 +79,7 @@ export function userAddFailed(error) {
 }
 
 //userToggleActive
-export function userToggleActive(username) {
+export function userToggleActive(username, active) {
   return dispatch => {
     dispatch({
       type: USER_TOGGLE_ACTIVE,
@@ -88,15 +88,13 @@ export function userToggleActive(username) {
 
     return request
       .post(serverUrl + '/toggleUser')
-      .send(data)
+      .send({ username, active })
       .end((err, res) => {
         if (err) {
           dispatch(userToggleActiveFailed(err));
         } else {
-          //if the server responds back with message='userToggled'
-          if (res.body.message === 'userAdded') {
-            //reload the page, which should rerun get All Active Users.?????
-            dispatch(userToggleActiveSuccess(res.body.data))
+          if (res.body.message === 'User Successfully Toggled') {
+            dispatch(userToggleActiveSuccess(username));
           } else {
             console.log('Failed to toggle user');
             dispatch(userToggleActiveFailed(err));

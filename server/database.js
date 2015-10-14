@@ -512,6 +512,23 @@ var markUserInactiveInUserTable = function markUserInactiveInUserTable(username)
   });
 };
 
+//fx to toggle user as inactive.
+var toggleUserActive = function toggleUserActive(username, active, cb) {
+  var deactivate = 'UPDATE userTable SET active=0 WHERE username =\'' + username + '\'';
+  var activate = 'UPDATE userTable SET active=1 WHERE username =\'' + username + '\'';
+
+  var query = (active===1)? deactivate:activate;
+
+  db.all(query, function(error, response) {
+    if (error) {
+      console.log('toggleUserActive error...', error);
+    } else {
+      console.log('Successful marked user:', username);
+      cb();
+    }
+  });
+};
+
 //FX to get all active users in the userTable
 var getAllActiveUsers = function getAllActiveUsers(cb) {
   var queryString = 'SELECT * FROM userTable WHERE active = "1"';
@@ -557,4 +574,5 @@ module.exports = {
   resetPassword,
   markUserInactiveInUserTable,
   getAllActiveUsers,
+  toggleUserActive,
 };
