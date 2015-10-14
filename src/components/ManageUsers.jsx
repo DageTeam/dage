@@ -3,6 +3,7 @@ var Griddle = require('griddle-react');
 var ReactBsTable = require("react-bootstrap-table");
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+// var UserPasswordReset = require('../actions/manageUsers').userPasswordReset;
 
 var ManageUsers = React.createClass({
   products: [
@@ -32,31 +33,37 @@ var ManageUsers = React.createClass({
         price: 160
     }
   ],
-  selectRowProp: {
-    mode: "checkbox",  //checkbox for multi select, radio for single select.
-    clickToSelect: true,   //click row will trigger a selection on that row.
-    bgColor: "rgb(238, 193, 213)"   //selected row background color
-  },
-  addUser: function(){
-    var modal = document.getElementById('myModal');
-    $('#myModal').modal();
-  },
+  // resetPassword: function(){
+  //   _this.props.callbacks._userPasswordReset(data.username);
+  // },
   render: function() {
+    var _this = this;
+    console.log('test')
+    var selectRowProp = {
+      mode: 'checkbox',  //checkbox for multi select, radio for single select.
+      clickToSelect: true,   //click row will trigger a selection on that row.
+      bgColor: 'rgb(238, 193, 213)',
+      context: this,
+      onSelect: function(data) {
+        // _this.props.callbacks._userPasswordReset(data.username);
+      },
+    };
     return (
       <div className='container'>
-        <Griddle results={this.props.userArray}
-                          showFilter={true}
-                          showSettings={true}
-                          className={this.styles.table}
-                          useFixedLayout={false}
-        columns={['username',
-                  'title',
-                  'email',
-                  'department',
-                  'managerID',
-                  'active'
-                  ]}
-        noDataMessage={'No data could be found.'}/>
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
+      float: 'right'}} onClick={this.props.callbacks._userPasswordReset(data.username)}>Reset PW</button>
+      <br />
+        <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
+         selectRow={selectRowProp} search={true}>
+          
+          <TableHeaderColumn dataField="username" isKey={true} dataAlign="right" dataSort={true}>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="title" dataSort={true}>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="email" dataAlign="center">Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="department" dataAlign="center">Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="managerID" dataAlign="center">Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="active" dataAlign="center">Product Price</TableHeaderColumn>
+        </BootstrapTable>
+        
       </div>
       );
   },

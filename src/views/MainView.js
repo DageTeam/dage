@@ -146,7 +146,11 @@ export class MainView extends React.Component {
       },
       _deleteToken: () =>{
         this.props.dispatch(deleteToken());
-      }
+      },
+
+      _userPasswordReset: username => {
+        this.props.dispatch(userPasswordReset(username));
+      },
     };
   }
 
@@ -220,7 +224,7 @@ export class MainView extends React.Component {
     return (
       <div>
         <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
-        <ManageUsers userArray={this.props.manageUsers.userArray} />
+        <ManageUsers callbacks={this.callbacks } userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }
