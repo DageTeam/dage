@@ -98,29 +98,15 @@ export function userFetchError(error) {
   };
 }
 
-export function deleteToken(data) {
-  window.localStorage.setItem('dage-token', '');
+export function deleteToken() {
   return dispatch => {
     dispatch({
       type: TOKEN_DELETED,
-      payload: { data },
     });
-
-    //Took this out; as requested, only delete the local token in localStorage instead of checking in db
-    // return request
-    //   .del(/*TODO: fill in with correct token url*/)
-    //   .end((err, res) => {
-    //     err ?
-    //       dispatch(tokenDeleteError()) :
-    //       window.location.reload();
-    //   });
-  };
-}
-
-export function deleteTokenError(error) {
-  return {
-    type: TOKEN_DELETE_FAILED,
-    payload: { error },
+    window.localStorage.removeItem('dage-token');
+    dispatch({
+      type: TOKEN_DELETE_SUCCEEDED,
+    });
   };
 }
 

@@ -4742,13 +4742,12 @@ input[type=radio], input[type=checkbox] {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
 }
 
-.licenseTextBox
-{
-    width:45px;
-}
-
 .centered
 {
     float: none;
     margin: 0 auto;
+}
+
+.dage-logout:hover {
+    font-weight: bold;
 }
