@@ -44,16 +44,19 @@ var ManageUsers = React.createClass({
   render: function() {
     return (
       <div className='container'>
-        <Griddle results={this.props.userArray} showSettings={true} className={this.styles.table}
-           useFixedLayout={false} showFilter={true} showSettings={true} useGriddleStyles={false} 
-           columns={['username',
-                     'title',
-                     'email',
-                     'department',
-                     'managerID',
-                     'active'
-                     ]} 
-           noDataMessage={'No data could be found.'}/>
+        <Griddle results={this.props.userArray}
+                          showFilter={true}
+                          showSettings={true}
+                          className={this.styles.table}
+                          useFixedLayout={false}
+        columns={['username',
+                  'title',
+                  'email',
+                  'department',
+                  'managerID',
+                  'active'
+                  ]}
+        noDataMessage={'No data could be found.'}/>
       </div>
       );
   },
