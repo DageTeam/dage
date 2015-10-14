@@ -7,6 +7,16 @@ var Header = React.createClass({
   },
 
   render: function(){
+    if(!this.props.callbacks){
+      return (
+        <div>
+          <header className="site-header promote-layer" style={this.styles.header}>
+              <a style={this.styles.banner} className="dage-logo" href="/"> DÄGE
+              </a>
+          </header>
+        </div>
+      )
+    }else{
     return (
       <div>
       <header className="site-header promote-layer" style={this.styles.header}>
@@ -17,6 +27,7 @@ var Header = React.createClass({
       </header>
       </div>
       );
+    }
   },
   styles:{
     banner:{
