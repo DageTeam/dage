@@ -123,7 +123,7 @@ export function userPasswordReset(username) {
   return dispatch => {
     dispatch({
       type: USER_PASSWORD_RESET,
-      payload: { username }
+      payload: { username },
     });
 
     return request
