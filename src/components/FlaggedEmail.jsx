@@ -67,9 +67,10 @@ var FlaggedEmail = React.createClass({
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>To</span>: {this.props.recipient}</div>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>From</span>: {this.props.sender}</div>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             {markNoButton}
           </div>
           { oneFLButtonsBlock }
@@ -85,9 +86,10 @@ var FlaggedEmail = React.createClass({
         <div>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>To</span>: {this.props.recipient}</div>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>From</span>: {this.props.sender}</div>
-            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>Date</span>: {this.props.sendTime}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
+            <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             {markNoButton}
           </div>
           { allFLButtonsBlock }
@@ -103,9 +105,10 @@ var FlaggedEmail = React.createClass({
         <div>
           <div className='container' style={this.styles.rows}>
             <div style={{'float':'left', 'width':'25%'}}>
-              <div className='heading' style={{'verticalAlign':'middle'}}>To: {this.props.recipient}</div>
-              <div className='heading' style={{'verticalAlign':'middle'}}>From: {this.props.sender}</div>
-              <div className='heading' style={{'verticalAlign':'middle'}}>Date: {this.props.sendTime}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
+              <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
               {markNoButton}
             </div>
             { fullEmailButtonsBlock }
