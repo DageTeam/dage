@@ -7,7 +7,6 @@ import MainView    from 'views/MainView';
 export default (
   <Route component={CoreLayout}>
     <Route name='home' path='/' component={HomeView} />
-    <Route name='dashboard' path='/dashboard' component={DashboardView} />
     <Route name='mainview' path='/mainview' component={MainView} />
   </Route>
 );
