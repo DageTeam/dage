@@ -1,7 +1,6 @@
 var React = require('react');
 
 var Login = React.createClass({
-
   handleFormSubmit: function(event) {
     event.preventDefault();
 
@@ -11,19 +10,25 @@ var Login = React.createClass({
     });
 
   },
-
   render: function() {
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-                <label htmlFor='username'>Username</label>
-                <input type='username' id='username' defaultValue='' ref='username' />
-
-                <label htmlFor='password'>Password</label>
-                <input type='password' id='password' ref='password' />
-                <input type='submit' style={{textAlign: 'right' }}  />
-        </form>
-      </div>
+      <div className='centered'>
+         
+     <form onSubmit={this.handleFormSubmit}>
+       <ul className='form-fields'>
+         <li>
+           <input htmlFor='username' type='username' id='username' defaultValue='' ref='username'
+           placeholder='Username' style={{cursor: 'auto'}}  className='input--text'/>
+         </li>
+         <li>
+           <input className='input--text' type='password' id='password' placeholder='Password' ref='password' />
+         </li>
+         <li>
+           <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '50%'}}>Log In</button>
+         </li>
+       </ul>
+     </form>
+    </div>
       );
   },
 });
