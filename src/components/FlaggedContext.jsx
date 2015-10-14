@@ -13,7 +13,7 @@ var FlaggedContext = React.createClass({
             <th>Context</th>
           </tr>
           <tr>
-            <td style={{color: 'red'}}>{ this.props.flaggedKeyword }</td>
+            <td style={{color: '#ea6314', fontWeight:'bold'}}>{ this.props.flaggedKeyword }</td>
             <td>{ this.props.callbacks._flagHighlightRender(this.props.context, this.props.flaggedKeyword) }</td>
           </tr>
       </table>

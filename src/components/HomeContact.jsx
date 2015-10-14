@@ -8,8 +8,7 @@ var HomeContact = React.createClass({
         <section className="bg-dark">
           <div className="container">
               <div className="row">
-                  <div className="col-lg-8 col-lg-offset-2 text-center">
-                      <hr className="primary"/>
+                  <div className="col-lg-8 text-center">
                       <p>Made Possible By: </p>
                       <h2 className="section-heading">Team Dage</h2>
                   </div>

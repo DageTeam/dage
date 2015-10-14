@@ -205,7 +205,7 @@ header {
 header .header-content {
     position: relative;
     width: 100%;
-    padding: 25% 15px;
+    padding: 10% 15px;
     text-align: center;
 }
 
@@ -368,4 +368,7 @@ fieldset[disabled] .btn-primary.active {
 .bg-dark {
     color: #fff;
     background-color: #222;
+}
+a:hover{
+    text-decoration: none;
 }

@@ -26,9 +26,6 @@ var HomeNav = React.createClass({
                     <li>
                         <a className="page-scroll" href="#services">Services</a>
                     </li>
-                    <li>
-                        <a className="page-scroll" href="#contact">Contact</a>
-                    </li>
                 </ul>
             </div>
         </div>
