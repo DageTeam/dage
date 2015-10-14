@@ -10,9 +10,9 @@ import {
   USER_TOGGLE_ACTIVE_SUCCESS,
   USER_TOGGLE_ACTIVE_FAILED,
 
-  USER_PASSSWORD_RESET,
-  USER_PASSSWORD_RESET_SUCCESS,
-  USER_PASSSWORD_RESET_FAILED,
+  USER_PASSWORD_RESET,
+  USER_PASSWORD_RESET_SUCCESS,
+  USER_PASSWORD_RESET_FAILED,
 
   USER_ARRAY_REQUEST,
   USER_ARRAY_REQUEST_SUCCESS,
@@ -122,7 +122,7 @@ export function userToggleActiveFailed(error) {
 export function userPasswordReset(username) {
   return dispatch => {
     dispatch({
-      type: USER_PASSSWORD_RESET,
+      type: USER_PASSWORD_RESET,
       payload: { username }
     });
 
@@ -146,14 +146,14 @@ export function userPasswordReset(username) {
 
 export function userPasswordResetSuccess(data) {
   return {
-    type: USER_PASSSWORD_RESET_SUCCESS,
+    type: USER_PASSWORD_RESET_SUCCESS,
     payload: { data },
   }
 }
 
 export function userPasswordResetFailed(error) {
   return {
-    type: USER_PASSSWORD_RESET_FAILED,
+    type: USER_PASSWORD_RESET_FAILED,
     payload: { error },
   };
 }

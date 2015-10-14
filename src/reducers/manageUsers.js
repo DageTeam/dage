@@ -9,9 +9,9 @@ import {
   USER_TOGGLE_ACTIVE_SUCCESS,
   USER_TOGGLE_ACTIVE_FAILED,
 
-  USER_PASSSWORD_RESET,
-  USER_PASSSWORD_RESET_SUCCESS,
-  USER_PASSSWORD_RESET_FAILED,
+  USER_PASSWORD_RESET,
+  USER_PASSWORD_RESET_SUCCESS,
+  USER_PASSWORD_RESET_FAILED,
 
   USER_ARRAY_REQUEST,
   USER_ARRAY_REQUEST_SUCCESS,
@@ -64,20 +64,20 @@ export default createReducer(initialState, {
       userToggleError: payload.error,
     };
   },
-//USER_PASSSWORD_RESET
-  [USER_PASSSWORD_RESET]: (state, payload) => {
+//USER_PASSWORD_RESET
+  [USER_PASSWORD_RESET]: (state, payload) => {
     return {
       ...state,
       username: payload.username,
     };
   },
-  [USER_PASSSWORD_RESET_SUCCESS]: (state, payload) => {
+  [USER_PASSWORD_RESET_SUCCESS]: (state, payload) => {
     return {
       ...state,
       username: payload.username,
     };
   },
-  [USER_PASSSWORD_RESET_FAILED]: (state, payload) => {
+  [USER_PASSWORD_RESET_FAILED]: (state, payload) => {
     return {
       ...state,
       userPasswordResetError: payload.error,
