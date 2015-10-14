@@ -23,8 +23,11 @@ var FlaggedEmail = React.createClass({
   },
 
   markIsNotFlag: function() {
-    console.log('sup');
     this.props.callbacks._unflagEmail(this.props.emailId);
+  },
+
+  markAsRead: function(){
+    this.props.callbacks._emailMarkRead(this.props.emailId);
   },
 
   render: function() {
@@ -52,7 +55,8 @@ var FlaggedEmail = React.createClass({
       <div/> : <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
     const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
     const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}> Yes, flag this email</span>;
-    const markNoButton = <span onClick={ this.markIsNotFlag } style={{'float':'left','color':'green','marginRight':'10px','marginTop':'10%','cursor':'pointer'}}> Unflag this email</span>;
+    const markNoButton = <span onClick={ this.markIsNotFlag } style={{'float':'left','color':'green','marginRight':'10px','cursor':'pointer'}}>Unflag / </span>;
+    const markReadButton =<span onClick={ this.markAsRead} style={{'float':'left','color':'#ea6314','marginRight':'10px','cursor':'pointer'}}>Mark Read</span>;
 
     const oneFLButtonsBlock = (userPermissionGroup === "admin") ? 
         <div>{ fullEmailButton } { allFlagsButton } </div> : 
@@ -72,6 +76,7 @@ var FlaggedEmail = React.createClass({
             <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
             <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             {markNoButton}
+            {markReadButton}
           </div>
           { oneFLButtonsBlock }
           <div style={{'float':'right', width:'70%'}}>
@@ -91,6 +96,7 @@ var FlaggedEmail = React.createClass({
             <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
             <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             {markNoButton}
+            {markReadButton}
           </div>
           { allFLButtonsBlock }
           <div style={{'float':'right', width:'70%'}}>
@@ -110,6 +116,7 @@ var FlaggedEmail = React.createClass({
               <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
               <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
               {markNoButton}
+              {markReadButton}
             </div>
             { fullEmailButtonsBlock }
 

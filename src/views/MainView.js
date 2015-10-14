@@ -104,6 +104,10 @@ export class MainView extends React.Component {
         this.props.dispatch(unflagEmail(emailId));
       },
 
+      _emailMarkRead: emailId => {
+        this.props.dispatch(emailMarkRead(emailId))
+      },
+      
       _filterArrayFetch: () => {
         this.props.dispatch(filterArrayFetch());
       },
