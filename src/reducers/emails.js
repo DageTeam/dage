@@ -10,6 +10,8 @@ import {
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
   EMAIL_UNFLAG_SUCCESS,
+  EMAIL_MARK_READ_REQUEST,
+  EMAIL_MARK_READ_SUCCESS,
 } from 'constants/emails';
 
 // const emailsArray = [
@@ -121,5 +123,17 @@ export default createReducer(initialState, {
       ...state,
     };
   },
+  
+  [EMAIL_MARK_READ_SUCCESS]: (state, payload) => {
+    let newState = Object.assign({}, state);
+    let emailID = payload.emailID
+    newState.emailsArray.forEach((emailObj, index, list) => {
+      if(emailID === emailObj.id) {
+        list[index].read = true;
+      }
+    })
+    return newState;
+  },
+  
 
 });

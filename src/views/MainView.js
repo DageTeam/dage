@@ -19,6 +19,7 @@ import {
   emailShowAllFlags,
   emailShowComplete,
   unflagEmail,
+  emailMarkRead,
 } from 'actions/emails';
 
 import {
