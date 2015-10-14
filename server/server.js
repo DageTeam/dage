@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-// var mailListener = require('./mailListener');
+var mailListener = require('./mailListener');
 var db = require('./database.js');
 
 var algo = require('./flaggingAlgo.js');

@@ -64,7 +64,7 @@ var FlaggedEmail = React.createClass({
 
     if (this.props.focusLevel == 'one') {
       return (
-        <div>
+        <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
           <div style={{'float':'left', 'width':'25%'}}>
             <div className='heading' style={{'verticalAlign':'middle'}}><span style={{'fontWeight':'bolder'}}>To</span>: {this.props.recipient}</div>
