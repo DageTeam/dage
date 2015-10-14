@@ -102,11 +102,11 @@ var insertFilter = function insertFilter(body, cb) {
   //get user id from database
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
-      // console.log('There was an error finding the userID for username', username);
+      console.log('There was an error finding the userID for username', username);
 
       //if username is not found.
     } else if (userInfo.length === 0) {
-      // console.log('user not found for username', username);
+      console.log('user not found for username', username);
     } else {
       // console.log('found username', userInfo);
       var userID = userInfo[0].id;
@@ -114,7 +114,7 @@ var insertFilter = function insertFilter(body, cb) {
 
       db.all(queryString, function(error, response) {
         if (error) {
-          // console.log('this is the error', error);
+          console.log('this is the error', error);
           cb(err);
         } else {
           db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response) {
@@ -141,7 +141,7 @@ var insertKeyword = function insertKeyword(body, cb) {
   //get user id from database
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
-      // console.log('There was an error finding the userID for username', username);
+      console.log('There was an error finding the userID for username', username);
     } else {
       // console.log('found username', userInfo);
       var userID = userInfo[0].id;
@@ -214,24 +214,7 @@ var badwords = require('./badWordsArray.js');
 
 // console.log('this is bwa.........', bwa);
 
-var bwa = badwords.badWordArray;
-
-var tempFX = function tempFX() {
-  console.log('tempFX is running!!!');
-  var cb = function cb(arg) {
-    // console.log(arg);
-  };
-
-  var userID = 999;
-  var filterID = 999;
-  console.log('this is bwa length', bwa.length);
-  for (var i = 0; i < bwa.length - 1; i++) {
-    // console.log('hi');
-    // insertIntoKeywordTable(userID, filterID, bwa[i], cb);
-  };
-};
-
-tempFX();
+// var bwa = badwords.badWordArray;
 
 //END TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
 
@@ -268,13 +251,13 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
       // console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
-          // console.log('fetch error', error);
+          console.log('fetch error', error);
         } else {
           // console.log('emails and flagged contexts all fetched');
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
-              flaggedEmails[j].focusLevel = 'one';
+              flaggedEmails[j].focusLevel = 'complete';
               if (flaggedContext[i].emailID === flaggedEmails[j].id) {
                 flaggedEmails[j].flags.push(flaggedContext[i]);
               }
@@ -295,7 +278,7 @@ var getUncheckedEmails = function getUncheckedEmails(cb) {
 
   db.all(query, function(err, responseArrayOfObjects) {
     if (err) {
-      // console.log('There was an error getting Unchecked Emails');
+      console.log('There was an error getting Unchecked Emails');
     } else {
       // console.log('this is the database response.....', responseArrayOfObjects);
       cb(responseArrayOfObjects);
