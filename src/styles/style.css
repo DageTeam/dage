@@ -3955,7 +3955,7 @@ figcaption {
     appearance: none;
     display: block;
     font-size: 17px;
-    width: 100%;
+    width: 50%;
     padding: 15px;
     border-radius: 2px;
     border: 1px solid #e9e2ec;
@@ -4747,3 +4747,8 @@ input[type=radio], input[type=checkbox] {
     width:45px;
 }
 
+.centered
+{
+    float: none;
+    margin: 0 auto;
+}

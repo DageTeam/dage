@@ -1,75 +1,47 @@
 var React = require('react');
 var Griddle = require('griddle-react');
+var ReactBsTable = require("react-bootstrap-table");
+var BootstrapTable = ReactBsTable.BootstrapTable;
+var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
 var ManageUsers = React.createClass({
-  fakeData:  [
+  products: [
     {
-      'Username': 'Mayer Leonard',
-      'Full Name': 'Kapowsin',
-      'Email': 'Hawaii',
-      'Title': 7,
-    },
-    {
-      'Username': 'Mayefsdr Leonard',
-      'Full Name': 'Kapowsisdfn',
-      'Email': 'California  ',
-      'Title': 7,
+        id: 1,
+        name: "Product1",
+        price: 120
     },{
-      'Username': 'Mayer Leosdfdsfnard',
-      'Full Name': 'Kapowsin',
-      'Email': 'New Jersey',
-      'Title': 7,
+        id: 2,
+        name: "Product2",
+        price: 80
     },{
-      'Username': 'Mayer Leonard',
-      'Full Name': 'Kapowsin',
-      'Email': 'Florida',
-      'Title': 7,
-    },
+        id: 3,
+        name: "Product3",
+        price: 207
+    },{
+        id: 4,
+        name: "Product4",
+        price: 100
+    },{
+        id: 5,
+        name: "Product5",
+        price: 150
+    },{
+        id: 6,
+        name: "Product1",
+        price: 160
+    }
   ],
-
-  // exampleMetadata: [
-  //   {
-  //       'columnName': 'name',
-  //       'order': 9,
-  //       'locked': false,
-  //       'visible': true,
-  //       'displayName': 'Employee Name',
-  //     },
-  //     {
-  //       'columnName': 'city',
-  //       'order': 8,
-  //       'locked': false,
-  //       'visible': true,
-  //     },
-  //     {
-  //       'columnName': 'state',
-  //       'order': 7,
-  //       'locked': false,
-  //       'visible': true,
-  //     },
-  //     {
-  //       'columnName': 'country',
-  //       'order': 6,
-  //       'locked': false,
-  //       'visible': true,
-  //     },
-  //     {
-  //       'columnName': 'company',
-  //       'order': 5,
-  //       'locked': false,
-  //       'visible': true,
-  //     },
-  //     {
-  //       'columnName': 'favoriteNumber',
-  //       'order':  4,
-  //       'locked': false,
-  //       'visible': true,
-  //       'displayName': 'Favorite Number',
-  //     },
-  // ],
-
+  selectRowProp: {
+    mode: "checkbox",  //checkbox for multi select, radio for single select.
+    clickToSelect: true,   //click row will trigger a selection on that row.
+    bgColor: "rgb(238, 193, 213)"   //selected row background color
+  },
+  addUser: function(){
+    var modal = document.getElementById('myModal');
+    $('#myModal').modal();
+  },
   render: function() {
-    console.log('testdsfsdfsadfdsffdssdfasdaf',this.props.userArray);
     return (
       <div className='container'>
         <Griddle results={this.props.userArray}
