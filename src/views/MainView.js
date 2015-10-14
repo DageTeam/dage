@@ -135,7 +135,7 @@ export class MainView extends React.Component {
 
         var flagRE = new RegExp(keyword, 'g', 'i');
         var result = flatMap(inputText.split(flagRE), function(part) {
-          return [part, <span style={{color: 'red'}}>{keyword}</span>];
+          return [part, <span style={{color: '#ea6314', fontWeight:'bold'}}>{keyword}</span>];
         });
 
         result.pop();

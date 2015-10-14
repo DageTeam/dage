@@ -4,7 +4,7 @@
   > Protect your company from the inside
 
 ## Summary ##
-  > Intelligently monitor your outbound corpoate email stream
+  > Intelligently monitor your outbound corporate email stream
 
 ## Problem ##
   > An estimated 40 million corporate emails were sent out in 2014. Each email has the potential to leak corporate secrets, confidential client information, or PR-damaging content. With no way to intelligently and efficiently monitor these messages, companies cannot proactively reduce their risk of damaging emails being leaked out.
