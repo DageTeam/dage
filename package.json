@@ -50,6 +50,7 @@
     "mailparser": "^0.5.2",
     "natural": "^0.2.1",
     "react": "^0.14.0-rc1",
+    "react-bootstrap-table": "^1.2.0",
     "react-chartjs": "^0.6.0",
     "react-dom": "^0.14.0-rc1",
     "react-input-autosize": "^0.5.3",
