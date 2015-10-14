@@ -40,7 +40,6 @@ import {
   userFetchSuccess,
   userFetchError,
   deleteToken,
-  deleteTokenError,
 } from 'actions/userSession';
 
 import {
@@ -145,6 +144,9 @@ export class MainView extends React.Component {
       _submitLogin: data => {
         this.props.dispatch(submitLogin(data));
       },
+      _deleteToken: () =>{
+        this.props.dispatch(deleteToken());
+      }
     };
   }
 
@@ -247,7 +249,7 @@ export class MainView extends React.Component {
     } else {
       return (
         <div>
-          <Header />
+          <Header callbacks={ this.callbacks }/>
           { mainComponent[this.props.navigation.currentPage] }
           <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession }/>
           <Footer />

@@ -84,13 +84,5 @@ export default createReducer(initialState, {
     };
   },
 
-  [TOKEN_DELETE_FAILED]: (state, payload) => {
-    return {
-      ...state,
-      isDeletingToken: false,
-      deleteTokenError: payload.error,
-    };
-  },
-
 });
 

@@ -15,7 +15,6 @@ var HomeNav = React.createClass({
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                 </button>
-                <a className="navbar-brand page-scroll" href="mainview" >DÄGE Login</a>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -25,6 +24,9 @@ var HomeNav = React.createClass({
                     </li>
                     <li>
                         <a className="page-scroll" href="#services">Services</a>
+                    </li>
+                    <li>
+                         <a className="navbar-brand page-scroll" href="mainview" style={{paddingLeft:'20px'}}>DÄGE Login</a>
                     </li>
                 </ul>
             </div>
