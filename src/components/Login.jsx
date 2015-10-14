@@ -12,7 +12,7 @@ var Login = React.createClass({
   },
   render: function() {
     return (
-      <div className='centered'>
+      <div style={{marginLeft:'60px'}}>
          
      <form onSubmit={this.handleFormSubmit}>
        <ul className='form-fields'>
