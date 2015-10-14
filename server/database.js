@@ -37,9 +37,20 @@ var unflagEmail = function unflagEmail(emailID, cb) {
   });
 };
 
+var emailMarkRead = function emailMarkRead(emailID, cb){
+  var queryString = 'UPDATE emailTable SET read = "1" where id =' + emailID;
+
+  db.all(queryString, function(error, response){
+    if(error){
+      cb(error);
+    } else{
+      cb(response)
+    }
+  })
+  }
 //insert email into emailTable
 var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
-  var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged) VALUES(\''
+  var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged, read) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
     + cc + '\',\''
@@ -49,7 +60,8 @@ var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc,
     + text + '\',\''
     + date + '\',\''
     + checked + '\',\''
-    + flagged + '\');';
+    + flagged + '\',\''
+    + 0 + '\');';
 
   db.run(emailContent);
 };
@@ -396,7 +408,7 @@ var printEmailTable = function printEmailTable() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function createEmailTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER)';
 
   db.run(createTable);
 };
@@ -526,6 +538,7 @@ module.exports = {
   markChecked,
   markFlagged,
   unflagEmail,
+  emailMarkRead,
   insertIntoEmailTable,
   insertIntoContextTable,
   insertEmail,

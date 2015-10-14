@@ -133,15 +133,20 @@ export function emailUnflagSuccess() {
 }
 
 export function emailMarkRead(emailID){
-  return request
-    .post(serverUrl + '/emailMarkRead')
-    .send({
-      emailID: emailID
-    })
-    .end((err, res) => {
-      err ? console.log(err) : 
-      dispatch(emailMarkReadSuccess(res.body.emailID));
-    })
+  return dispatch => {
+    return request
+      .post(serverUrl + '/emailMarkRead')
+      .send({
+        emailID: emailID
+      })
+      .end((err, res) => {
+        if(err){
+          console.log(err);
+        }else{
+          dispatch(emailMarkReadSuccess(res.body.emailID));
+        }
+    })   
+  }
 }
 
 export function emailMarkReadSuccess(emailID){

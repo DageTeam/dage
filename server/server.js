@@ -72,8 +72,8 @@ app.post('/unflagEmail', function(req, res) {
 });
 
 app.post('/emailMarkRead', function(req, res) {
-  console.log('hello! asdfasdf', req.body.emailID)
   db.emailMarkRead(req.body.emailID, function(message){
+    console.log(message);
     res.send(message);
   })
 })
