@@ -15,6 +15,7 @@ var FlaggedEmailList = React.createClass({
           sender = {email.sender}
           recipient = {email.recipient}
           sendTime = {email.sendTime}
+          subject = {email.subject}
           flags = {email.flags}
           body = {email.body}
           focusLevel = {email.focusLevel}
