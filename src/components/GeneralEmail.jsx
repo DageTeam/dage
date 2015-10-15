@@ -86,7 +86,7 @@ var GeneralEmail = React.createClass({
     } else if (this.props.focusLevel == 'allFlags') {
       return (
 
-        <div style={{'width':'100%'}}>
+        <div style={{'width':'100%',}}>
           <div className='container' style={this.styles.rows}>
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
@@ -101,7 +101,7 @@ var GeneralEmail = React.createClass({
               {markNoButton}
               {allFLButtonsBlock}
             </div>
-            <div className='container' style={{'marginTop':'1%'}}>
+            <div className='container' style={{'marginTop':'1%', 'marginBottom':'1%'}}>
               {contentRows}
             </div>
             
@@ -125,7 +125,7 @@ var GeneralEmail = React.createClass({
               {markNoButton}
               {fullEmailButtonsBlock}
             </div>
-            <div className='container' style={{'marginTop':'1%'}}>
+            <div className='container' style={{'marginTop':'1%', 'marginBottom':'1%'}}>
               {contentRows}
               <table style={{width:'100%', 'marginTop':'1%'}}>
                   <tr>
