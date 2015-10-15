@@ -7,17 +7,25 @@ import Footer from 'components/Footer';
 import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
+import AllEmailsList from 'components/AllEmailsList';
 import ManageUsers from 'components/ManageUsers';
 import Dashboard from 'components/Dashboard';
 import Login from 'components/Login';
 
 import {
   emailArrayFetch,
-  emailArrayFetchSuccess,
-  emailArrayFetchError,
+  // emailArrayFetchSuccess,
+  // emailArrayFetchError,
+  allEmailArrayFetch,
+  // allEmailArrayFetchSuccess,
+  // allEmailArrayFetchError,
+  clearAllEmailCache,
   emailShowOneFlag,
   emailShowAllFlags,
   emailShowComplete,
+  allEmailsShowOneFlag,
+  allEmailsShowAllFlags,
+  allEmailsShowComplete,
   unflagEmail,
   emailMarkRead,
 } from 'actions/emails';
@@ -88,6 +96,14 @@ export class MainView extends React.Component {
         this.props.dispatch(userArrayFetch(param));
       },
 
+      _allEmailArrayFetch: () => {
+        this.props.dispatch(allEmailArrayFetch());
+      },
+
+      _clearAllEmailCache: () => {
+        this.props.dispatch(clearAllEmailCache());
+      },
+
       _emailShowOneFlag: emailId => {
         this.props.dispatch(emailShowOneFlag(emailId));
       },
@@ -99,6 +115,20 @@ export class MainView extends React.Component {
       _emailShowComplete: emailId => {
         this.props.dispatch(emailShowComplete(emailId));
       },
+
+
+      _allEmailsShowOneFlag: emailId => {
+        this.props.dispatch(allEmailsShowOneFlag(emailId));
+      },
+
+      _allEmailsShowAllFlags: emailId => {
+        this.props.dispatch(allEmailsShowAllFlags(emailId));
+      },
+
+      _allEmailsShowComplete: emailId => {
+        this.props.dispatch(allEmailsShowComplete(emailId));
+      },
+
 
       _unflagEmail: emailId => {
         this.props.dispatch(unflagEmail(emailId));
@@ -163,6 +193,13 @@ export class MainView extends React.Component {
     this.props.dispatch(navigationRouteSelect('dashboard'))
   }
 
+  componentWillMount() {
+    console.log('THIS IS CURRENT PAGE', this.props.navigation.currentPage)
+    if (this.props.navigation.currentPage === 'allEmails') {
+      console.log('allEmails');
+    }
+  }
+
   // normally you'd import an action creator, but I don't want to create
   // a file that you're just going to delete anyways!
 
@@ -181,6 +218,25 @@ export class MainView extends React.Component {
             userSession={ this.props.userSession }
           />
         </div>
+      );
+    }
+  }
+
+  allEmailsViewRender() {
+    if (this.props.emails.isFetchingAllEmails) {
+      this.loadingViewRender();
+    } else {
+
+      return (
+        <div>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>All emails</h1>
+          <AllEmailsList
+            emails={ this.props.emails }
+            callbacks={ this.callbacks }
+            userSession={ this.props.userSession }
+          />
+        </div>
+
       );
     }
   }
@@ -256,6 +312,7 @@ export class MainView extends React.Component {
       dashboard: this.dashboardViewRender(),
       manageUser: this.manageUserRender(),
       loading: this.loadingViewRender(),
+      allEmails: this.allEmailsViewRender(),
     };
 
     // this.props.dispatch(applicationLoaded())

@@ -242,8 +242,13 @@ var getFlaggedWords = function getFlaggedWords(cb) {
 };
 
 //fx to get an array of flagged emails.
-var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
-  var queryString = 'SELECT * FROM emailTable WHERE flagged="1" AND read="0"';
+var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, getAll, cb) {
+  var queryString;
+  if (getAll) {
+    queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+  } else {
+    queryString = 'SELECT * FROM emailTable WHERE flagged="1" AND read="0"';
+  };
 
   db.all(queryString, function(err, flaggedEmails) {
     if (err) {
@@ -274,6 +279,18 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
     }
   });
 };
+
+// var getAllEmails = function getAllEmails(userID, isAdmin, cb) {
+//   var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+//   db.all(queryuery, function(err, allEmails){
+//     if (err) {
+//       console.log('err', err);
+//     } else {
+//       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
+//       db.all(fetchString, function(err))
+//     }
+//   }) 
+// }
 
 //fx to pull all unchecked emails from the db
 var getUncheckedEmails = function getUncheckedEmails(cb) {

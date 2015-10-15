@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-// var mailListener = require('./mailListener');
+var mailListener = require('./mailListener');
 var db = require('./database.js');
 
 var algo = require('./flaggingAlgo.js');
@@ -40,7 +40,6 @@ app.post('/test', function(req, res) {
 
 //dashboard is the placeholder url for the dashboard url for the client
 app.get('/emailData', function(req, res) {
-
   //TODO: placeholder until authentication complete
   var userIsAuthenticated = true;
   var isAdmin = true;
@@ -52,7 +51,7 @@ app.get('/emailData', function(req, res) {
     // res.setHeader('Access-Control-Allow-Origin', '*');
 
     //get the flagged emails via a db query
-    db.getFlaggedEmails(userID, isAdmin, function(emails) {
+    db.getFlaggedEmails(userID, isAdmin, false, function(emails) {
       // console.log(typeof emails);
       // console.log(emails);
       res.send(emails);
@@ -60,8 +59,15 @@ app.get('/emailData', function(req, res) {
   } else {
     res.send('user is not authenticated');
   }
-
 });
+
+app.get('/allEmails', function(req,res) {
+  var isAdmin = true;
+  var userID = 1;
+  db.getFlaggedEmails(userID, isAdmin, true, function(emails) {
+    res.send(emails);
+  })
+})
 
 app.post('/unflagEmail', function(req, res) {
   var emailID = req.body.emailID;
