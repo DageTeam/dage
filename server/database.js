@@ -119,7 +119,7 @@ var insertFilter = function insertFilter(body, cb) {
         } else {
           db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response) {
             if (error) {
-              // console.log('Error when selecting filterName row');
+              console.log('Error when selecting filterName row');
               cb(error);
             } else {
               cb(response[0].id, response[0].filterName);
@@ -230,7 +230,6 @@ var getFlaggedWords = function getFlaggedWords(cb) {
       console.log('There was an error getting keywords', err);
     } else {
       // console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
-
       cb(flaggedWords);
     }
   });
@@ -453,7 +452,7 @@ var getNumOfUsers = function getNumOfUsers() {
   var sqlQuery = 'SELECT COUNT(*) FROM userTable';
   var cb = function cb(error, response) {
     if (error) {
-      // console.log('getNumOfUsers...', error);
+      console.log('getNumOfUsers...', error);
     } else {
       for (var key in response[0]) {
         // console.log('successfully fetched getNumOfUsers');
