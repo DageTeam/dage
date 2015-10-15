@@ -136,7 +136,7 @@ export function userPasswordReset(username) {
           dispatch(userPasswordResetFailed(err));
         } else {
           if (res.body.message === 'Password Successfully Resetted') {
-            dispatch(userPasswordResetSuccess(data));
+            dispatch(userPasswordResetSuccess(res.body));
           } else {
             console.log('Failed to reset user password');
             dispatch(userPasswordResetFailed(err));

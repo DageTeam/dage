@@ -73,7 +73,7 @@ app.post('/unflagEmail', function(req, res) {
 });
 
 app.get('/filterData', function(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getAllFilters(function(data) {
     res.send(data);
   });
