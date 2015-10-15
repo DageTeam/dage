@@ -251,8 +251,9 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, getAll, cb) {
   };
 
   db.all(queryString, function(err, flaggedEmails) {
+    // console.log('this is flaggedEmails', flaggedEmails);
     if (err) {
-      console.log('err');
+      console.log('err', err);
     } else {
       // console.log('emails fetched, now getting all the flagged contexts for user');
       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
@@ -266,10 +267,17 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, getAll, cb) {
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
+
+              //set the focus level of each email to one [flag], which will be utilized on the client side later on
               flaggedEmails[j].focusLevel = 'one';
               if (flaggedContext[i].emailID === flaggedEmails[j].id) {
                 flaggedEmails[j].flags.push(flaggedContext[i]);
-              }
+              };
+
+              //if the flagged email has no subject, set it to 'no subject'
+              if (flaggedEmails[j].subject === 'undefined') {
+                flaggedEmails[j].subject = '<no subject>';
+              };
             }
           }
 
@@ -424,7 +432,7 @@ var printEmailTable = function printEmailTable() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function createEmailTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER)';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER, natFlagged CHAR(50), predictFlagged CHAR(50), nlkFlagged CHAR(50))';
 
   db.run(createTable);
 };
