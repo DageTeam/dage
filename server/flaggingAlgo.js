@@ -20,14 +20,14 @@ var createContext = function(email, flaggedKeyword) {
   var start = index - numOfChars;
   var end = numOfChars + index;
   var context = text.substring(start, end);
-  console.log('createContext fx ran/////');
+  // console.log('createContext fx ran/////');
   return context;
 };
 
 //fx to check emails for keywords and then store it into the contextTable
 var filterEmail = exports.filterEmail = function(emailArray) {
-  console.log('filterEmail fx ran/////');
-  console.log('filterEmailz emailArray argument is ///////.....', emailArray);
+  // console.log('filterEmail fx ran/////');
+  // console.log('filterEmailz emailArray argument is ///////.....', emailArray);
   if (emailArray.length) {
     getFlaggedWords(function(flaggedWords) {
 
@@ -52,7 +52,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
           if (subString.test(email.body)) {
             // change flag value to 1 in the emailTable ;
             markFlagged(email.id);
-            console.log('triggered for string', email.body, ' and word', keyword.keyword);
+            // console.log('triggered for string', email.body, ' and word', keyword.keyword);
 
             // //create context
             var context = createContext(email, keyword.keyword);
@@ -66,7 +66,7 @@ var filterEmail = exports.filterEmail = function(emailArray) {
   }
 
 
-  console.log('filterEmail fx is done running/////');
+  // console.log('filterEmail fx is done running/////');
 };
 
 var scanEmail = function() {

@@ -242,7 +242,7 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
 
   db.all(queryString, function(err, flaggedEmails) {
     if (err) {
-      // console.log('err');
+      console.log('err');
     } else {
       // console.log('emails fetched, now getting all the flagged contexts for user');
       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
