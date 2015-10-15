@@ -3,9 +3,11 @@ var ReactDOM = require('react-dom')
 var BarChart = require("react-chartjs").Bar;
 var DoughnutChart = require('react-chartjs').Doughnut
 
+
 var Dashboard = React.createClass({
 
   render: function(){
+    var emailNum = this.props.emails.emailsArray.length
     var barData = {
       labels: ["January", "February", "March", "April", "May", "June", "July",'August','September','October','November','December'],
       datasets: [
@@ -87,20 +89,24 @@ var Dashboard = React.createClass({
     };
 
     return(
-      <div style={{'marginTop':'8%','marginLeft':'15%', 'width':'75%'}}>
-        <h3 style={{'marginBottom':'2%','textAlign':'left'}}>Flagged Emails by month</h3>
-        <BarChart data={barData} options={barOptions} width={'1000px'} height={'200px'} redraw={true} style={{'marginLeft':'2%'}}/>
-        <div style={{'marginTop': '3%', 'marginLeft':'7%', float:'left'}}>
-        <h3>Flags by Filters (this week)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
-        </div>
-        <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
-        <h3>Flags by Filters (this month)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
-        </div>
-        <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
-        <h3>Flags by Filters (this year)</h3>
-        <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
+      <div>
+        <div style={{'marginTop':'8%','marginLeft':'15%', 'width':'75%'}}>
+        <h2>You Have {emailNum} New Alerts Right Now </h2>
+        <h6>Click on the Alerts Tab to View</h6>
+          <h3 style={{'marginBottom':'2%','textAlign':'left'}}>Flagged Emails by month</h3>
+          <BarChart data={barData} options={barOptions} width={'1000px'} height={'200px'} redraw={true} style={{'marginLeft':'2%'}}/>
+          <div style={{'marginTop': '3%', 'marginLeft':'7%', float:'left'}}>
+          <h3>Flags by Filters (this week)</h3>
+          <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
+          </div>
+          <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
+          <h3>Flags by Filters (this month)</h3>
+          <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
+          </div>
+          <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
+          <h3>Flags by Filters (this year)</h3>
+          <DoughnutChart data={doughnutData} options ={doughnutOptions} width={'150px'} height = {'150px'} redraw = {true} style={{'marginLeft':'20px'}}/>
+          </div>
         </div>
       </div>
       

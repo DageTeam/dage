@@ -4,7 +4,7 @@ import {
 } from 'constants/navigation';
 
 const initialState = {
-  currentPage: 'loading',
+  currentPage: 'dashboard',
   history: [],
 }
 

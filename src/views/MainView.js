@@ -160,7 +160,7 @@ export class MainView extends React.Component {
     this.props.dispatch(userArrayRequest());
     this.props.dispatch(emailArrayFetch());
     this.props.dispatch(filterArrayFetch());
-    this.props.dispatch(navigationRouteSelect('alerts'))
+    this.props.dispatch(navigationRouteSelect('dashboard'))
   }
 
   // normally you'd import an action creator, but I don't want to create
@@ -223,7 +223,7 @@ export class MainView extends React.Component {
 
   dashboardViewRender() {
     return (
-      <Dashboard />
+      <Dashboard emails={this.props.emails} />
     );
   }
 
