@@ -17,6 +17,8 @@ import {
   USER_ARRAY_REQUEST,
   USER_ARRAY_REQUEST_SUCCESS,
   USER_ARRAY_REQUEST_FAILED,
+
+  ADD_USER_TO_STATE
 } from 'constants/manageUsers';
 
 //username, permissionGroup, name, title, email, department, managerID, active
@@ -151,6 +153,7 @@ export function userPasswordResetSuccess(data) {
   }
 }
 
+
 export function userPasswordResetFailed(error) {
   return {
     type: USER_PASSWORD_RESET_FAILED,
@@ -195,5 +198,12 @@ export function userArrayRequestFailed(error) {
   return {
     type: USER_ARRAY_REQUEST_FAILED,
     payload: { error },
+  };
+}
+
+export function addUserToState(userState){
+  return {
+    type: ADD_USER_TO_STATE,
+    payload: { userState }
   };
 }

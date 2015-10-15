@@ -47,6 +47,7 @@ import {
   userToggleActive,
   userPasswordReset,
   userArrayRequest,
+  addUserToState
 } from 'actions/manageUsers'
 
 // We define mapStateToProps where we'd normally use the @connect
@@ -151,6 +152,10 @@ export class MainView extends React.Component {
       _userPasswordReset: username => {
         this.props.dispatch(userPasswordReset(username));
       },
+
+      _addUserToState: data => {
+        this.props.dispatch(addUserToState(data));
+      },
     };
   }
 
@@ -194,7 +199,7 @@ export class MainView extends React.Component {
           <img src="http://i1109.photobucket.com/albums/h427/SnowflakeGD/infinite-1.gif" style={{position:'absolute','top':'40%','left':'37%','z-index':'1'}} />
         </div>
       )
-    }else{
+    }else {
     return (
       <div className='container text-center'>
         <h1 style={{paddingTop:'60px', textAlign:'center'}}>Dage Customize Filters</h1>
@@ -220,11 +225,11 @@ export class MainView extends React.Component {
 
   manageUserRender() {
     console.log('manage user triggered');
-    console.log(this.props)
+    console.log(this.props.manageUsers.userState);
     return (
       <div>
-        <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
-        <ManageUsers callbacks={this.callbacks } userArray={this.props.manageUsers.userArray} />
+        <h1 style={{paddingTop: '60px', textAlign: 'center'}}>User Accounts</h1>
+        <ManageUsers userInfo={this.props.manageUsers.userState} callbacks={this.callbacks } userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }
