@@ -44,9 +44,19 @@ var ManageUsers = React.createClass({
     console.log('toggleuser',this.props.userInfo)
     this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
   },
+  addingUser: function(data) {
+    this.props.callbacks._userAdd(data);
+  },
   render: function() {
     // console.log('THIS IS THE USERSTATE', this.props.userInfo)
     var _this = this;
+    
+    var insertRowCallback = {
+      afterInsertRow: function(data){
+        console.log('data', data);
+        _this.addingUser(data);
+      },
+    };
     var selectRowProp = {
       mode: 'checkbox',  //checkbox for multi select, radio for single select.
       clickToSelect: true,   //click row will trigger a selection on that row.
@@ -55,24 +65,25 @@ var ManageUsers = React.createClass({
         // console.log('onSelect', data);
         _this.addUserToState(data);
       },
-
     };
     return (
       <div className='container'>
       <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
-      float: 'right'}} onClick={this.resetPassword} >Reset PW</button>
+      float: 'right'}} onClick={this.resetPassword} style={{marginLeft: '5%'}}>Reset PW</button>
       <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
       float: 'right'}} onClick={this.toggleUser} >Enable/Disable</button>
       <br />
         <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
-         selectRow={selectRowProp} search={true}>
+         selectRow={selectRowProp} search={true} options={insertRowCallback}>
           
-          <TableHeaderColumn dataField="username" isKey={true} dataAlign="right" dataSort={true}>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="title" dataSort={true}>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="email" dataAlign="center">Product Price</TableHeaderColumn>
-          <TableHeaderColumn dataField="department" dataAlign="center">Product Price</TableHeaderColumn>
-          <TableHeaderColumn dataField="managerID" dataAlign="center">Product Price</TableHeaderColumn>
-          <TableHeaderColumn dataField="active" dataAlign="center">Product Price</TableHeaderColumn>
+          <TableHeaderColumn dataField="username" isKey={true} dataSort={true}>Username</TableHeaderColumn>
+          <TableHeaderColumn dataField="title" dataSort={true}>Title</TableHeaderColumn>
+          <TableHeaderColumn dataField="email" dataAlign="center">Email</TableHeaderColumn>
+          <TableHeaderColumn dataField="department" dataAlign="center">Dept</TableHeaderColumn>
+          <TableHeaderColumn dataField="managerID" dataAlign="center">ManagerID</TableHeaderColumn>
+          <TableHeaderColumn dataField="active" dataAlign="center">Enabled</TableHeaderColumn>
+          <TableHeaderColumn dataField="permissionGroup" dataAlign="center">PermGroup</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" dataAlign="center">Name</TableHeaderColumn>
         </BootstrapTable>
         
       </div>

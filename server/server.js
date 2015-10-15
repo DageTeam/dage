@@ -236,7 +236,10 @@ app.post('/createUser', function(req, res) {
 //url to create admin users, accessible from client
 app.post('/userAdd', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
-  console.log('userAdd triggered')
+  // console.log('this is the userAdd object?', req.body);
+  if (!req.body.password) {
+    req.body.password = 'password';
+  }
   req.body.hash = bcrypt.hashSync(req.body.password, salt);
   db.createUser(req.body, function() {
     res.send({

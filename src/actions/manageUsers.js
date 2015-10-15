@@ -53,8 +53,6 @@ export function userAdd(data) {
         if (err) {
           dispatch(userAddFailed(err));
         } else {
-          //if the server responds back with message='userAdded'
-          //TODO: ADD SERVER CODE...
           if (res.body.message === 'user added') {
             dispatch(userAddSuccess(data));
           } else {
