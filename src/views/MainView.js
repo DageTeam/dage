@@ -243,7 +243,7 @@ export class MainView extends React.Component {
     return (
       <div>
         <h1 style={{'paddingTop': '60px', 'textAlign': 'center'}}>User Accounts</h1>
-        <ManageUsers userArray={this.props.manageUsers.userArray} />
+        <ManageUsers manageUsers = {this.props.manageUsers} userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }

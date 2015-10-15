@@ -32,7 +32,7 @@ var Header = React.createClass({
   styles:{
     banner:{
       'textAlign':'center',
-      'color':'#ea6314',
+      'color':'#75567b',
       'fontSize':'30px',
       'font':'Avenir sans-serif',
       'padding':'auto',

@@ -7,7 +7,7 @@
     "dageTest": "./node_modules/.bin/jasmine-node ./tests/serverSpec.js",
     "clean": "rm -rf dist",
     "compile": "webpack",
-    "start": "npm run dev",
+    "start": "node server/server.js",
     "dev": "node --harmony bin/webpack-dev-server",
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
