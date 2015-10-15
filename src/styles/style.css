@@ -4755,3 +4755,6 @@ input[type=radio], input[type=checkbox] {
 .markRead:visited {
     font-weight: bold;
 }
+.alertNum{
+    cursor:pointer;
+}
