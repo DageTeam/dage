@@ -4751,3 +4751,7 @@ input[type=radio], input[type=checkbox] {
 .dage-logout:hover {
     font-weight: bold;
 }
+
+.markRead:visited {
+    font-weight: bold;
+}

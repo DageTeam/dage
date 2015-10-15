@@ -129,7 +129,7 @@ export default createReducer(initialState, {
     let emailID = payload.emailID
     newState.emailsArray.forEach((emailObj, index, list) => {
       if(emailID === emailObj.id) {
-        list[index].read = true;
+        list[index].read = 1;
       }
     })
     return newState;

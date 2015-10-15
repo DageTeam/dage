@@ -150,8 +150,11 @@ export function emailMarkRead(emailID){
 }
 
 export function emailMarkReadSuccess(emailID){
-  return {
-    type:EMAIL_MARK_READ_SUCCESS,
-    payload: {emailID}
+  return dispatch => {
+    dispatch(emailArrayFetch());
+    return {
+      type:EMAIL_MARK_READ_SUCCESS,
+      payload: {emailID}
+    }
   }
 }

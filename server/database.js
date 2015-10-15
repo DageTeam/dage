@@ -243,8 +243,7 @@ var getFlaggedWords = function getFlaggedWords(cb) {
 
 //fx to get an array of flagged emails.
 var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
-  // console.log('triggered');
-  var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+  var queryString = 'SELECT * FROM emailTable WHERE flagged="1" AND read="0"';
 
   db.all(queryString, function(err, flaggedEmails) {
     if (err) {
