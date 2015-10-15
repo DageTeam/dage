@@ -35,24 +35,28 @@ var ManageUsers = React.createClass({
   addUserToState: function(data){
     this.props.callbacks._addUserToState(data);
   },
+  resetPassword: function(){
+    // console.log('this is password name', this.props.userInfo.name);
+    // console.log('component-manageUser_resetPassword',this.props.userInfo.name)
+    this.props.callbacks._userPasswordReset(this.props.userInfo.username);
+  },
   render: function() {
-    console.log('THIS IS THE USERSTATE', this.props.userInfo)
+    // console.log('THIS IS THE USERSTATE', this.props.userInfo)
     var _this = this;
     var selectRowProp = {
       mode: 'checkbox',  //checkbox for multi select, radio for single select.
       clickToSelect: true,   //click row will trigger a selection on that row.
       bgColor: 'rgb(238, 193, 213)',
       onSelect: function(data) {
-        console.log('onSelect', data);
+        // console.log('onSelect', data);
         _this.addUserToState(data);
-
       },
 
     };
     return (
       <div className='container'>
       <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
-      float: 'right'}} >Reset PW</button>
+      float: 'right'}} onClick={this.resetPassword} >Reset PW</button>
       <br />
         <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
          selectRow={selectRowProp} search={true}>

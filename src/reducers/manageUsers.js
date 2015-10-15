@@ -68,6 +68,7 @@ export default createReducer(initialState, {
   },
 //USER_PASSWORD_RESET
   [USER_PASSWORD_RESET]: (state, payload) => {
+    console.log('reducer', payload.username)
     return {
       ...state,
       username: payload.username,
