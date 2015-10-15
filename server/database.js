@@ -94,7 +94,7 @@ var insertEmail = function insertEmail(email) {
 
 //fx to add a new filter into the database for the user
 var insertFilter = function insertFilter(body, cb) {
-  console.log('this is body', body);
+  // console.log('this is body', body);
   var username = body.username;
   var filterName = body.filter;
   var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
@@ -108,7 +108,7 @@ var insertFilter = function insertFilter(body, cb) {
     } else if (userInfo.length === 0) {
       console.log('user not found for username', username);
     } else {
-      console.log('found username', userInfo);
+      // console.log('found username', userInfo);
       var userID = userInfo[0].id;
       var queryString = 'INSERT INTO filterTable (userID, filterName) VALUES (' + userID + ',\'' +  filterName +  '\')';
 
@@ -143,7 +143,7 @@ var insertKeyword = function insertKeyword(body, cb) {
     if (err) {
       console.log('There was an error finding the userID for username', username);
     } else {
-      console.log('found username', userInfo);
+      // console.log('found username', userInfo);
       var userID = userInfo[0].id;
       var queryString = 'INSERT INTO keywordTable(userID, filterID, keyword) VALUES(' + userID + ',' + filterId + ',\'' + keyword + '\')';
       db.all(queryString, function(error, response) {
@@ -214,24 +214,7 @@ var badwords = require('./badWordsArray.js');
 
 // console.log('this is bwa.........', bwa);
 
-var bwa = badwords.badWordArray;
-
-var tempFX = function tempFX() {
-  console.log('tempFX is running!!!');
-  var cb = function cb(arg) {
-    // console.log(arg);
-  };
-
-  var userID = 999;
-  var filterID = 999;
-  console.log('this is bwa length', bwa.length);
-  for (var i = 0; i < bwa.length - 1; i++) {
-    // console.log('hi');
-    // insertIntoKeywordTable(userID, filterID, bwa[i], cb);
-  };
-};
-
-tempFX();
+// var bwa = badwords.badWordArray;
 
 //END TEMP CODE TO INSERT BADWORDSARRAY INTO EMAILS.DB
 
@@ -247,7 +230,6 @@ var getFlaggedWords = function getFlaggedWords(cb) {
       console.log('There was an error getting keywords', err);
     } else {
       // console.log('These are the keywords returned from getFlaggedWords......', flaggedWords);
-
       cb(flaggedWords);
     }
   });
@@ -255,22 +237,22 @@ var getFlaggedWords = function getFlaggedWords(cb) {
 
 //fx to get an array of flagged emails.
 var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
-  console.log('triggered');
+  // console.log('triggered');
   var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
 
   db.all(queryString, function(err, flaggedEmails) {
     if (err) {
-      console.log('err');
+      // console.log('err');
     } else {
-      console.log('emails fetched, now getting all the flagged contexts for user');
+      // console.log('emails fetched, now getting all the flagged contexts for user');
       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
 
-      console.log('this is fetchString', fetchString);
+      // console.log('this is fetchString', fetchString);
       db.all(fetchString, function(error, flaggedContext) {
         if (error) {
           console.log('fetch error', error);
         } else {
-          console.log('emails and flagged contexts all fetched');
+          // console.log('emails and flagged contexts all fetched');
           for (var i = 0; i < flaggedContext.length; i++) {
             for (var j = 0; j < flaggedEmails.length; j++) {
               flaggedEmails[j].flags = flaggedEmails[j].flags || [];
@@ -290,14 +272,14 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
 
 //fx to pull all unchecked emails from the db
 var getUncheckedEmails = function getUncheckedEmails(cb) {
-  console.log('starting to get Unchecked Emails');
+  // console.log('starting to get Unchecked Emails');
   var query = 'SELECT * FROM emailTable WHERE checked="0"';
 
   db.all(query, function(err, responseArrayOfObjects) {
     if (err) {
       console.log('There was an error getting Unchecked Emails');
     } else {
-      console.log('this is the database response.....', responseArrayOfObjects);
+      // console.log('this is the database response.....', responseArrayOfObjects);
       cb(responseArrayOfObjects);
     }
   });
@@ -473,7 +455,7 @@ var getNumOfUsers = function getNumOfUsers() {
       console.log('getNumOfUsers...', error);
     } else {
       for (var key in response[0]) {
-        console.log('successfully fetched getNumOfUsers');
+        // console.log('successfully fetched getNumOfUsers');
         return response[0][key];
       }
     }
