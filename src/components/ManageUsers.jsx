@@ -3,7 +3,6 @@ var Griddle = require('griddle-react');
 var ReactBsTable = require("react-bootstrap-table");
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-// var UserPasswordReset = require('../actions/manageUsers').userPasswordReset;
 
 var ManageUsers = React.createClass({
   products: [
@@ -33,25 +32,27 @@ var ManageUsers = React.createClass({
         price: 160
     }
   ],
-  // resetPassword: function(){
-  //   _this.props.callbacks._userPasswordReset(data.username);
-  // },
+  addUserToState: function(data){
+    this.props.callbacks._addUserToState(data);
+  },
   render: function() {
+    console.log('THIS IS THE USERSTATE', this.props.userInfo)
     var _this = this;
-    console.log('test')
     var selectRowProp = {
       mode: 'checkbox',  //checkbox for multi select, radio for single select.
       clickToSelect: true,   //click row will trigger a selection on that row.
       bgColor: 'rgb(238, 193, 213)',
-      context: this,
       onSelect: function(data) {
-        // _this.props.callbacks._userPasswordReset(data.username);
+        console.log('onSelect', data);
+        _this.addUserToState(data);
+
       },
+
     };
     return (
       <div className='container'>
       <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
-      float: 'right'}} onClick={this.props.callbacks._userPasswordReset(data.username)}>Reset PW</button>
+      float: 'right'}} >Reset PW</button>
       <br />
         <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
          selectRow={selectRowProp} search={true}>
