@@ -14,6 +14,9 @@ var SideNav = React.createClass({
   navigateManageUserRoute: function(){
     this.props.callbacks._navigationRouteSelect('manageUser');
   },
+  navigateAllEmailsRoute: function(){
+    this.props.callbacks._navigationRouteSelect('allEmails');
+  },
 
   render: function() {
     var userPermissionGroup = this.props.userSession.permissionGroup;
@@ -37,6 +40,7 @@ var SideNav = React.createClass({
                 <ul className='nav'>
                   <li className='nav__item site-nav--platform'><a onClick={ this.navigateDashboardRoute }>Dashboard<i className='icon--support'></i></a></li>
                   <li className='nav__item nav__item--has-child site-nav--products'><a onClick={ this.navigateAlertsRoute }>Alerts<i className='icon--products'></i></a></li>
+                  <li className='nav__item nav__item--has-child site-nav--products'><a onClick={ this.navigateAllEmailsRoute }>All emails<i className='icon--products'></i></a></li>
                   <li className='nav__item nav__item--has-child site-nav--company'><a onClick={ this.navigateCustomizeRoute }>Customize<i className='icon--company'></i></a></li>
                   { manageUserBlock }
                 </ul>

@@ -6,15 +6,26 @@ import {
   EMAIL_ARRAY_REQUEST,
   EMAIL_ARRAY_FETCH_SUCCESS,
   EMAIL_ARRAY_FETCH_ERROR,
+
+  ALL_EMAIL_FETCH_REQUEST,
+  ALL_EMAIL_FETCH_SUCCESS,
+  ALL_EMAIL_FETCH_ERROR,
+
+  CLEAR_ALL_EMAILS_CACHE,
+
   EMAIL_SHOW_ONE_FLAG,
   EMAIL_SHOW_ALL_FLAGS,
   EMAIL_SHOW_COMPLETE,
+
+  ALL_EMAILS_SHOW_ONE_FLAG,
+  ALL_EMAILS_SHOW_ALL_FLAGS,
+  ALL_EMAILS_SHOW_COMPLETE,
+  
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
   EMAIL_UNFLAG_SUCCESS,
   EMAIL_MARK_READ_REQUEST,
   EMAIL_MARK_READ_SUCCESS,
-  EMAIL_MARK_READ_ERROR,
 
 } from 'constants/emails';
 
@@ -34,16 +45,6 @@ export function emailArrayFetch() {
     //   .then(req => { console.log('this is req', req);
     //     return req.json(); })
     //   .then(json => { dispatch(emailArrayFetchSuccess(json)); });
-  };
-}
-
-//TODO: modify
-export function userArrayFetch() {
-  return dispatch => {
-    dispatch(emailArrayRequest());
-    return fetch('http://localhost:4000/getNumOfUsers')
-      .then(req => { return req.json(); })
-      .then(json => { dispatch(emailArrayFetchSuccess(json)); });
   };
 }
 
@@ -72,6 +73,52 @@ export function emailArrayFetchError(error) {
   };
 }
 
+//fetches ALL emails that were initially flagged
+export function allEmailArrayFetch() {
+  console.log('allemailArrayFetch triggered');
+  return dispatch => {
+    dispatch(allEmailArrayRequest());
+    return request
+    //TODO: change URL
+      .get(serverUrl + '/allEmails')
+      .end((err, res={}) => {
+        if (err) {
+          dispatch(allEmailArrayFetchError(err))
+        } else {
+          dispatch(allEmailArrayFetchSuccess(res.body));
+        }
+      });
+  };
+}
+
+export function allEmailArrayRequest() {
+  return {
+    type: ALL_EMAIL_FETCH_REQUEST,
+  };
+}
+
+export function allEmailArrayFetchSuccess(allEmailsArray) {
+  return {
+    type: ALL_EMAIL_FETCH_SUCCESS,
+    payload: {
+      allEmailsArray,
+    },
+  };
+}
+
+export function allEmailArrayFetchError(error) {
+  return {
+    type: ALL_EMAIL_FETCH_ERROR,
+    payload: { error },
+  };
+}
+
+export function clearAllEmailCache() {
+  return {
+    type: CLEAR_ALL_EMAILS_CACHE,
+  }
+}
+
 export function emailShowOneFlag(emailId) {
   console.log('actionShowOneFlag', emailId);
   return {
@@ -90,6 +137,28 @@ export function emailShowAllFlags(emailId) {
 export function emailShowComplete(emailId) {
   return {
     type: EMAIL_SHOW_COMPLETE,
+    payload: { emailId },
+  };
+}
+
+export function allEmailsShowOneFlag(emailId) {
+  console.log('actionShowOneFlag', emailId);
+  return {
+    type: ALL_EMAILS_SHOW_ONE_FLAG,
+    payload: { emailId },
+  };
+}
+
+export function allEmailsShowAllFlags(emailId) {
+  return {
+    type: ALL_EMAILS_SHOW_ALL_FLAGS,
+    payload: { emailId },
+  };
+}
+
+export function allEmailsShowComplete(emailId) {
+  return {
+    type: ALL_EMAILS_SHOW_COMPLETE,
     payload: { emailId },
   };
 }
