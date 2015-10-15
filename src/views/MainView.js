@@ -223,7 +223,8 @@ export class MainView extends React.Component {
 
   dashboardViewRender() {
     return (
-      <Dashboard emails={this.props.emails} />
+      <Dashboard emails={this.props.emails} 
+                 callbacks = {this.callbacks} />
     );
   }
 
