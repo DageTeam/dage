@@ -30,7 +30,6 @@ var unflagEmail = function unflagEmail(emailID, cb) {
 
   db.all(flagString, function(error, response) {
     if (error) {
-      console.log('error triggered', error);
       cb('there was an error');
     } else {
       cb('success');
@@ -38,9 +37,20 @@ var unflagEmail = function unflagEmail(emailID, cb) {
   });
 };
 
+var emailMarkRead = function emailMarkRead(emailID, cb){
+  var queryString = 'UPDATE emailTable SET read = "1" where id =' + emailID;
+
+  db.all(queryString, function(error, response){
+    if(error){
+      cb(error);
+    } else{
+      cb(response)
+    }
+  })
+  }
 //insert email into emailTable
 var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc, bcc, subject, priority, text, date, checked, flagged) {
-  var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged) VALUES(\''
+  var emailContent = 'INSERT into emailTable (recipient, sender, cc, bcc, subject, priority, body, sendTime, checked, flagged, read) VALUES(\''
     + toField + '\',\''
     + fromField + '\',\''
     + cc + '\',\''
@@ -50,7 +60,8 @@ var insertIntoEmailTable = function insertIntoEmailTable(toField, fromField, cc,
     + text + '\',\''
     + date + '\',\''
     + checked + '\',\''
-    + flagged + '\');';
+    + flagged + '\',\''
+    + 0 + '\');';
 
   db.run(emailContent);
 };
@@ -94,7 +105,6 @@ var insertEmail = function insertEmail(email) {
 
 //fx to add a new filter into the database for the user
 var insertFilter = function insertFilter(body, cb) {
-  // console.log('this is body', body);
   var username = body.username;
   var filterName = body.filter;
   var getUserIDString = 'SELECT * FROM userTable WHERE username="' + username + '"';
@@ -102,11 +112,9 @@ var insertFilter = function insertFilter(body, cb) {
   //get user id from database
   db.all(getUserIDString, function(err, userInfo) {
     if (err) {
-      console.log('There was an error finding the userID for username', username);
 
       //if username is not found.
     } else if (userInfo.length === 0) {
-      console.log('user not found for username', username);
     } else {
       // console.log('found username', userInfo);
       var userID = userInfo[0].id;
@@ -114,7 +122,6 @@ var insertFilter = function insertFilter(body, cb) {
 
       db.all(queryString, function(error, response) {
         if (error) {
-          console.log('this is the error', error);
           cb(err);
         } else {
           db.all('SELECT id, filterName from filterTable where filterName ="' + filterName + '"', function(error, response) {
@@ -176,7 +183,6 @@ var removeKeyword = function removeKeyword(body, cb){
     if (err) {
       console.log('There was an error finding the userID for username', username);
     } else {
-      console.log('found username', userInfo);
       var userID = userInfo[0].id;
       var queryString = 'DELETE from keywordTable where userID="' + userID + '" AND filterID=' + filterId + ' AND id=' + parseInt(keyword) + '';
       db.all(queryString,function(error, response){
@@ -237,8 +243,7 @@ var getFlaggedWords = function getFlaggedWords(cb) {
 
 //fx to get an array of flagged emails.
 var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, cb) {
-  // console.log('triggered');
-  var queryString = 'SELECT * FROM emailTable WHERE flagged="1"';
+  var queryString = 'SELECT * FROM emailTable WHERE flagged="1" AND read="0"';
 
   db.all(queryString, function(err, flaggedEmails) {
     if (err) {
@@ -292,7 +297,6 @@ var getAllFilters = function getAllFilters(cb) {
     if (err) {
       console.log('There was an error getting filters');
     } else {
-      console.log('this is the database response.....', filterArray);
       var userQuery = 'SELECT id, username FROM userTable';
       db.all(userQuery, function(err, userArray) {
         var keywordQuery = 'SELECT * FROM keywordTable';
@@ -335,7 +339,6 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
     if (err) {
       console.log('There was an error getting keywordsArray with tagName =', tagName);
     } else {
-      console.log('this is the result.....', result);
       cb(result);
       return result; //eg of result... [ { keyword: 'coolie' }, { keyword: 'gringo'} ]
     }
@@ -345,9 +348,7 @@ var getArrayOfKeywordsFromTagsTable = function getArrayOfKeywordsFromTagsTable(t
 //FX to get user data for authentication
 var getUser = function getUser(body, cb) {
   var username = body.username;
-  console.log('this is username', username);
   var queryString = 'SELECT username, saltedHash, active, permissionGroup FROM userTable WHERE username=\'' + username + '\'';
-  console.log('this is queryString', queryString);
   db.all(queryString, function(error, response) {
     if (error) {
       cb(error);
@@ -406,7 +407,7 @@ var printEmailTable = function printEmailTable() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function createEmailTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER)';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER)';
 
   db.run(createTable);
 };
@@ -473,7 +474,6 @@ var resetPassword = function resetPassword(username, callback) {
     if (error) {
       console.log('resetPassword error...', error);
     } else {
-      console.log('Successful password reset!');
       callback();
     }
   };
@@ -537,6 +537,7 @@ module.exports = {
   markChecked,
   markFlagged,
   unflagEmail,
+  emailMarkRead,
   insertIntoEmailTable,
   insertIntoContextTable,
   insertEmail,

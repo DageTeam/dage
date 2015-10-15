@@ -12,6 +12,9 @@ import {
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
   EMAIL_UNFLAG_SUCCESS,
+  EMAIL_MARK_READ_REQUEST,
+  EMAIL_MARK_READ_SUCCESS,
+  EMAIL_MARK_READ_ERROR,
 
 } from 'constants/emails';
 
@@ -100,7 +103,6 @@ export function unflagEmail(emailID) {
         emailID: emailID,
       })
       .end((err, res={}) => {
-        console.log('server responded for deleteion with', res);
         err ? dispatch(emailUnflagError(err)) :
         dispatch(emailUnflagSuccess());
       });
@@ -122,11 +124,37 @@ export function emailUnflagError(error) {
 }
 
 export function emailUnflagSuccess() {
-  console.log('yay email unflagged');
   return dispatch => {
     dispatch(emailArrayFetch());
     return {
       type: EMAIL_UNFLAG_SUCCESS,
     };
   };
+}
+
+export function emailMarkRead(emailID){
+  return dispatch => {
+    return request
+      .post(serverUrl + '/emailMarkRead')
+      .send({
+        emailID: emailID
+      })
+      .end((err, res) => {
+        if(err){
+          console.log(err);
+        }else{
+          dispatch(emailMarkReadSuccess(res.body.emailID));
+        }
+    })   
+  }
+}
+
+export function emailMarkReadSuccess(emailID){
+  return dispatch => {
+    dispatch(emailArrayFetch());
+    return {
+      type:EMAIL_MARK_READ_SUCCESS,
+      payload: {emailID}
+    }
+  }
 }
