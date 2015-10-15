@@ -40,6 +40,10 @@ var ManageUsers = React.createClass({
     // console.log('component-manageUser_resetPassword',this.props.userInfo.name)
     this.props.callbacks._userPasswordReset(this.props.userInfo.username);
   },
+  toggleUser: function(){
+    console.log('toggleuser',this.props.userInfo)
+    this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
+  },
   render: function() {
     // console.log('THIS IS THE USERSTATE', this.props.userInfo)
     var _this = this;
@@ -57,6 +61,8 @@ var ManageUsers = React.createClass({
       <div className='container'>
       <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
       float: 'right'}} onClick={this.resetPassword} >Reset PW</button>
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
+      float: 'right'}} onClick={this.toggleUser} >Enable/Disable</button>
       <br />
         <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
          selectRow={selectRowProp} search={true}>
