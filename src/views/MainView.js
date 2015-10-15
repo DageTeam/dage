@@ -195,6 +195,9 @@ export class MainView extends React.Component {
       _userToggleActive: (username, active) => {
         this.props.dispatch(userToggleActive(username, active));
       },
+      _userAdd: data => {
+        this.props.dispatch(userAdd(data));
+      },
     };
   }
 
