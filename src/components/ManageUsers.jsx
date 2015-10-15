@@ -36,8 +36,6 @@ var ManageUsers = React.createClass({
     this.props.callbacks._addUserToState(data);
   },
   resetPassword: function(){
-    // console.log('this is password name', this.props.userInfo.name);
-    // console.log('component-manageUser_resetPassword',this.props.userInfo.name)
     this.props.callbacks._userPasswordReset(this.props.userInfo.username);
   },
   toggleUser: function(){
@@ -48,7 +46,6 @@ var ManageUsers = React.createClass({
     this.props.callbacks._userAdd(data);
   },
   render: function() {
-    // console.log('THIS IS THE USERSTATE', this.props.userInfo)
     var _this = this;
     
     var insertRowCallback = {
@@ -58,49 +55,51 @@ var ManageUsers = React.createClass({
       },
     };
     var selectRowProp = {
-      mode: 'checkbox',  //checkbox for multi select, radio for single select.
-      clickToSelect: true,   //click row will trigger a selection on that row.
+      mode: 'checkbox',  
+      clickToSelect: true,   
       bgColor: 'rgb(238, 193, 213)',
       onSelect: function(data) {
-        // console.log('onSelect', data);
         _this.addUserToState(data);
       },
     };
     return (
       <div className='container'>
-      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
-      float: 'right'}} onClick={this.resetPassword} style={{marginLeft: '5%'}}>Reset PW</button>
-      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', width: '10%', 
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', 
+      float: 'right', marginLeft: '5px', fontSize: '5%'}} onClick={this.resetPassword}>Reset PW</button>
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568', 
       float: 'right'}} onClick={this.toggleUser} >Enable/Disable</button>
       <br />
         <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
-         selectRow={selectRowProp} search={true} options={insertRowCallback}>
-          
-          <TableHeaderColumn dataField="username" isKey={true} dataSort={true}>Username</TableHeaderColumn>
-          <TableHeaderColumn dataField="title" dataSort={true}>Title</TableHeaderColumn>
-          <TableHeaderColumn dataField="email" dataAlign="center">Email</TableHeaderColumn>
-          <TableHeaderColumn dataField="department" dataAlign="center">Dept</TableHeaderColumn>
-          <TableHeaderColumn dataField="managerID" dataAlign="center">ManagerID</TableHeaderColumn>
-          <TableHeaderColumn dataField="active" dataAlign="center">Enabled</TableHeaderColumn>
-          <TableHeaderColumn dataField="permissionGroup" dataAlign="center">PermGroup</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" dataAlign="center">Name</TableHeaderColumn>
+         selectRow={selectRowProp} search={true} options={insertRowCallback} style={{marginTop: '0'}}>
+          <TableHeaderColumn dataField="username" width="10%" dataAlign="left" isKey={true} dataSort={true}>Username</TableHeaderColumn>
+          <TableHeaderColumn dataField="title" width="10%" dataAlign="left" dataSort={true}>Title</TableHeaderColumn>
+          <TableHeaderColumn dataField="email" width="20%" dataAlign="left">Email</TableHeaderColumn>
+          <TableHeaderColumn dataField="department" width="20%" dataAlign="left">Dept</TableHeaderColumn>
+          <TableHeaderColumn dataField="managerID" dataAlign="left" hidden>ManagerID</TableHeaderColumn>
+          <TableHeaderColumn dataField="active" width="10%" dataAlign="left">Enabled</TableHeaderColumn>
+          <TableHeaderColumn dataField="permissionGroup" width="10" dataAlign="left">PermGroup</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" dataAlign="left" hidden>Name</TableHeaderColumn>
         </BootstrapTable>
         
       </div>
       );
   },
 
-  styles:{
-    table:{
-      'marginTop':'0',
-      'position':'relative',
-      'width':'75%',
-    },
-    rows:{
-      'borderBottom':'3px solid purple',
-      'marginBottom':'15px',
-    },
-  },
+
+  // styles:{
+  //   table:{
+  //     'marginTop':'0',
+  //     'position':'relative',
+  //     'width':'75%',
+  //   },
+  //   rows:{
+  //     'borderBottom':'3px solid purple',
+  //     'marginBottom':'15px',
+  //   },
+  //   tbody>tr:nth-child(even) {
+  //       background-color: #fff
+  //   }
+  // },
 });
 
 module.exports = ManageUsers;

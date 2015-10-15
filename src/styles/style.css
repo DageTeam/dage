@@ -4066,7 +4066,7 @@ label.error {
 
 table {
     width: 100%;
-    margin-top: 3.25em
+    /*margin-top: 3.25em*/
 }
 
 th {
@@ -4757,4 +4757,9 @@ input[type=radio], input[type=checkbox] {
 }
 .alertNum{
     cursor:pointer;
+}
+.btn-info
+{
+    background-color: #6e2568;
+    margin-right: 5px;
 }
