@@ -51,6 +51,9 @@ mailListener.on('mail', function(mail, seqno, attributes) {
 
 //fx to sanitize the email text's quotes
 var sanitizeInput = function(str) {
-  str = str.replace(/'/g, '\'\'');
+  if (str) {
+    str = str.replace(/'/g, '\'\'');
+    return str;
+  }
   return str;
 };
