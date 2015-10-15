@@ -204,8 +204,17 @@ app.post('/userAuth', function(req, res) {
 });
 
 //fx to return all users
-//TODO: modify db code to return only active users
 app.get('/getAllUsers', function(req, res) {
+  db.getAllUsers(function(userArray) {
+    res.send({
+      message: 'got all users',
+      userArray: userArray,
+    });
+  });
+});
+
+//fx to return all active users
+app.get('/getAllActiveUsers', function(req, res) {
   db.getAllActiveUsers(function(userArray) {
     res.send({
       message: 'got all active users',

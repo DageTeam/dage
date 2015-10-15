@@ -176,7 +176,7 @@ export function userArrayRequest() {
           dispatch(userArrayRequestFailed(err));
         }else {
           //how to send mesage inside body?
-          if(res.body.message = 'got all active users') {
+          if(res.body.message = 'got all users') {
             //send the res.body down the food chain
             dispatch(userArrayRequestSuccess(res.body))
           } else {

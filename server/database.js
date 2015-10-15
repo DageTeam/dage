@@ -542,6 +542,19 @@ var getAllActiveUsers = function getAllActiveUsers(cb) {
   });
 };
 
+//FX to get all active users in the userTable
+var getAllUsers = function getAllUsers(cb) {
+  var queryString = 'SELECT * FROM userTable';
+  console.log('this is queryString', queryString);
+  db.all(queryString, function(error, response) {
+    if (error) {
+      console.log('error getting all users');
+    } else {
+      cb(response);
+    }
+  });
+};
+
 //FX CALLS
 createEmailTable();
 createContextTable();
@@ -574,5 +587,6 @@ module.exports = {
   resetPassword,
   markUserInactiveInUserTable,
   getAllActiveUsers,
+  getAllUsers,
   toggleUserActive,
 };
