@@ -7,12 +7,10 @@ var AllEmailsList = React.createClass({
   //   this.props.callbacks._allEmailArrayFetch();
   // },
 
-  render: function(){
-    console.log('inside all emails list');
+  render: function() {
     var allEmailsRows = [];
     var emailList = this.props.emails.allEmailsArray;
-    console.log('after allEmailsArray', this.props.emails);
-    for (var i = emailList.length-1; i >=0; i--) {
+    for (var i = emailList.length - 1; i >= 0; i--) {
       var email = emailList[i];
       allEmailsRows.push(
         <GeneralEmail
@@ -27,20 +25,21 @@ var AllEmailsList = React.createClass({
           focusLevel = {email.focusLevel}
           userSession = {this.props.userSession}
           callbacks = {this.props.callbacks}/>
-      )
+      );
     }
 
-    return (<div style={this.styles.allEmailListBox}> { allEmailsRows } </div> );
+    return (<div style={this.styles.allEmailListBox}> { allEmailsRows } </div>);
   },
+
   styles:{
     allEmailListBox:{
-      'marginLeft': '5%',
-      'width': '90%',
-      'height': '600px',
-      'overflow': 'scroll',
-      'border': '3px solid purple'
-    }
-  }
+      marginLeft: '5%',
+      width: '90%',
+      height: '600px',
+      overflow: 'scroll',
+      border: '3px solid purple',
+    },
+  },
 });
 
 module.exports = AllEmailsList;
