@@ -35,11 +35,11 @@ mailListener.on('server:disconnected', function() {
 mailListener.on('error', function(err) {
   console.log(err);
 });
-
+// function that can be used for mail attachments
 mailListener.on('attachment', function(attachment) {
   console.log(attachment.path);
 });
-
+// when mail comes in, sanitize subject & text and insert into the database
 mailListener.on('mail', function(mail, seqno, attributes) {
   mail.subject = sanitizeInput(mail.subject);
   mail.text = sanitizeInput(mail.text);
