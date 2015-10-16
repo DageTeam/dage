@@ -33,6 +33,8 @@ var GeneralEmail = React.createClass({
   render: function() {
     var contentRows = [];
     var contentList = this.props.flags;
+    //todo: fix this!!
+    var MLcode = Math.floor(Math.random()*2) + 1;
     var flagsArray = [];
     for (var i = 0; i < contentList.length; i++) {
       flagsArray.push(contentList[i].flaggedKeyword);
@@ -58,7 +60,10 @@ var GeneralEmail = React.createClass({
     const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
     const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}> Yes, flag this email</span>;
     const markNoButton = <span onClick={ this.markIsNotFlag } style={{'float':'left','color':'green','marginRight':'10px','cursor':'pointer'}}>Unflag </span>;
-    const markReadButton =<span onClick={ this.markAsRead} id='markRead' style={{'float':'left','color':'#ea6314','marginRight':'10px','cursor':'pointer'}}>Mark Read</span>;
+    const markReadButton = <span onClick={ this.markAsRead} id='markRead' style={{'float':'left','color':'#ea6314','marginRight':'10px','cursor':'pointer'}}>Mark Read</span>;
+
+    const MLTag = MLcode === 2 ? <span style={{'float':'left','color':'red','marginRight':'10px','fontWeight':'bold'}}>High confidence </span> :
+      <span style={{'float':'left','color':'orange','marginRight':'10px','fontWeight':'bold'}}>Low confidence </span>
 
     const oneFLButtonsBlock = <div>{ fullEmailButton } </div>;
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
@@ -87,6 +92,7 @@ var GeneralEmail = React.createClass({
               </table>
             </div>
             <div className='container' > 
+              { MLTag }
               {markNoButton}
               {oneFLButtonsBlock}
             </div>

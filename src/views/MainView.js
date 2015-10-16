@@ -252,7 +252,7 @@ export class MainView extends React.Component {
     } else {
       return (
         <div>
-          <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have New Alerts</h1>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have {this.props.emails.emailsArray.length} New Alerts</h1>
           <FlaggedEmailList
             state={ this.props.emails }
             callbacks={ this.callbacks }
@@ -289,7 +289,7 @@ export class MainView extends React.Component {
 
       return (
         <div>
-          <h1 style={{paddingTop:'60px', textAlign:'center'}}>ML emails</h1>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>DägeWatch: Machine Learning-flagged emails</h1>
           <MLEmailsList
             emails={ this.props.emails }
             callbacks={ this.callbacks }
@@ -397,7 +397,7 @@ export class MainView extends React.Component {
         <div>
           <Header callbacks={ this.callbacks }/>
           { mainComponent[this.props.navigation.currentPage] }
-          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession }/>
+          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession } numEmails= {this.props.emails.emailsArray.length}/>
           <Footer />
           <ScriptLoader />
           <div
