@@ -16,6 +16,8 @@ import {
   USER_ARRAY_REQUEST,
   USER_ARRAY_REQUEST_SUCCESS,
   USER_ARRAY_REQUEST_FAILED,
+
+  ADD_USER_TO_STATE
 } from 'constants/manageUsers';
 
 const initialState = {
@@ -66,6 +68,7 @@ export default createReducer(initialState, {
   },
 //USER_PASSWORD_RESET
   [USER_PASSWORD_RESET]: (state, payload) => {
+    console.log('reducer', payload.username)
     return {
       ...state,
       username: payload.username,
@@ -102,5 +105,12 @@ export default createReducer(initialState, {
       userArrayRequestError: payload.error,
     };
   },
+//ADD_USER_TO_STATE    
+  [ADD_USER_TO_STATE]: (state, payload) => {
+    return {
+      ...state,
+      userState: payload.userState,
+    }
+  }
 
 });

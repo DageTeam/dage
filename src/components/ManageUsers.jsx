@@ -32,46 +32,74 @@ var ManageUsers = React.createClass({
         price: 160
     }
   ],
-  selectRowProp: {
-    mode: "checkbox",  //checkbox for multi select, radio for single select.
-    clickToSelect: true,   //click row will trigger a selection on that row.
-    bgColor: "rgb(238, 193, 213)"   //selected row background color
+  addUserToState: function(data){
+    this.props.callbacks._addUserToState(data);
   },
-  addUser: function(){
-    var modal = document.getElementById('myModal');
-    $('#myModal').modal();
+  resetPassword: function(){
+    this.props.callbacks._userPasswordReset(this.props.userInfo.username);
+  },
+  toggleUser: function(){
+    console.log('toggleuser',this.props.userInfo)
+    this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
+  },
+  addingUser: function(data) {
+    this.props.callbacks._userAdd(data);
   },
   render: function() {
+    var _this = this;
+
+    var insertRowCallback = {
+      afterInsertRow: function(data){
+        console.log('data', data);
+        _this.addingUser(data);
+      },
+    };
+    var selectRowProp = {
+      mode: 'checkbox',
+      clickToSelect: true,
+      bgColor: 'rgb(238, 193, 213)',
+      onSelect: function(data) {
+        _this.addUserToState(data);
+      },
+    };
     return (
       <div className='container'>
-        <Griddle results={this.props.userArray}
-                          showFilter={true}
-                          showSettings={true}
-                          className={this.styles.table}
-                          useFixedLayout={false}
-        columns={['username',
-                  'title',
-                  'email',
-                  'department',
-                  'managerID',
-                  'active'
-                  ]}
-        noDataMessage={'No data could be found.'}/>
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568',
+      float: 'right', marginLeft: '5px'}} onClick={this.resetPassword}>Reset PW</button>
+      <button className='btn btn-primary' type='submit' style={{backgroundColor: '#6e2568',
+      float: 'right'}} onClick={this.toggleUser} >Enable/Disable</button>
+      <br />
+        <BootstrapTable data={this.props.userArray} hover={true} insertRow={true}
+         selectRow={selectRowProp} search={true} options={insertRowCallback} style={{marginTop: '0'}}>
+          <TableHeaderColumn dataField="username" width="10%" dataAlign="left" isKey={true} dataSort={true}>Username</TableHeaderColumn>
+          <TableHeaderColumn dataField="title" width="10%" dataAlign="left" dataSort={true}>Title</TableHeaderColumn>
+          <TableHeaderColumn dataField="email" width="20%" dataAlign="left">Email</TableHeaderColumn>
+          <TableHeaderColumn dataField="department" width="20%" dataAlign="left">Dept</TableHeaderColumn>
+          <TableHeaderColumn dataField="managerID" dataAlign="left" hidden>ManagerID</TableHeaderColumn>
+          <TableHeaderColumn dataField="active" width="10%" dataAlign="left">Enabled</TableHeaderColumn>
+          <TableHeaderColumn dataField="permissionGroup" width="10" dataAlign="left">PermGroup</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" dataAlign="left" hidden>Name</TableHeaderColumn>
+        </BootstrapTable>
+
       </div>
       );
   },
 
-  styles:{
-    table:{
-      'marginTop':'0',
-      'position':'relative',
-      'width':'75%',
-    },
-    rows:{
-      'borderBottom':'3px solid purple',
-      'marginBottom':'15px',
-    },
-  },
+
+  // styles:{
+  //   table:{
+  //     'marginTop':'0',
+  //     'position':'relative',
+  //     'width':'75%',
+  //   },
+  //   rows:{
+  //     'borderBottom':'3px solid purple',
+  //     'marginBottom':'15px',
+  //   },
+  //   tbody>tr:nth-child(even) {
+  //       background-color: #fff
+  //   }
+  // },
 });
 
 module.exports = ManageUsers;

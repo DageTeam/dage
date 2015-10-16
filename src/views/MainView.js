@@ -58,7 +58,8 @@ import {
   userToggleActive,
   userPasswordReset,
   userArrayRequest,
-} from 'actions/manageUsers';
+  addUserToState
+} from 'actions/manageUsers'
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -207,6 +208,20 @@ export class MainView extends React.Component {
       _deleteToken: () => {
         this.props.dispatch(deleteToken());
       },
+
+      _userPasswordReset: username => {
+        this.props.dispatch(userPasswordReset(username));
+      },
+      _addUserToState: data => {
+        this.props.dispatch(addUserToState(data));
+      },
+      _userToggleActive: (username, active) => {
+        this.props.dispatch(userToggleActive(username, active));
+      },
+      _userAdd: data => {
+        this.props.dispatch(userAdd(data));
+      },
+
     };
   }
 
@@ -316,12 +331,10 @@ export class MainView extends React.Component {
   }
 
   manageUserRender() {
-    console.log('manage user triggered');
-    console.log(this.props);
     return (
       <div>
         <h1 style={{paddingTop: '60px', textAlign: 'center'}}>User Accounts</h1>
-        <ManageUsers userArray={this.props.manageUsers.userArray} />
+        <ManageUsers userInfo={this.props.manageUsers.userState} callbacks={this.callbacks } userArray={this.props.manageUsers.userArray} />
       </div>
     );
   }

@@ -17,6 +17,8 @@ import {
   USER_ARRAY_REQUEST,
   USER_ARRAY_REQUEST_SUCCESS,
   USER_ARRAY_REQUEST_FAILED,
+
+  ADD_USER_TO_STATE
 } from 'constants/manageUsers';
 
 //username, permissionGroup, name, title, email, department, managerID, active
@@ -51,8 +53,6 @@ export function userAdd(data) {
         if (err) {
           dispatch(userAddFailed(err));
         } else {
-          //if the server responds back with message='userAdded'
-          //TODO: ADD SERVER CODE...
           if (res.body.message === 'user added') {
             dispatch(userAddSuccess(data));
           } else {
@@ -123,7 +123,7 @@ export function userPasswordReset(username) {
   return dispatch => {
     dispatch({
       type: USER_PASSWORD_RESET,
-      payload: { username }
+      payload: { username },
     });
 
     return request
@@ -134,7 +134,7 @@ export function userPasswordReset(username) {
           dispatch(userPasswordResetFailed(err));
         } else {
           if (res.body.message === 'Password Successfully Resetted') {
-            dispatch(userPasswordResetSuccess(data));
+            dispatch(userPasswordResetSuccess(res.body));
           } else {
             console.log('Failed to reset user password');
             dispatch(userPasswordResetFailed(err));
@@ -150,6 +150,7 @@ export function userPasswordResetSuccess(data) {
     payload: { data },
   }
 }
+
 
 export function userPasswordResetFailed(error) {
   return {
@@ -173,7 +174,7 @@ export function userArrayRequest() {
           dispatch(userArrayRequestFailed(err));
         }else {
           //how to send mesage inside body?
-          if(res.body.message = 'got all active users') {
+          if(res.body.message = 'got all users') {
             //send the res.body down the food chain
             dispatch(userArrayRequestSuccess(res.body))
           } else {
@@ -195,5 +196,12 @@ export function userArrayRequestFailed(error) {
   return {
     type: USER_ARRAY_REQUEST_FAILED,
     payload: { error },
+  };
+}
+
+export function addUserToState(userState){
+  return {
+    type: ADD_USER_TO_STATE,
+    payload: { userState }
   };
 }

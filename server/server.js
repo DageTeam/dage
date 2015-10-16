@@ -85,7 +85,7 @@ app.post('/emailMarkRead', function(req, res) {
 })
 
 app.get('/filterData', function(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getAllFilters(function(data) {
     res.send(data);
   });
@@ -206,8 +206,17 @@ app.post('/userAuth', function(req, res) {
 });
 
 //fx to return all users
-//TODO: modify db code to return only active users
 app.get('/getAllUsers', function(req, res) {
+  db.getAllUsers(function(userArray) {
+    res.send({
+      message: 'got all users',
+      userArray: userArray,
+    });
+  });
+});
+
+//fx to return all active users
+app.get('/getAllActiveUsers', function(req, res) {
   db.getAllActiveUsers(function(userArray) {
     res.send({
       message: 'got all active users',
@@ -228,7 +237,13 @@ app.post('/createUser', function(req, res) {
 //url to create admin users, accessible from client
 app.post('/userAdd', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
-  req.body.hash = bcrypt.hashSync(req.body.password, salt);
+
+  if (!req.body.password) {
+    req.body.password = 'password';
+  }
+
+  var req.body.hash = bcrypt.hashSync(req.body.password, salt);
+
   db.createUser(req.body, function() {
     res.send({
       message: 'user added',
