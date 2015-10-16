@@ -17,4 +17,6 @@ export default createConstants(
   'USER_ARRAY_REQUEST',
   'USER_ARRAY_REQUEST_SUCCESS',
   'USER_ARRAY_REQUEST_FAILED',
+
+  'ADD_USER_TO_STATE'
 );

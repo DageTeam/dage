@@ -253,7 +253,7 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, getAll, cb) {
   db.all(queryString, function(err, flaggedEmails) {
     // console.log('this is flaggedEmails', flaggedEmails);
     if (err) {
-      console.log('err', err);
+      console.log('there was an error getting flagged emails',err);
     } else {
       // console.log('emails fetched, now getting all the flagged contexts for user');
       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
@@ -297,7 +297,7 @@ var getFlaggedEmails = function getFlaggedEmails(userID, isAdmin, getAll, cb) {
 //       var fetchString = isAdmin ? 'SELECT emailID, flaggedKeyword, context FROM contextTable' : 'SELECT emailID, flaggedKeyword, context FROM contextTable WHERE userID=' + userID;
 //       db.all(fetchString, function(err))
 //     }
-//   }) 
+//   })
 // }
 
 //fx to pull all unchecked emails from the db
@@ -549,6 +549,19 @@ var getAllActiveUsers = function getAllActiveUsers(cb) {
   });
 };
 
+//FX to get all active users in the userTable
+var getAllUsers = function getAllUsers(cb) {
+  var queryString = 'SELECT * FROM userTable';
+  // console.log('this is queryString', queryString);
+  db.all(queryString, function(error, response) {
+    if (error) {
+      console.log('error getting all users');
+    } else {
+      cb(response);
+    }
+  });
+};
+
 //FX CALLS
 createEmailTable();
 createContextTable();
@@ -582,5 +595,6 @@ module.exports = {
   resetPassword,
   markUserInactiveInUserTable,
   getAllActiveUsers,
+  getAllUsers,
   toggleUserActive,
 };
