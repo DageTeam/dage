@@ -242,7 +242,7 @@ app.post('/userAdd', function(req, res) {
     req.body.password = 'password';
   }
 
-  var req.body.hash = bcrypt.hashSync(req.body.password, salt);
+  req.body.hash = bcrypt.hashSync(req.body.password, salt);
 
   db.createUser(req.body, function() {
     res.send({
