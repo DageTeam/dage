@@ -8,6 +8,7 @@ import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
 import AllEmailsList from 'components/AllEmailsList';
+import MLEmailsList from 'components/MLEmailsList';
 import ManageUsers from 'components/ManageUsers';
 import Dashboard from 'components/Dashboard';
 import Login from 'components/Login';
@@ -281,6 +282,25 @@ export class MainView extends React.Component {
     }
   }
 
+  MLEmailsViewRender() {
+    if (this.props.emails.isFetchingAllEmails) {
+      this.loadingViewRender();
+    } else {
+
+      return (
+        <div>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>ML emails</h1>
+          <MLEmailsList
+            emails={ this.props.emails }
+            callbacks={ this.callbacks }
+            userSession={ this.props.userSession }
+          />
+        </div>
+
+      );
+    }
+  }
+
   customizeFiltersViewRender() {
     if (this.props.state.filters.isFetchingFilters || this.props.state.filters.isPostingFlag) {
       return (
@@ -351,6 +371,7 @@ export class MainView extends React.Component {
       manageUser: this.manageUserRender(),
       loading: this.loadingViewRender(),
       allEmails: this.allEmailsViewRender(),
+      MLEmails: this.MLEmailsViewRender(),
     };
 
     // this.props.dispatch(applicationLoaded())
