@@ -221,6 +221,9 @@ export class MainView extends React.Component {
       _userAdd: data => {
         this.props.dispatch(userAdd(data));
       },
+      _userArrayRequest: () => {
+        this.props.dispatch(userArrayRequest());
+      },
 
     };
   }

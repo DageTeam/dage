@@ -37,10 +37,13 @@ var ManageUsers = React.createClass({
   },
   resetPassword: function(){
     this.props.callbacks._userPasswordReset(this.props.userInfo.username);
+    this.props.callbacks._userArrayRequest();
   },
   toggleUser: function(){
     console.log('toggleuser',this.props.userInfo)
     this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
+    this.props.callbacks._userArrayRequest();
+
   },
   addingUser: function(data) {
     this.props.callbacks._userAdd(data);
