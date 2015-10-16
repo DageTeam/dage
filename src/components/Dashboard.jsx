@@ -25,7 +25,7 @@ var Dashboard = React.createClass({
             strokeColor: "#6B24B2",
             highlightFill: "#EBD6FF",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40, 50, 34, 60, 80, 90]
+            data: [1560, 1236, 1203, 1323, 1806, 1425, 1123, 1534, 2044, 4259, 4248, 1718]
         }
       ]
     };
@@ -236,6 +236,12 @@ var Dashboard = React.createClass({
               label: "ethics"
           },
           {
+              value: 3636,
+              color: "#FFF0F5",
+              highlight: "#FFF0F5",
+              label: "racism"
+          },
+          {
               value: 1683,
               color: "#B0171F",
               highlight: "#5AD3D1",
@@ -252,12 +258,6 @@ var Dashboard = React.createClass({
               color:"#8B5F65",
               highlight: "#8B5F65",
               label: "sexual harrassment"
-          },
-          {
-              value: 3636,
-              color: "#FFF0F5",
-              highlight: "#FFF0F5",
-              label: "racism"
           }
       ];
 
@@ -290,7 +290,7 @@ var Dashboard = React.createClass({
     return(
       <div>
           <div style={{'marginTop':'8%','marginLeft':'5%', 'width':'65%', 'float':'left'}}>
-          <h2>You Have <a onClick = {this.navigateAlert} className='alertNum'>{emailNum}</a> New Alerts Right Now</h2>
+          <h2 style={{'paddingLeft':'6%', 'textAlign':'left'}}>You Have <a onClick = {this.navigateAlert} className='alertNum'>{emailNum}</a> New Alerts Right Now</h2>
           <div style={{'marginTop': '3%', 'marginLeft':'7%', float:'left'}}>
             <h3 style={{'marginBottom':'2%','textAlign':'left'}}>Flagged Emails by month</h3>
             <BarChart data={barData} options={barOptions} width={'920px'} height={'200px'} redraw={true} style={{'marginLeft':'2%'}}/>
@@ -299,17 +299,17 @@ var Dashboard = React.createClass({
             <h3>Ethics Filter (by keywords)</h3>
             <DoughnutChart data={doughnutDataEthics} options ={doughnutOptions} width={'200px'} height = {'200px'} redraw = {true} style={{'marginLeft':'20px','paddingTop':'20px'}}/>
           </div>
-          <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
+          <div style={{'marginTop': '3%', 'marginLeft':'7%', float:'left'}}>
             <h3>Competitors Filter (by keywords)</h3>
-            <DoughnutChart data={doughnutDataCompetitors} options ={doughnutOptions} width={'200px'} height = {'200px'} redraw = {true} style={{'marginLeft':'20px','paddingTop':'20px'}}/>
+            <DoughnutChart data={doughnutDataCompetitors} options ={doughnutOptions} width={'200px'} height = {'200px'} redraw = {true} style={{'marginLeft':'40px','paddingTop':'20px'}}/>
           </div>
           <div style={{'marginTop': '3%', 'marginLeft':'5%', float:'left'}}>
             <h3>Flags by Filters (this year)</h3>
-            <DoughnutChart data={doughnutDataEthics} options ={doughnutOptions} width={'200px'} height = {'200px'} redraw = {true} style={{'marginLeft':'20px','paddingTop':'20px'}}/>
+            <DoughnutChart data={doughnutDataFilters} options ={doughnutOptions} width={'200px'} height = {'200px'} redraw = {true} style={{'marginLeft':'20px','paddingTop':'20px'}}/>
           </div>
         </div>
            <div style={{'marginTop':'8%','marginRight':'2%', float:'right'}}>
-                <h3>Most flagged users</h3>
+                <h3 style={{textAlign:'center'}}>Most flagged users</h3>
                 <Table
                   rowHeight={50}
                   rowGetter={rowGetter}
