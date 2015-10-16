@@ -3,10 +3,10 @@ var FlaggedEmail = require('components/FlaggedEmail.jsx');
 
 var FlaggedEmailList = React.createClass({
 
-  render: function(){
+  render: function() {
     var emailRows = [];
     var emailList = this.props.state.emailsArray;
-    for (var i = emailList.length-1; i >=0; i--) {
+    for (var i = emailList.length - 1; i >= 0; i--) {
       var email = emailList[i];
       emailRows.push(
         <FlaggedEmail
@@ -21,20 +21,21 @@ var FlaggedEmailList = React.createClass({
           focusLevel = {email.focusLevel}
           userSession = {this.props.userSession}
           callbacks = {this.props.callbacks}/>
-      )
+      );
     }
 
-    return (<div style={this.styles.emailListBox}> { emailRows } </div> );
+    return (<div style={this.styles.emailListBox}> { emailRows } </div>);
   },
+
   styles:{
     emailListBox:{
-      'marginLeft': '5%',
-      'width': '90%',
-      'height': '600px',
-      'overflow': 'scroll',
-      'border': '3px solid purple'
-    }
-  }
+      marginLeft: '5%',
+      width: '90%',
+      height: '600px',
+      overflow: 'scroll',
+      border: '3px solid purple',
+    },
+  },
 });
 
 module.exports = FlaggedEmailList;

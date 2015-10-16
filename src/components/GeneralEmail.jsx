@@ -33,6 +33,10 @@ var GeneralEmail = React.createClass({
   render: function() {
     var contentRows = [];
     var contentList = this.props.flags;
+    var flagsArray = [];
+    for (var i = 0; i < contentList.length; i++) {
+      flagsArray.push(contentList[i].flaggedKeyword);
+    };
     var displayLength = contentList.length;
     var userPermissionGroup = this.props.userSession.permissionGroup;
     if (this.props.focusLevel === 'one') {
@@ -133,7 +137,7 @@ var GeneralEmail = React.createClass({
                   </tr>
                   <tr>
 
-                    <td>{ this.props.callbacks._flagHighlightRender(this.props.body, this.props.flags[0].flaggedKeyword) }</td>
+                    <td>{ this.props.callbacks._flagHighlightRender(this.props.body, flagsArray) }</td>
                   </tr>
               </table>
             </div>
