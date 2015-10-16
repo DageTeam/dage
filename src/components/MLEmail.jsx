@@ -53,7 +53,7 @@ var GeneralEmail = React.createClass({
         )
     }
 
-    const fullEmailButton = <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>Full Email</span></small>;
+    const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
     // const allFlagsButton = <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
     const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
     const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}> Yes, flag this email</span>;
@@ -62,6 +62,7 @@ var GeneralEmail = React.createClass({
 
     const oneFLButtonsBlock = <div>{ fullEmailButton } </div>;
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
+    const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0,110) }[...]</td> : <td>{ this.props.body } </td>;
 
     if (this.props.focusLevel == 'one') {
       return (
@@ -75,14 +76,13 @@ var GeneralEmail = React.createClass({
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             </div>
-            <div className='container' style={{'marginTop':'1%', 'marginBottom':'1%'}}>
+            <div className='container' style={{'marginBottom':'1%'}}>
               <table style={{width:'100%', 'marginTop':'1%'}}>
                   <tr>
                     <th>Email Body</th>
                   </tr>
                   <tr>
-
-                    <td>{ this.props.body.slice(0,100) }[...]</td>
+                    { emailMessage }
                   </tr>
               </table>
             </div>
@@ -107,14 +107,13 @@ var GeneralEmail = React.createClass({
 
             </div>
             <div className='container' style={{'marginTop':'1%', 'marginBottom':'1%'}}>
-              {contentRows}
               <table style={{width:'100%', 'marginTop':'1%'}}>
                   <tr>
                     <th>Email Body</th>
                   </tr>
                   <tr>
 
-                    <td>{ this.props.callbacks._flagHighlightRender(this.props.body, flagsArray) }</td>
+                    <td>{ this.props.body }</td>
                   </tr>
               </table>
             </div>
