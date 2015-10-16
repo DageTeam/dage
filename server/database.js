@@ -432,7 +432,7 @@ var printEmailTable = function printEmailTable() {
 /////FX's TO CREATE TABLES
 //create emailTable if it doesnt exit
 var createEmailTable = function createEmailTable() {
-  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER, natFlagged CHAR(50), predictFlagged CHAR(50), nlkFlagged CHAR(50))';
+  var createTable = 'CREATE TABLE IF NOT EXISTS emailTable(id INTEGER PRIMARY KEY AUTOINCREMENT, recipient CHAR(100), sender CHAR(100), cc CHAR(100), bcc CHAR(100), subject CHAR(100), priority CHAR(100), body MEDIUMTEXT, parsedText MEDIUMTEXT, sendTime DATE, checked INTEGER, flagged INTEGER, read INTEGER)';
 
   db.run(createTable);
 };

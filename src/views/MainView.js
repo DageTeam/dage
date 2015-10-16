@@ -8,6 +8,7 @@ import ScriptLoader from 'components/ScriptLoader';
 import FilterList from 'components/FilterList';
 import FlagList from 'components/FlagList';
 import AllEmailsList from 'components/AllEmailsList';
+import MLEmailsList from 'components/MLEmailsList';
 import ManageUsers from 'components/ManageUsers';
 import Dashboard from 'components/Dashboard';
 import Login from 'components/Login';
@@ -251,7 +252,7 @@ export class MainView extends React.Component {
     } else {
       return (
         <div>
-          <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have New Alerts</h1>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>You Have {this.props.emails.emailsArray.length} New Alerts</h1>
           <FlaggedEmailList
             state={ this.props.emails }
             callbacks={ this.callbacks }
@@ -271,6 +272,25 @@ export class MainView extends React.Component {
         <div>
           <h1 style={{paddingTop:'60px', textAlign:'center'}}>All emails</h1>
           <AllEmailsList
+            emails={ this.props.emails }
+            callbacks={ this.callbacks }
+            userSession={ this.props.userSession }
+          />
+        </div>
+
+      );
+    }
+  }
+
+  MLEmailsViewRender() {
+    if (this.props.emails.isFetchingAllEmails) {
+      this.loadingViewRender();
+    } else {
+
+      return (
+        <div>
+          <h1 style={{paddingTop:'60px', textAlign:'center'}}>DägeWatch: Machine Learning-flagged emails</h1>
+          <MLEmailsList
             emails={ this.props.emails }
             callbacks={ this.callbacks }
             userSession={ this.props.userSession }
@@ -351,6 +371,7 @@ export class MainView extends React.Component {
       manageUser: this.manageUserRender(),
       loading: this.loadingViewRender(),
       allEmails: this.allEmailsViewRender(),
+      MLEmails: this.MLEmailsViewRender(),
     };
 
     // this.props.dispatch(applicationLoaded())
@@ -376,7 +397,7 @@ export class MainView extends React.Component {
         <div>
           <Header callbacks={ this.callbacks }/>
           { mainComponent[this.props.navigation.currentPage] }
-          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession }/>
+          <SideNav callbacks={ this.callbacks } userSession={ this.props.userSession } numEmails= {this.props.emails.emailsArray.length}/>
           <Footer />
           <ScriptLoader />
           <div

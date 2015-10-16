@@ -7,7 +7,7 @@ import {
 import {
   allEmailArrayFetch,
   emailArrayFetch,
-} from './emails'
+} from './emails';
 
 export function navigationRouteSelect(route) {
   if (route === 'allEmails') {
@@ -16,7 +16,15 @@ export function navigationRouteSelect(route) {
       dispatch({
         type: NAVIGATION_ROUTE_SELECT,
         payload: { route },
-      })
+      });
+    };
+  } else if (route === 'MLEmails') {
+    return dispatch => {
+      dispatch(allEmailArrayFetch());
+      dispatch({
+          type: NAVIGATION_ROUTE_SELECT,
+          payload: { route },
+        });
     };
   } else if (route === 'alerts') {
     return dispatch => {
@@ -24,12 +32,12 @@ export function navigationRouteSelect(route) {
       dispatch({
         type: NAVIGATION_ROUTE_SELECT,
         payload: { route },
-      })
-    }
+      });
+    };
   } else {
     return {
       type: NAVIGATION_ROUTE_SELECT,
       payload: { route },
-    }
+    };
   }
 }
