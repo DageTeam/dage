@@ -226,73 +226,39 @@ var Dashboard = React.createClass({
               highlight: "#6599FF",
               label: "El Paso"
           }
-          // {
-          //     value: 1195,
-          //     color: "#46BFBD",
-          //     highlight: "#5AD3D1",
-          //     label: "sensitive"
-          // },
-          // {
-          //     value: 14683,
-          //     color: "#B0171F",
-          //     highlight: "#5AD3D1",
-          //     label: "confidential"
-          // },          
-          // {
-          //     value: 2324,
-          //     color: "#FFAEB9",
-          //     highlight: "#FFAEB9",
-          //     label: "secret"
-          // },
-          // {
-          //     value: 0,
-          //     color:"#8B5F65",
-          //     highlight: "#8B5F65",
-          //     label: "noncompliant"
-          // },
-          // {
-          //     value: 636,
-          //     color: "#FFF0F5",
-          //     highlight: "#FFF0F5",
-          //     label: "unlawful"
-          // },
-          // {
-          //     value: 659,
-          //     color: "#EEE0E5",
-          //     highlight: "#EEE0E5",
-          //     label: "manipulation"
-          // },
-          // {
-          //     value: 266,
-          //     color: "#CDC1C5",
-          //     highlight: "#CDC1C5",
-          //     label: "scandal"
-          // },
-          // {
-          //     value: 1453,
-          //     color: "#FF3E96",
-          //     highlight: "#FF3E96",
-          //     label: "hide"
-          // },
-          // {
-          //     value: 11300,
-          //     color: "#872657",
-          //     highlight: "#872657",
-          //     label: "delete"
-          // },          
-          // {
-          //     value: 201,
-          //     color: "#8B7B8B",
-          //     highlight: "#8B7B8B",
-          //     label: "get rid of"
-          // },
-          // {
-          //     value: 2077,
-          //     color: "#D15FEE",
-          //     highlight: "#D15FEE",
-          //     label: "eliminate"
-          // },
+      ];
 
+      var doughnutDataFilters = [
+        {
+              value: 1195,
+              color: "#46BFBD",
+              highlight: "#5AD3D1",
+              label: "ethics"
+          },
+          {
+              value: 1683,
+              color: "#B0171F",
+              highlight: "#5AD3D1",
+              label: "competitors"
+          },          
+          {
+              value: 2324,
+              color: "#FFAEB9",
+              highlight: "#FFAEB9",
+              label: "general inappropriate"
+          },
+          {
+              value: 3520,
+              color:"#8B5F65",
+              highlight: "#8B5F65",
+              label: "sexual harrassment"
+          },
+          {
+              value: 3636,
+              color: "#FFF0F5",
+              highlight: "#FFF0F5",
+              label: "racism"
+          }
       ];
 
     var doughnutOptions = {
@@ -349,7 +315,7 @@ var Dashboard = React.createClass({
                   rowGetter={rowGetter}
                   rowsCount={rows.length}
                   width={300}
-                  height={800}
+                  height={650}
                   headerHeight={30}>
                   <Column
                     label="user email"
