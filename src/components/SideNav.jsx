@@ -44,17 +44,7 @@ var SideNav = React.createClass({
                   <li className='nav__item nav__item--has-child site-nav--company'><a onClick={ this.navigateCustomizeRoute }>Customize<i className='icon--company'></i></a></li>
                   { manageUserBlock }
                 </ul>
-                <ul className='nav nav--social'>
-                  <li className='nav__item site-nav--support'>
-                    <a className='utility twitter' href='https://twitter.com/dage' target='_blank'>Twitter<i className='icon--twitter'></i></a>
-                  </li>
-                  <li className='nav__item site-nav--support'>
-                    <a className='utility linkedin' href='https://www.linkedin.com/company/dage' target='_blank'>LinkedIn<i className='icon--linkedin'></i></a>
-                  </li>
-                  <li className='nav__item site-nav--support'>
-                    <a className='utility facebook' href='https://www.facebook.com/dage' target='_blank'>Facebook<i className='icon--facebook'></i></a>
-                  </li>
-                </ul>
+              
               </div>
             </nav>
           </div>
