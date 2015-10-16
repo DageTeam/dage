@@ -5,9 +5,8 @@ var FlaggedEmailList = React.createClass({
 
   render: function(){
     var emailRows = [];
-    // var emailList = /*EMAILARRAY props from state tree*/;
     var emailList = this.props.state.emailsArray;
-    for (var i = 0; i < emailList.length; i++) {
+    for (var i = emailList.length-1; i >=0; i--) {
       var email = emailList[i];
       emailRows.push(
         <FlaggedEmail
@@ -16,17 +15,25 @@ var FlaggedEmailList = React.createClass({
           sender = {email.sender}
           recipient = {email.recipient}
           sendTime = {email.sendTime}
+          subject = {email.subject}
           flags = {email.flags}
           body = {email.body}
           focusLevel = {email.focusLevel}
-          callbacks = {this.props.callbacks}
-          // /*CBFuncShowFlags*/={this.props.CBFunc}
-          // /*CBFuncShowCompleteEmail*/={this.props.CBFunc}
-          />
+          userSession = {this.props.userSession}
+          callbacks = {this.props.callbacks}/>
       )
     }
 
-    return (<div> { emailRows } </div> );
+    return (<div style={this.styles.emailListBox}> { emailRows } </div> );
+  },
+  styles:{
+    emailListBox:{
+      'marginLeft': '5%',
+      'width': '90%',
+      'height': '600px',
+      'overflow': 'scroll',
+      'border': '3px solid purple'
+    }
   }
 });
 

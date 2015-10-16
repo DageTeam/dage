@@ -190,7 +190,7 @@ html,body,button {
 body {
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     font-size: 17px;
-    line-height: 1.6250em;
+    line-height: 1.4250em;
     font-weight: 300;
     color: #2a2a2a;
     min-height: 100%;
@@ -1250,7 +1250,8 @@ html.no-svg .linkedin:hover .icon--linkedin {
 
 .wrap {
     overflow: hidden;
-    position: relative
+    position: relative;
+    height:0px;
 }
 
 .gallery-cell {
@@ -3954,7 +3955,7 @@ figcaption {
     appearance: none;
     display: block;
     font-size: 17px;
-    width: 100%;
+    width: 50%;
     padding: 15px;
     border-radius: 2px;
     border: 1px solid #e9e2ec;
@@ -4065,7 +4066,7 @@ label.error {
 
 table {
     width: 100%;
-    margin-top: 3.25em
+    /*margin-top: 3.25em*/
 }
 
 th {
@@ -4741,7 +4742,24 @@ input[type=radio], input[type=checkbox] {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
 }
 
-.licenseTextBox
+.centered
 {
-    width:45px;
+    float: none;
+    margin: 0 auto;
+}
+
+.dage-logout:hover {
+    font-weight: bold;
+}
+
+.markRead:visited {
+    font-weight: bold;
+}
+.alertNum{
+    cursor:pointer;
+}
+.btn-info
+{
+    background-color: #6e2568;
+    margin-right: 5px;
 }

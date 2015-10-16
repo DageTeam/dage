@@ -1,11 +1,14 @@
 var MailListener = require('mail-listener2');
 var CronJob = require('cron').CronJob;
 var db = require('./database.js');
+var authorization = require('../auth.js');
+
+// console.log('PASSWORDD................', authorization.gmailPassword);
 
 //create new mailListener instance. Connect with gmail.
 var mailListener = new MailListener({
   username: 'dageprotect@gmail.com',
-  password: 'node1234',
+  password: authorization.gmailPassword,
   host: 'imap.gmail.com',
   port: 993, // imap port
   tls: true,
@@ -48,6 +51,9 @@ mailListener.on('mail', function(mail, seqno, attributes) {
 
 //fx to sanitize the email text's quotes
 var sanitizeInput = function(str) {
-  str = str.replace(/'/g, '\'\'');
+  if (str) {
+    str = str.replace(/'/g, '\'\'');
+    return str;
+  }
   return str;
 };

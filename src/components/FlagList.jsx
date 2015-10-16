@@ -2,13 +2,33 @@ var React = require('react');
 
 var Select = require('react-select');
 
-function AddFlag() {
-  console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
-  //insert the newly added flag as param for CB so that redux code can connect with DB to insert it.
-  // this.props./*CBNewFlag*/(Array.prototype.slice.apply(arguments[arguments.length-1]))//double check to see if param === last added object values.PLAY WITH IT.
-}
 
 var FlagDisplay = React.createClass({
+  ManageFlag: function(flags){
+    var removeFlag;
+    var checkFlag ={};
+    var flagsArr = flags.split(',');
+    for(var i = 0; i < this.props.options.length; i ++){
+      if(flagsArr.indexOf(this.props.options[i].value.toString())===-1){
+        checkFlag[this.props.options[i].value]=false;
+      }else{
+        checkFlag[this.props.options[i].value]=true;
+      }
+    }
+    for(var key in checkFlag){
+      if(checkFlag[key]===false){
+        removeFlag=key;
+      }
+    }
+    if(removeFlag){
+      this.props.callbacks._filterRemoveFlagKeyword(removeFlag);
+    }
+    else{
+    var newFlag = flags.split(',');
+    newFlag = newFlag[newFlag.length-1];
+    this.props.callbacks._filterAddFlagKeyword(newFlag);
+    } 
+    },
   propTypes:{
           // allowCreate: React.propTypes.bool,
           hint: React.PropTypes.string,
@@ -17,16 +37,16 @@ var FlagDisplay = React.createClass({
   },
   render: function(){
     return(
-      <div className = 'col-xs-5'>
-        <h3 className = 'col-xs-3'>Selected Flags</h3>
-        <h6 className = 'col-xs-3'>Enter a keyword not in the list, then hit enter</h6>
+      <div className = 'col-xs-6'>
+        <h3>Selected Flags</h3>
+        <h6>To Enter A New KeyWord, Start Typing and Hit Enter</h6>
         <Select
           allowCreate={this.props.allowCreate} //passed down from parent Component. set allowCreate to true.(example didn't have '=true') eg. 'allowcreate'
           value={this.props.options}//passed down from parent Component (Customize). Need to be in array of objects eg. [{label:'chocolate', value:'chocolate'}, ...]
           multi //test if this is needed
           placeholder="Add keywords here"
           options={this.props.options} //won't need. Test.
-          onChange={this.AddFlag} />
+          onChange={this.ManageFlag} />
       </div>
     )
   }

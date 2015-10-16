@@ -16,21 +16,21 @@ var getFlaggedWords = database.getFlaggedWords;
 var createContext = function(email, flaggedKeyword) {
   var text = email.body;
   var index = text.search(flaggedKeyword);
-  var numOfChars = 200;
+  var numOfChars = 100;
   var start = index - numOfChars;
   var end = numOfChars + index;
   var context = text.substring(start, end);
-  console.log('createContext fx ran/////');
+  // console.log('createContext fx ran/////');
   return context;
 };
 
 //fx to check emails for keywords and then store it into the contextTable
 var filterEmail = exports.filterEmail = function(emailArray) {
-  console.log('filterEmail fx ran/////');
-  console.log('filterEmailz emailArray argument is ///////.....', emailArray);
+  // console.log('filterEmail fx ran/////');
+  // console.log('filterEmailz emailArray argument is ///////.....', emailArray);
   if (emailArray.length) {
     getFlaggedWords(function(flaggedWords) {
-      
+
       //loop thru the responseArray
       for (var i = 0; i < emailArray.length; i++) {
         var email = emailArray[i];
@@ -40,16 +40,19 @@ var filterEmail = exports.filterEmail = function(emailArray) {
         markChecked(email.id);
 
         // loop thru the flaggedWords array from keywordTable
-      
+
         for (var j = 0; j < flaggedWords.length; j++) {
           var keyword = flaggedWords[j];
-          var subString = new RegExp(keyword.keyword, 'ig');
+          // var subString = new RegExp(keyword.keyword, 'ig');//OLD SUBSTRING
+
+          //this new subString should find whole words only. DELETE OLD IF WORK
+          var subString = new RegExp("\\b" + keyword.keyword + "\\b", 'ig');
 
           //if object's TEXT value contains that 'bad word'
           if (subString.test(email.body)) {
             // change flag value to 1 in the emailTable ;
             markFlagged(email.id);
-            console.log('triggered for string', email.body, ' and word', keyword.keyword);
+            // console.log('triggered for string', email.body, ' and word', keyword.keyword);
 
             // //create context
             var context = createContext(email, keyword.keyword);
@@ -61,9 +64,9 @@ var filterEmail = exports.filterEmail = function(emailArray) {
       }
     });
   }
-  
 
-  console.log('filterEmail fx is done running/////');
+
+  // console.log('filterEmail fx is done running/////');
 };
 
 var scanEmail = function() {

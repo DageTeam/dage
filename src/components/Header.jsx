@@ -2,24 +2,53 @@ var React = require('react');
 
 var Header = React.createClass({
 
+  logout: function (){
+    this.props.callbacks._deleteToken();
+  },
+
   render: function(){
+    if(!this.props.callbacks){
+      return (
+        <div>
+          <header className="site-header promote-layer" style={this.styles.header}>
+              <a style={this.styles.banner} className="dage-logo" href="/"> DÄGE
+              </a>
+          </header>
+        </div>
+      )
+    }else{
     return (
-      <header className="site-header promote-layer">
-        <div className="mobile-nav">
-          <a href="#" className="mobile-nav__toggle">
-            <span className="mobile-nav__glyph">Menu</span>
+      <div>
+      <header className="site-header promote-layer" style={this.styles.header}>
+          <a style={this.styles.logout} className="dage-logout" onClick={this.logout}> DÄGE LOGOUT
           </a>
-        </div>
-        <div className="logo">
-          <a className="dage-logo" href="/">Dage
-            <span className="text--is-hidden">Dage</span>
+          <a style={this.styles.banner} className="dage-logo" href="/"> DÄGE
           </a>
-        </div>
-        <a className="global-cta--button">
-          <span className="hide--small">Get Started</span><span className="hide--medium">Go</span>
-        </a>
       </header>
+      </div>
       );
+    }
+  },
+  styles:{
+    banner:{
+      'textAlign':'center',
+      'color':'#ea6314',
+      'fontSize':'30px',
+      'font':'Avenir sans-serif',
+      'padding':'auto',
+      'marginTop':'20px',
+    },
+    header:{
+      'top':'0',
+      'backgroundColor':'#fff'
+    },
+    logout: {
+      'color':'#ea6314',
+      'fontSize':'15px',
+      'float': 'right', 
+      'marginTop': '17px',
+      'marginRight': '20px',
+    }
   }
 });
 

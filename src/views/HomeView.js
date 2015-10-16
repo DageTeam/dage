@@ -1,5 +1,10 @@
 import React       from 'react';
 import { connect } from 'react-redux';
+import HomeNav from 'components/HomeNav';
+import HomeHeader from 'components/HomeHeader';
+import HomeAbout from 'components/HomeAbout';
+import HomeService from 'components/HomeService';
+import HomeContact from 'components/HomeContact';
 
 // We define mapStateToProps where we'd normally use the @connect
 // decorator so the data requirements are clear upfront, but then
@@ -9,6 +14,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => ({
   counter : state.counter
 });
+
 export class HomeView extends React.Component {
   static propTypes = {
     dispatch : React.PropTypes.func,
@@ -27,13 +33,12 @@ export class HomeView extends React.Component {
 
   render () {
     return (
-      <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>Sample Counter: {this.props.counter}</h2>
-        <button className='btn btn-default'
-                onClick={::this._increment}>
-          Increment
-        </button>
+      <div>
+        <HomeNav />
+        <HomeHeader />
+        <HomeAbout />
+        <HomeService />
+        <HomeContact />
       </div>
     );
   }

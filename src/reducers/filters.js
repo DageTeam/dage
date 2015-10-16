@@ -16,6 +16,11 @@ import {
   FILTER_FLAG_POST_SUCCESS,
   FILTER_FLAG_POST_REQUEST,
   FILTER_FLAG_POST_ERROR,
+
+  FILTER_REMOVE_FLAG_KEYWORD,
+  FILTER_FLAG_REMOVE_SUCCESS,
+  FILTER_FLAG_REMOVE_REQUEST,
+  FILTER_FLAG_REMOVE_ERROR,
 } from 'constants/filters';
 
 const filtersArray = [
@@ -33,7 +38,12 @@ const filters = {
   lastUpdated: 0,
   fetchingEmailError: '',
   filterOptions: [],
+  filterTypeSelected: 1,
   filtersArray,
+  flagOptionsObject: {},
+  flagOptionsCurrent: [],
+  isPostingFilters: false,
+  isPostingFlag: false,
 }
 
 const initialState = filters;
@@ -47,14 +57,22 @@ export default createReducer(initialState, {
   },
   [FILTER_ARRAY_FETCH_SUCCESS]: (state, payload) => {
     let filterOptions = [];
+    let flagOptionsObject = {};
     payload.filtersArray.forEach(filter => {
       filterOptions.push({ value: filter.id, label: filter.filterName })
+      flagOptionsObject[filter.id] = filter.keyword.map(keywordObj => {
+        return { value: keywordObj.keywordID, label: keywordObj.keyword };
+      })
     })
     return { ...state,
+      _console: flagOptionsObject[1],
       isFetchingFilters: false,
       lastUpdated: payload.receivedAt,
       filtersArray: payload.filtersArray,
       filterOptions,
+      flagOptionsObject,
+      // flagOptionsCurrent: flagOptionsObject[// selected filter.id],
+      flagOptionsCurrent: flagOptionsObject[state.filterTypeSelected],
     }
   },
   [FILTER_ARRAY_FETCH_ERROR]: (state, payload) => {
@@ -65,49 +83,67 @@ export default createReducer(initialState, {
 
   [FILTER_TYPE_SELECT]: (state, payload) => {
     return { ...state,
-
+      filterTypeSelected: payload.filterId,
     }
   },
 
   [FILTER_TYPE_ADD]: (state, payload) => {
     return { ...state,
-
     }
   },
   [FILTER_TYPE_POST_SUCCESS]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters:false,
+      filterTypeSelected: payload.filterId
     }
   },
   [FILTER_TYPE_POST_REQUEST]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters: true,
     }
   },
   [FILTER_TYPE_POST_ERROR]: (state, payload) => {
     return { ...state,
-
+      isPostingFilters: false,
     }
   },
 
   [FILTER_ADD_FLAG_KEYWORD]: (state, payload) => {
     return { ...state,
-
     }
   },
   [FILTER_FLAG_POST_SUCCESS]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag: false,
     }
   },
   [FILTER_FLAG_POST_REQUEST]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag: true,
     }
   },
   [FILTER_FLAG_POST_ERROR]: (state, payload) => {
     return { ...state,
-
+      isPostingFlag:false,
+    }
+  },
+    [FILTER_REMOVE_FLAG_KEYWORD]: (state, payload) => {
+    return { ...state,
+    }
+  },
+  [FILTER_FLAG_REMOVE_SUCCESS]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag: false,
+    }
+  },
+  [FILTER_FLAG_REMOVE_REQUEST]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag: true,
+    }
+  },
+  [FILTER_FLAG_REMOVE_ERROR]: (state, payload) => {
+    return { ...state,
+      isRemovingFlag:false,
     }
   },
 

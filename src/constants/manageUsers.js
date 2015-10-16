@@ -1,0 +1,22 @@
+import { createConstants } from 'utils';
+
+//todo: add user_add_success
+export default createConstants(
+  'USER_ADD',
+  'USER_ADD_SUCCESS',
+  'USER_ADD_FAILED',
+
+  'USER_TOGGLE_ACTIVE',
+  'USER_TOGGLE_ACTIVE_SUCCESS',
+  'USER_TOGGLE_ACTIVE_FAILED',
+
+  'USER_PASSWORD_RESET',
+  'USER_PASSWORD_RESET_SUCCESS',
+  'USER_PASSWORD_RESET_FAILED',
+
+  'USER_ARRAY_REQUEST',
+  'USER_ARRAY_REQUEST_SUCCESS',
+  'USER_ARRAY_REQUEST_FAILED',
+
+  'ADD_USER_TO_STATE'
+);
