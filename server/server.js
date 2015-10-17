@@ -70,7 +70,7 @@ app.get('/MLEmails', function(req,res) {
   var isAdmin = true;
   var userID = 1;
 
-  connection.connect();
+  // connection.connect();
 
   var returnObjectCallback = function (json){
     console.log('inside returnObjectCallback')

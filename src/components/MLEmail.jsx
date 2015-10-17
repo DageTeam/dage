@@ -26,28 +26,14 @@ var GeneralEmail = React.createClass({
   },
 
   render: function() {
-    // var contentRows = [];
-    // var contentList = this.props.flags;
-    // //todo: fix this!!
-    var MLcode = this.props.n_classification + this.props.p_classification    // var flagsArray = [];
-    // for (var i = 0; i < contentList.length; i++) {
-    //   flagsArray.push(contentList[i].flaggedKeyword);
-    // };
-    // var displayLength = contentList.length;
-    // var userPermissionGroup = this.props.userSession.permissionGroup;
-    // if (this.props.focusLevel === 'one') {
-    //   displayLength = 1;
-    // }
+    var MLcode = 0;
 
-    // for (var i = 0; i < displayLength; i++) {
-    //   var content = contentList[i];
-    //   contentRows.push(
-    //       <FlaggedContext
-    //         flaggedKeyword={ content.flaggedKeyword }
-    //         context={ content.context }
-    //         callbacks={ this.props.callbacks }/>
-    //     )
-    // }
+    if (this.props.n_classification === 'innappropriate'){
+      MLcode ++
+    }
+    if (JSON.stringify(this.props.p_classification) === JSON.stringify('P_inappropriate\r')){
+      MLcode ++
+    }
 
     const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
     // const allFlagsButton = <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
@@ -78,7 +64,7 @@ var GeneralEmail = React.createClass({
             <div className='container' style={{'marginBottom':'1%'}}>
               <table style={{width:'100%', 'marginTop':'1%'}}>
                   <tr>
-                    <th>Email Body</th>
+                    <th>{ MLcode } Email Body</th>
                   </tr>
                   <tr>
                     { emailMessage }
