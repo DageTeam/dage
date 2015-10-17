@@ -1,5 +1,16 @@
 # Däge #
 
+This is our GIT WorkFlow:
+
+![Alt text](/screenshots/gitWorkflow.png?raw=true "GIT WorkFlow")
+
+
+This is our Database Schema:
+
+![Alt text](/screenshots/databaseSchema.png?raw=true "Database Schema")
+
+
+
 #HOW DOES OUR PROPRIETARY ALGORITHM SIFT THRU ALL EMAILS?
 Let’s start with the fetching of the email. The mailListener.js, when ran, consistently listens for incoming emails sent to the provided email address setup. In our case, it is dageprotect@gmail.com. When the mailListener detects a new mail has been received, it will first sanitize the email subject and email body for apostrophes. A single apostrophe can break the SQL Statement, thus we need to escape it by appending another apostrophe to it. Then the insertEmail function will be called from the database.js file to insert the email into the database.
 
@@ -13,14 +24,14 @@ After which it will get all the flagged words, defined in the keywordTable, and 
 
 #TECHNOLOGIES USED:
 
--React
--Node
--Express
--SQLite
--Gulp
--Jasmine
--Karma
--Travis CI
--Google Cloud SQL
--Google Cloud BigTable
--Amazon Web Services Elastic Beanstalk
+- React
+- Node
+- Express
+- SQLite
+- Gulp
+- Jasmine
+- Karma
+- Travis CI
+- Google Cloud SQL
+- Google Cloud BigTable
+- Amazon Web Services Elastic Beanstalk
