@@ -14,7 +14,7 @@ Let's look at Däge's functionalities:
 
 3. The all flagged emails panel archives all unflagged emails or those that have been read. 
 
-4. DägeWatch flagged emails - see below.
+4. DägeWatch flagged emails - see below. 
 
 5. The customization panel allows the top level admin to manage custom filters and its related keywords. It features responsive adding and removing capabilities despite the need to query the database, thanks to the dynamic re-rendering capabilities based off the React state tree. 
 
@@ -75,7 +75,7 @@ Make sure the Express server is running, then navigate to __BLANK__ and execute 
 
 Please see _CONTRIBUTING.md for contributing best practices. Aside from our extensive comments within the codebase, we've tried our best to create easy-to-understand self-documenting code. Please try to keep this up when you are contributing. Thanks!
 
-#Developers#
+#Authors#
 TEAM DÄGE: 
 GT Deng
 Anthony Liu
