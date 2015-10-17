@@ -9,6 +9,10 @@ import {
   ALL_EMAIL_FETCH_SUCCESS,
   ALL_EMAIL_FETCH_ERROR,
 
+  ML_EMAIL_FETCH_REQUEST,
+  ML_EMAIL_FETCH_SUCCESS,
+  ML_EMAIL_FETCH_ERROR,
+
   CLEAR_ALL_EMAILS_CACHE,
 
   EMAIL_SHOW_ONE_FLAG,
@@ -18,6 +22,9 @@ import {
   ALL_EMAILS_SHOW_ONE_FLAG,
   ALL_EMAILS_SHOW_ALL_FLAGS,
   ALL_EMAILS_SHOW_COMPLETE,
+
+  ML_EMAILS_SHOW_ONE_FLAG,
+  ML_EMAILS_SHOW_COMPLETE,
 
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
@@ -53,10 +60,12 @@ import {
 const emails = {
   isFetchingEmail: true,
   isFetchingAllEmails: false,
+  isFetchingMLEmails: false,
   lastUpdated: 0,
   fetchingEmailError: '',
   emailsArray: [],
   allEmailsArray: [],
+  MLEmailsArray: [],
 };
 
 const initialState = emails;
@@ -106,6 +115,26 @@ export default createReducer(initialState, {
     return {
       ...state,
       isFetchingAllEmails: false,
+    }
+  },
+
+  [ML_EMAIL_FETCH_REQUEST]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: true,
+    }
+  },
+  [ML_EMAIL_FETCH_SUCCESS]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: false,
+      MLEmailsArray: payload.MLEmailsArray,
+    }
+  },
+  [ML_EMAIL_FETCH_ERROR]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: false,
     }
   },
 
@@ -183,6 +212,29 @@ export default createReducer(initialState, {
     return newState;
   },
 
+  //this section is for all the show/hide commands for allEmails tab
+  [ML_EMAILS_SHOW_ONE_FLAG]: (state, payload) => {
+    let newState = Object.assign({}, state);
+    let { emailId } = payload;
+    newState.MLEmailsArray.forEach((email, index, list) => {
+      if (emailId === email.id) {
+        list[index].focusLevel = 'one';
+      }
+    });
+    return newState;
+  },
+
+  [ML_EMAILS_SHOW_COMPLETE]: (state, payload) => {
+    let newState = Object.assign({}, state);
+    let { emailId } = payload;
+    newState.MLEmailsArray.forEach((email, index, list) => {
+      if (emailId === email.id) {
+        list[index].focusLevel = 'complete';
+      }
+    });
+    return newState;
+  },
+
   [REQUESTING_EMAIL_UNFLAG]: (state, payload) => {
     return {
       ...state,
@@ -202,7 +254,7 @@ export default createReducer(initialState, {
       ...state,
     };
   },
-  
+
   [EMAIL_MARK_READ_SUCCESS]: (state, payload) => {
     let newState = Object.assign({}, state);
     let emailID = payload.emailID
@@ -213,6 +265,6 @@ export default createReducer(initialState, {
     })
     return newState;
   },
-  
+
 
 });

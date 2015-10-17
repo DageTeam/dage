@@ -8,11 +8,11 @@ var MLEmailsList = React.createClass({
   // },
 
   render: function() {
-    var allEmailsRows = [];
-    var emailList = this.props.emails.allEmailsArray;
+    var MLEmailsRows = [];
+    var emailList = this.props.emails.MLEmailsArray;
     for (var i = emailList.length - 1; i >= 0; i--) {
       var email = emailList[i];
-      allEmailsRows.push(
+      MLEmailsRows.push(
         <MLEmail
           key = {email.id}
           emailId = {email.id}
@@ -24,11 +24,13 @@ var MLEmailsList = React.createClass({
           body = {email.body}
           focusLevel = {email.focusLevel}
           userSession = {this.props.userSession}
+          n_classification = {email.n_classification}
+          p_classification = {email.p_classification}
           callbacks = {this.props.callbacks}/>
       );
     }
 
-    return (<div style={this.styles.MLEmailsListBox}> { allEmailsRows } </div>);
+    return (<div style={this.styles.MLEmailsListBox}> { MLEmailsRows } </div>);
   },
 
   styles:{

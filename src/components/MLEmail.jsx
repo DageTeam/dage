@@ -3,19 +3,14 @@ var FlaggedContext = require('components/FlaggedContext');
 
 var GeneralEmail = React.createClass({
 
-  showAllFlags: function() {
-    // this.props./*CBFuncShowFlags*/('all');
-    this.props.callbacks._allEmailsShowAllFlags(this.props.emailId);
-  },
-
   showCompleteEmail: function() {
     // this.props./*CBFuncShowCompleteEmail*/('complete');
-    this.props.callbacks._allEmailsShowComplete(this.props.emailId);
+    this.props.callbacks._MLEmailsShowComplete(this.props.emailId);
   },
 
   showOneFlag: function() {
     // this.props./*CBFuncShowOnee*/('one');
-    this.props.callbacks._allEmailsShowOneFlag(this.props.emailId);
+    this.props.callbacks._MLEmailsShowOneFlag(this.props.emailId);
   },
 
   markIsFlag: function() {
@@ -31,28 +26,13 @@ var GeneralEmail = React.createClass({
   },
 
   render: function() {
-    var contentRows = [];
-    var contentList = this.props.flags;
-    //todo: fix this!!
-    var MLcode = Math.floor(Math.random()*2) + 1;
-    var flagsArray = [];
-    for (var i = 0; i < contentList.length; i++) {
-      flagsArray.push(contentList[i].flaggedKeyword);
-    };
-    var displayLength = contentList.length;
-    var userPermissionGroup = this.props.userSession.permissionGroup;
-    if (this.props.focusLevel === 'one') {
-      displayLength = 1;
-    }
+    var MLcode = 0;
 
-    for (var i = 0; i < displayLength; i++) {
-      var content = contentList[i];
-      contentRows.push(
-          <FlaggedContext
-            flaggedKeyword={ content.flaggedKeyword }
-            context={ content.context }
-            callbacks={ this.props.callbacks }/>
-        )
+    if (this.props.n_classification === 'innappropriate'){
+      MLcode ++
+    }
+    if (JSON.stringify(this.props.p_classification) === JSON.stringify('P_inappropriate\r')){
+      MLcode ++
     }
 
     const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
@@ -76,22 +56,22 @@ var GeneralEmail = React.createClass({
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-            <div className='container' > 
+            </div>
+            <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             </div>
             <div className='container' style={{'marginBottom':'1%'}}>
               <table style={{width:'100%', 'marginTop':'1%'}}>
                   <tr>
-                    <th>Email Body</th>
+                    <th>{ MLcode } Email Body</th>
                   </tr>
                   <tr>
                     { emailMessage }
                   </tr>
               </table>
             </div>
-            <div className='container' > 
+            <div className='container' >
               { MLTag }
               {markNoButton}
               {oneFLButtonsBlock}
@@ -106,8 +86,8 @@ var GeneralEmail = React.createClass({
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-            <div className='container' > 
+            </div>
+            <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
 
@@ -123,11 +103,11 @@ var GeneralEmail = React.createClass({
                   </tr>
               </table>
             </div>
-            <div className='container' > 
+            <div className='container'>
               {markNoButton}
               {fullEmailButtonsBlock}
             </div>
-            
+
           </div>
         </div>
       )

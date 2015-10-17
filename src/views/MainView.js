@@ -22,6 +22,10 @@ import {
 
   // allEmailArrayFetchSuccess,
   // allEmailArrayFetchError,
+  MLEmailArrayFetch,
+
+  // MLEmailArrayFetchSuccess,
+  // MLEmailArrayFetchError,
   clearAllEmailCache,
   emailShowOneFlag,
   emailShowAllFlags,
@@ -29,6 +33,8 @@ import {
   allEmailsShowOneFlag,
   allEmailsShowAllFlags,
   allEmailsShowComplete,
+  MLEmailsShowOneFlag,
+  MLEmailsShowComplete,
   unflagEmail,
   emailMarkRead,
 } from 'actions/emails';
@@ -132,6 +138,14 @@ export class MainView extends React.Component {
         this.props.dispatch(allEmailsShowComplete(emailId));
       },
 
+      _MLEmailsShowOneFlag: emailId => {
+        this.props.dispatch(MLEmailsShowOneFlag(emailId));
+      },
+
+      _MLEmailsShowComplete: emailId => {
+        this.props.dispatch(MLEmailsShowComplete(emailId));
+      },
+
       _unflagEmail: emailId => {
         this.props.dispatch(unflagEmail(emailId));
       },
@@ -232,6 +246,7 @@ export class MainView extends React.Component {
   componentDidMount() {
     this.props.dispatch(userArrayRequest());
     this.props.dispatch(emailArrayFetch());
+    this.props.dispatch(MLEmailArrayFetch());
     this.props.dispatch(filterArrayFetch());
     this.props.dispatch(navigationRouteSelect('dashboard'));
   }
@@ -283,7 +298,7 @@ export class MainView extends React.Component {
   }
 
   MLEmailsViewRender() {
-    if (this.props.emails.isFetchingAllEmails) {
+    if (this.props.emails.isFetchingMLEmails) {
       this.loadingViewRender();
     } else {
 
