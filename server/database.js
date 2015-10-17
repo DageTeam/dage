@@ -186,6 +186,7 @@ var removeKeyword = function removeKeyword(body, cb){
     } else {
       var userID = userInfo[0].id;
       var queryString = 'DELETE from keywordTable where userID="' + userID + '" AND filterID=' + filterId + ' AND id=' + parseInt(keyword) + '';
+
       db.all(queryString,function(error, response){
         if (error) {
           console.log('There was an error with removeKeyword', error);

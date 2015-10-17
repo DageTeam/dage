@@ -2,8 +2,8 @@ var db = require('./database.js');
 var natural = require('natural');
 var stemmer = natural.PorterStemmer;
 
+//import fxs
 var getArrayOfKeywordsFromTagsTable = db.getArrayOfKeywordsFromTagsTable;
-
 
 //fx to test whether an email should be rated
 var getEmailStats = function getEmailStats(tagName, email) {
@@ -69,37 +69,37 @@ var getStemmedArray = function getStemmedArray(str) {
   return arrayOfStemmedWords;
 };
 
-//TESTING PURPOSES.....
-var testString = 'this is a long donkey ducking email. it includes numbers and digits and repeats of the fellowing: stem, stems, stemming, stemmed. duck, ducking, ducked, ducker, ducks';
+// //TESTING PURPOSES.....
+// var testString = 'this is a long donkey ducking email. it includes numbers and digits and repeats of the fellowing: stem, stems, stemming, stemmed. duck, ducking, ducked, ducker, ducks';
 
-// console.log('this is the stemmed sentence', getStemmedArray(testString));
-/**
-[ 'long',
-  'duck',
-  'donkei' //replaces Y with I
-  'email',
-  'includ', ///removes ES
-  'number',
-  'digit',
-  'repeat',
-  'fellow',
-  'stem',
-  'stem',
-  'stem',
-  'stem',
-  'duck',
-  'duck',
-  'duck',
-  'ducker',
-  'duck' ]
-  */
+// // console.log('this is the stemmed sentence', getStemmedArray(testString));
+// *
+// [ 'long',
+//   'duck',
+//   'donkei' //replaces Y with I
+//   'email',
+//   'includ', ///removes ES
+//   'number',
+//   'digit',
+//   'repeat',
+//   'fellow',
+//   'stem',
+//   'stem',
+//   'stem',
+//   'stem',
+//   'duck',
+//   'duck',
+//   'duck',
+//   'ducker',
+//   'duck' ]
 
-var testStringgy = {
-  body : 'hi gringo or cracker. this is a long ducking email. it includes numbers and digits and repeats of the fellowing: stem, stems, stemming, stemmed. duck, ducking, ducked, ducker, ducks'
-};
-// console.log('testing getEmailStats........', getEmailStats('racism', testStringgy));
-//shit works. but why does it say undefined?
-//TESTING PURPOSES.....
+
+// var testStringgy = {
+//   body : 'hi gringo or cracker. this is a long ducking email. it includes numbers and digits and repeats of the fellowing: stem, stems, stemming, stemmed. duck, ducking, ducked, ducker, ducks'
+// };
+// // console.log('testing getEmailStats........', getEmailStats('racism', testStringgy));
+// //shit works. but why does it say undefined?
+// //TESTING PURPOSES.....
 
 
 
