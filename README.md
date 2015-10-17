@@ -59,7 +59,7 @@ After which it will get all the flagged words, defined in the keywordTable, and 
 
 #TECHNOLOGIES USED:
 
-- React
+- React/Redux
 - Node
 - Express
 - SQLite
