@@ -85,8 +85,8 @@ Please see _CONTRIBUTING.md for contributing best practices. Aside from our exte
 
 #Authors#
 TEAM DÄGE:
-GT Deng
-Anthony Liu
-Max Li
-Andrew Nguyen
-Tito Esteves
+- GT Deng
+- Anthony Liu
+- Max Li
+- Andrew Nguyen
+- Tito Esteves
