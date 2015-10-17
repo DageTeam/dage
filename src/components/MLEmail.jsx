@@ -3,19 +3,14 @@ var FlaggedContext = require('components/FlaggedContext');
 
 var GeneralEmail = React.createClass({
 
-  showAllFlags: function() {
-    // this.props./*CBFuncShowFlags*/('all');
-    this.props.callbacks._allEmailsShowAllFlags(this.props.emailId);
-  },
-
   showCompleteEmail: function() {
     // this.props./*CBFuncShowCompleteEmail*/('complete');
-    this.props.callbacks._allEmailsShowComplete(this.props.emailId);
+    this.props.callbacks._MLEmailsShowComplete(this.props.emailId);
   },
 
   showOneFlag: function() {
     // this.props./*CBFuncShowOnee*/('one');
-    this.props.callbacks._allEmailsShowOneFlag(this.props.emailId);
+    this.props.callbacks._MLEmailsShowOneFlag(this.props.emailId);
   },
 
   markIsFlag: function() {
@@ -34,8 +29,7 @@ var GeneralEmail = React.createClass({
     // var contentRows = [];
     // var contentList = this.props.flags;
     // //todo: fix this!!
-    var MLcode = Math.floor(Math.random()*2) + 1;
-    // var flagsArray = [];
+    var MLcode = this.props.n_classification + this.props.p_classification    // var flagsArray = [];
     // for (var i = 0; i < contentList.length; i++) {
     //   flagsArray.push(contentList[i].flaggedKeyword);
     // };
@@ -69,8 +63,7 @@ var GeneralEmail = React.createClass({
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
     const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0,110) }[...]</td> : <td>{ this.props.body } </td>;
 
-    if (this.props.focusLevel == 'complete') {
-      console.log('COOOOOOOOOOOOOOOOOOOMPLEEEEEEEEEEEEEEETE',this.props.focusLevel)
+    if (this.props.focusLevel == 'one') {
       return (
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
@@ -100,7 +93,7 @@ var GeneralEmail = React.createClass({
           </div>
         </div>
       )
-    } else /* (this.props.focusLevel === 'one')*/ {
+    } else if (this.props.focusLevel === 'complete') {
       return (
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>

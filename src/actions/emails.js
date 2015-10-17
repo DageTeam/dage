@@ -25,6 +25,9 @@ import {
   ALL_EMAILS_SHOW_ALL_FLAGS,
   ALL_EMAILS_SHOW_COMPLETE,
 
+  ML_EMAILS_SHOW_ONE_FLAG,
+  ML_EMAILS_SHOW_COMPLETE,
+
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
   EMAIL_UNFLAG_SUCCESS,
@@ -157,6 +160,8 @@ export function MLEmailArrayFetchError(error) {
   };
 }
 
+
+
 export function clearAllEmailCache() {
   return {
     type: CLEAR_ALL_EMAILS_CACHE,
@@ -205,6 +210,20 @@ export function allEmailsShowComplete(emailId) {
     type: ALL_EMAILS_SHOW_COMPLETE,
     payload: { emailId },
   };
+}
+
+export function MLEmailsShowOneFlag(emailId){
+  return {
+    type: ML_EMAILS_SHOW_ONE_FLAG,
+    payload: { emailId },
+  }
+}
+
+export function MLEmailsShowComplete(emailId){
+  return {
+    type: ML_EMAILS_SHOW_COMPLETE,
+    payload: { emailId },
+  }
 }
 
 export function unflagEmail(emailID) {

@@ -24,6 +24,8 @@ var MLEmailsList = React.createClass({
           body = {email.body}
           focusLevel = {email.focusLevel}
           userSession = {this.props.userSession}
+          n_classification = {this.props.n_classification}
+          p_classification = {this.props.p_classification}
           callbacks = {this.props.callbacks}/>
       );
     }

@@ -79,6 +79,11 @@ app.get('/MLEmails', function(req,res) {
     // res.send(json);
   }
 
+  // flaggedEmails[j].focusLevel = 'one';
+  // if (flaggedContext[i].emailID === flaggedEmails[j].id) {
+  //   flaggedEmails[j].flags.push(flaggedContext[i]);
+  // };
+
   var json = '';
   var query = "select * from p_ethicFilterClassified \
    where p_classification like '%P_inappropriate%' \
@@ -89,6 +94,9 @@ app.get('/MLEmails', function(req,res) {
     if (err) throw err;
     json = JSON.stringify(rows);
     // connection.end();
+    rows.forEach(function(row){
+      row.focusLevel = 'one'
+    })
     return returnObjectCallback(rows);
   });
 })

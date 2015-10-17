@@ -33,6 +33,8 @@ import {
   allEmailsShowOneFlag,
   allEmailsShowAllFlags,
   allEmailsShowComplete,
+  MLEmailsShowOneFlag,
+  MLEmailsShowComplete,
   unflagEmail,
   emailMarkRead,
 } from 'actions/emails';
@@ -134,6 +136,14 @@ export class MainView extends React.Component {
 
       _allEmailsShowComplete: emailId => {
         this.props.dispatch(allEmailsShowComplete(emailId));
+      },
+
+      _MLEmailsShowOneFlag: emailId => {
+        this.props.dispatch(MLEmailsShowOneFlag(emailId));
+      },
+
+      _MLEmailsShowComplete: emailId => {
+        this.props.dispatch(MLEmailsShowComplete(emailId));
       },
 
       _unflagEmail: emailId => {
