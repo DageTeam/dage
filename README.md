@@ -48,7 +48,7 @@ Däge also features simple RESTful API calls from the front-end to back-end. How
 
 
 
-#HOW DOES OUR PROPRIETARY ALGORITHM SIFT THRU ALL EMAILS?
+#HOW DOES OUR DÄGEWATCH ALGORITHM SIFT THRU ALL EMAILS?
 Let’s start with the fetching of the email. The mailListener.js, when ran, consistently listens for incoming emails sent to the provided email address setup. In our case, it is dageprotect@gmail.com. When the mailListener detects a new mail has been received, it will first sanitize the email subject and email body for apostrophes. A single apostrophe can break the SQL Statement, thus we need to escape it by appending another apostrophe to it. Then the insertEmail function will be called from the database.js file to insert the email into the database.
 
 At this point, the program parses the email, which has been sent as an argument, into multiple columns, as defined in our schema. It will insert it into the emailTable, ready for the periodic Cron job to take further parse the email.
