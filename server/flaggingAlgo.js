@@ -33,7 +33,8 @@ var filterEmail = function filterEmail(emailArray) {
         var email = emailArray[i];
 
         //replace all single apostrophes with double apostrophes
-        email.body = email.body.replace(/'/g, '\'\'');
+        //removing built in redundancy
+        // email.body = email.body.replace(/'/g, '\'\'');
 
         // change checked value to 1 in the emailTable
         markChecked(email.id);
