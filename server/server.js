@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var mysql = require('mysql');
 
 // var mailListener = require('./mailListener');
 //must manually start mailListener.
@@ -12,6 +13,13 @@ var authorization = require('../auth.js');
 
 var secret = authorization.jwtSecret;
 var app = express();
+
+var connection = mysql.createConnection({
+  host     : '173.194.248.220',
+  user     : 'root',
+  password : 'node$1234',
+  database : 'enronEmail'
+});
 
 app.use(bodyParser.json());
 
@@ -56,6 +64,33 @@ app.get('/allEmails', function(req,res) {
   db.getFlaggedEmails(userID, isAdmin, true, function(emails) {
     res.send(emails);
   })
+})
+
+app.get('/MLEmails', function(req,res) {
+  var isAdmin = true;
+  var userID = 1;
+
+  connection.connect();
+
+  var returnObjectCallback = function (json){
+    console.log('inside returnObjectCallback')
+    // res.setHeader('Content-Type' , 'x-application/json');
+    res.send(json);
+    // res.send(json);
+  }
+
+  var json = '';
+  var query = "select * from p_ethicFilterClassified \
+   where p_classification like '%P_inappropriate%' \
+   and n_classification like '%innappropriate%' \
+   and body like '%fuck%'limit 20"
+  connection.query(query, function(err, rows, fields) {
+    console.log('inside Query')
+    if (err) throw err;
+    json = JSON.stringify(rows);
+    // connection.end();
+    return returnObjectCallback(rows);
+  });
 })
 
 app.post('/unflagEmail', function(req, res) {

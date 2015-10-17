@@ -31,29 +31,29 @@ var GeneralEmail = React.createClass({
   },
 
   render: function() {
-    var contentRows = [];
-    var contentList = this.props.flags;
-    //todo: fix this!!
+    // var contentRows = [];
+    // var contentList = this.props.flags;
+    // //todo: fix this!!
     var MLcode = Math.floor(Math.random()*2) + 1;
-    var flagsArray = [];
-    for (var i = 0; i < contentList.length; i++) {
-      flagsArray.push(contentList[i].flaggedKeyword);
-    };
-    var displayLength = contentList.length;
-    var userPermissionGroup = this.props.userSession.permissionGroup;
-    if (this.props.focusLevel === 'one') {
-      displayLength = 1;
-    }
+    // var flagsArray = [];
+    // for (var i = 0; i < contentList.length; i++) {
+    //   flagsArray.push(contentList[i].flaggedKeyword);
+    // };
+    // var displayLength = contentList.length;
+    // var userPermissionGroup = this.props.userSession.permissionGroup;
+    // if (this.props.focusLevel === 'one') {
+    //   displayLength = 1;
+    // }
 
-    for (var i = 0; i < displayLength; i++) {
-      var content = contentList[i];
-      contentRows.push(
-          <FlaggedContext
-            flaggedKeyword={ content.flaggedKeyword }
-            context={ content.context }
-            callbacks={ this.props.callbacks }/>
-        )
-    }
+    // for (var i = 0; i < displayLength; i++) {
+    //   var content = contentList[i];
+    //   contentRows.push(
+    //       <FlaggedContext
+    //         flaggedKeyword={ content.flaggedKeyword }
+    //         context={ content.context }
+    //         callbacks={ this.props.callbacks }/>
+    //     )
+    // }
 
     const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
     // const allFlagsButton = <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
@@ -69,15 +69,16 @@ var GeneralEmail = React.createClass({
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
     const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0,110) }[...]</td> : <td>{ this.props.body } </td>;
 
-    if (this.props.focusLevel == 'one') {
+    if (this.props.focusLevel == 'complete') {
+      console.log('COOOOOOOOOOOOOOOOOOOMPLEEEEEEEEEEEEEEETE',this.props.focusLevel)
       return (
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-            <div className='container' > 
+            </div>
+            <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             </div>
@@ -91,7 +92,7 @@ var GeneralEmail = React.createClass({
                   </tr>
               </table>
             </div>
-            <div className='container' > 
+            <div className='container' >
               { MLTag }
               {markNoButton}
               {oneFLButtonsBlock}
@@ -99,15 +100,15 @@ var GeneralEmail = React.createClass({
           </div>
         </div>
       )
-    } else if (this.props.focusLevel === 'complete') {
+    } else /* (this.props.focusLevel === 'one')*/ {
       return (
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-            <div className='container' > 
+            </div>
+            <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
 
@@ -123,11 +124,11 @@ var GeneralEmail = React.createClass({
                   </tr>
               </table>
             </div>
-            <div className='container' > 
+            <div className='container'>
               {markNoButton}
               {fullEmailButtonsBlock}
             </div>
-            
+
           </div>
         </div>
       )

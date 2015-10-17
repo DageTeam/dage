@@ -9,6 +9,10 @@ import {
   ALL_EMAIL_FETCH_SUCCESS,
   ALL_EMAIL_FETCH_ERROR,
 
+  ML_EMAIL_FETCH_REQUEST,
+  ML_EMAIL_FETCH_SUCCESS,
+  ML_EMAIL_FETCH_ERROR,
+
   CLEAR_ALL_EMAILS_CACHE,
 
   EMAIL_SHOW_ONE_FLAG,
@@ -53,10 +57,12 @@ import {
 const emails = {
   isFetchingEmail: true,
   isFetchingAllEmails: false,
+  isFetchingMLEmails: false,
   lastUpdated: 0,
   fetchingEmailError: '',
   emailsArray: [],
   allEmailsArray: [],
+  MLEmailsArray: [],
 };
 
 const initialState = emails;
@@ -106,6 +112,26 @@ export default createReducer(initialState, {
     return {
       ...state,
       isFetchingAllEmails: false,
+    }
+  },
+
+  [ML_EMAIL_FETCH_REQUEST]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: true,
+    }
+  },
+  [ML_EMAIL_FETCH_SUCCESS]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: false,
+      MLEmailsArray: payload.MLEmailsArray,
+    }
+  },
+  [ML_EMAIL_FETCH_ERROR]: (state, payload) => {
+    return {
+      ...state,
+      isFetchingMLEmails: false,
     }
   },
 
@@ -202,7 +228,7 @@ export default createReducer(initialState, {
       ...state,
     };
   },
-  
+
   [EMAIL_MARK_READ_SUCCESS]: (state, payload) => {
     let newState = Object.assign({}, state);
     let emailID = payload.emailID
@@ -213,6 +239,6 @@ export default createReducer(initialState, {
     })
     return newState;
   },
-  
+
 
 });

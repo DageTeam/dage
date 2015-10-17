@@ -11,6 +11,10 @@ import {
   ALL_EMAIL_FETCH_SUCCESS,
   ALL_EMAIL_FETCH_ERROR,
 
+  ML_EMAIL_FETCH_REQUEST,
+  ML_EMAIL_FETCH_SUCCESS,
+  ML_EMAIL_FETCH_ERROR,
+
   CLEAR_ALL_EMAILS_CACHE,
 
   EMAIL_SHOW_ONE_FLAG,
@@ -20,7 +24,7 @@ import {
   ALL_EMAILS_SHOW_ONE_FLAG,
   ALL_EMAILS_SHOW_ALL_FLAGS,
   ALL_EMAILS_SHOW_COMPLETE,
-  
+
   REQUESTING_EMAIL_UNFLAG,
   EMAIL_UNFLAG_ERROR,
   EMAIL_UNFLAG_SUCCESS,
@@ -109,6 +113,46 @@ export function allEmailArrayFetchSuccess(allEmailsArray) {
 export function allEmailArrayFetchError(error) {
   return {
     type: ALL_EMAIL_FETCH_ERROR,
+    payload: { error },
+  };
+}
+
+//fetches ML emails that were initially flagged
+export function MLEmailArrayFetch() {
+  console.log('MLEmailArrayFetch triggered');
+  return dispatch => {
+    dispatch(MLEmailArrayRequest());
+    return request
+    //TODO: change URL
+      .get(serverUrl + '/MLEmails')
+      .end((err, res={}) => {
+        if (err) {
+          dispatch(MLEmailArrayFetchError(err))
+        } else {
+          dispatch(MLEmailArrayFetchSuccess(res.body));
+        }
+      });
+  };
+}
+
+export function MLEmailArrayRequest() {
+  return {
+    type: ML_EMAIL_FETCH_REQUEST,
+  };
+}
+
+export function MLEmailArrayFetchSuccess(MLEmailsArray) {
+  return {
+    type: ML_EMAIL_FETCH_SUCCESS,
+    payload: {
+      MLEmailsArray,
+    },
+  };
+}
+
+export function MLEmailArrayFetchError(error) {
+  return {
+    type: ML_EMAIL_FETCH_ERROR,
     payload: { error },
   };
 }
@@ -214,7 +258,7 @@ export function emailMarkRead(emailID){
         }else{
           dispatch(emailMarkReadSuccess(res.body.emailID));
         }
-    })   
+    })
   }
 }
 

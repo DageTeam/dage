@@ -22,6 +22,10 @@ import {
 
   // allEmailArrayFetchSuccess,
   // allEmailArrayFetchError,
+  MLEmailArrayFetch,
+
+  // MLEmailArrayFetchSuccess,
+  // MLEmailArrayFetchError,
   clearAllEmailCache,
   emailShowOneFlag,
   emailShowAllFlags,
@@ -232,6 +236,7 @@ export class MainView extends React.Component {
   componentDidMount() {
     this.props.dispatch(userArrayRequest());
     this.props.dispatch(emailArrayFetch());
+    this.props.dispatch(MLEmailArrayFetch());
     this.props.dispatch(filterArrayFetch());
     this.props.dispatch(navigationRouteSelect('dashboard'));
   }
@@ -283,7 +288,7 @@ export class MainView extends React.Component {
   }
 
   MLEmailsViewRender() {
-    if (this.props.emails.isFetchingAllEmails) {
+    if (this.props.emails.isFetchingMLEmails) {
       this.loadingViewRender();
     } else {
 
