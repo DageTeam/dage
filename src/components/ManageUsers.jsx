@@ -5,52 +5,29 @@ var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
 var ManageUsers = React.createClass({
-  products: [
-    {
-        id: 1,
-        name: "Product1",
-        price: 120
-    },{
-        id: 2,
-        name: "Product2",
-        price: 80
-    },{
-        id: 3,
-        name: "Product3",
-        price: 207
-    },{
-        id: 4,
-        name: "Product4",
-        price: 100
-    },{
-        id: 5,
-        name: "Product5",
-        price: 150
-    },{
-        id: 6,
-        name: "Product1",
-        price: 160
-    }
-  ],
+  
   addUserToState: function(data){
     this.props.callbacks._addUserToState(data);
   },
+  // function ran when reset button is clicked. Use userArrayRequest to refresh data
   resetPassword: function(){
     this.props.callbacks._userPasswordReset(this.props.userInfo.username);
     this.props.callbacks._userArrayRequest();
   },
+  // function ran when enable/disable button is clicked. Use userArrayRequest to refresh
   toggleUser: function(){
     console.log('toggleuser',this.props.userInfo)
     this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
     this.props.callbacks._userArrayRequest();
 
   },
+  // function to add user after userinfo is inserted to table via new button
   addingUser: function(data) {
     this.props.callbacks._userAdd(data);
   },
   render: function() {
     var _this = this;
-
+    // add user to db after userinfo is inserted to table via new button
     var insertRowCallback = {
       afterInsertRow: function(data){
         console.log('data', data);
@@ -87,22 +64,6 @@ var ManageUsers = React.createClass({
       </div>
       );
   },
-
-
-  // styles:{
-  //   table:{
-  //     'marginTop':'0',
-  //     'position':'relative',
-  //     'width':'75%',
-  //   },
-  //   rows:{
-  //     'borderBottom':'3px solid purple',
-  //     'marginBottom':'15px',
-  //   },
-  //   tbody>tr:nth-child(even) {
-  //       background-color: #fff
-  //   }
-  // },
 });
 
 module.exports = ManageUsers;

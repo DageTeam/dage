@@ -1,7 +1,7 @@
 var React = require('react');
 
 var Footer = React.createClass({
-
+  // created a footer component with some css applied to it
   render: function() {
     return (
       <div className='site-footer page-wrapper'>
