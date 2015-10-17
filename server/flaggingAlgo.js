@@ -1,19 +1,16 @@
-// var badWordsArray = require('./badWordsArray.js');
 var database = require('./database.js');
 var cron = require('cron');
 
-//import fx
+//import fxs
 var getUncheckedEmails = database.getUncheckedEmails;
 var markChecked = database.markChecked;
 var markFlagged = database.markFlagged;
 var insertIntoContextTable = database.insertIntoContextTable;
 var getFlaggedWords = database.getFlaggedWords;
 
-//temp small list of bad words
-// var badWords = ['damn', 'shit', 'crap', 'butt'];
 
 //fx to createContext. context = a substring of 200chars before and 200 after the flaggedKeyword
-var createContext = function(email, flaggedKeyword) {
+var createContext = function createContext(email, flaggedKeyword) {
   var text = email.body;
   var index = text.search(flaggedKeyword);
   var numOfChars = 100;
@@ -25,7 +22,7 @@ var createContext = function(email, flaggedKeyword) {
 };
 
 //fx to check emails for keywords and then store it into the contextTable
-var filterEmail = exports.filterEmail = function(emailArray) {
+var filterEmail = function filterEmail(emailArray) {
   // console.log('filterEmail fx ran/////');
   // console.log('filterEmailz emailArray argument is ///////.....', emailArray);
   if (emailArray.length) {
@@ -34,7 +31,10 @@ var filterEmail = exports.filterEmail = function(emailArray) {
       //loop thru the responseArray
       for (var i = 0; i < emailArray.length; i++) {
         var email = emailArray[i];
-        email.body = email.body.replace(/'/g, '\'\'');
+
+        //replace all single apostrophes with double apostrophes
+        //removing built in redundancy
+        // email.body = email.body.replace(/'/g, '\'\'');
 
         // change checked value to 1 in the emailTable
         markChecked(email.id);
@@ -64,24 +64,21 @@ var filterEmail = exports.filterEmail = function(emailArray) {
       }
     });
   }
-
-
   // console.log('filterEmail fx is done running/////');
 };
 
-var scanEmail = function() {
+//fx to scan the email
+var scanEmail = function scanEmail() {
   getUncheckedEmails(function(emailArray) {
     filterEmail(emailArray);
   });
 };
 
-// TESTING purposes. delete fitlerEmail call.
-scanEmail();
-
 //fx to create cronJob to periodically scan emailTable, filter it, store offensive emails to contextTable
 var cronJob = cron.job(
   '0 */1 * * * *', //every 30mins at the 0th second.
   function() {
+    //print out to the terminal that the Cron job is starting
     console.log('CRONJOB starting now......///////', new Date());
     scanEmail();
   },
@@ -92,3 +89,9 @@ var cronJob = cron.job(
 );
 
 cronJob.start();
+
+
+//MODULE.EXPORTS TO EXPORT REQUIRED FX
+module.exports = {
+  filterEmail
+};

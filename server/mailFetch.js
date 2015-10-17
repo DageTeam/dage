@@ -22,85 +22,95 @@ function openInbox(cb) {
   imap.openBox('INBOX', false, cb);
 }
 
-
 var job = new CronJob({
   cronTime: '*/10 * * * * * ',
-  onTick: function() {
+  onTick: onTick;
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  start: true,
+  timeZone: 'America/Los_Angeles',
+});
 
-
-
-imap.once('ready', function() {
-  openInbox(function(err, box) {
-    if (err) throw err;
-    //search all unread messages
-    imap.search(['UNSEEN'], function(err, results){
-      if(err) throw err;
-      //if no unread messages, end IMAP connection
-      if(results.length === 0){
-        console.log('Nothing to fetch');
-        return imap.end();
+var onTick = function onTick() {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  imap.once('ready', function() {
+    openInbox(function(err, box) {
+      if (err) {
+        throw err;
       }
 
-      var fetch = imap.fetch(results, {markSeen:true, bodies: ['']});
-      //for every message that we fetch...
-      fetch.on('message', function(msg) {
-        //...create new instance of MailParser
-        var mailparser = new MailParser();
-        console.log('mailparser instance created...')
+      //search all unread messages
+      imap.search(['UNSEEN'], function(err, results) {
+        if (err) {
+          throw err;
+        }
 
-        mailparser.on('end', function(mail_object){
-          emailBuffer.push(mail_object)
-        });
-        //pipe the body stream to mailparser instance
-        msg.on('body', function(stream){
-          stream.pipe(mailparser);
+        //if no unread messages, end IMAP connection
+        if (results.length === 0) {
+          console.log('Nothing to fetch');
+          return imap.end();
+        }
+
+        var fetch = imap.fetch(results, {
+          markSeen: true,
+          bodies: ['']
         });
 
-        msg.once('end', function() {
-          //call mailparser 'end' event
-          mailparser.end();
-          console.log('message finished processing');
+        //for every message that we fetch...
+        fetch.on('message', function(msg) {
+          //...create new instance of MailParser
+          var mailparser = new MailParser();
+          console.log('mailparser instance created...')
+
+          mailparser.on('end', function(mail_object) {
+            emailBuffer.push(mail_object)
+          });
+
+          //pipe the body stream to mailparser instance
+          msg.on('body', function(stream) {
+            stream.pipe(mailparser);
+          });
+
+          msg.once('end', function() {
+            //call mailparser 'end' event
+            mailparser.end();
+            console.log('message finished processing');
+          });
+
+        });
+
+        fetch.once('error', function(err) {
+          console.log('Fetch error: ' + err);
+        });
+
+        fetch.once('end', function() {
+          console.log('Done fetching all messages!');
+
+          imap.end();
         });
 
       });
-
-      fetch.once('error', function(err) {
-        console.log('Fetch error: ' + err);
-      });
-
-      fetch.once('end', function() {
-        console.log('Done fetching all messages!');
-
-        imap.end();
-      });
-
+    });
   });
-});
-});
 
-imap.once('error', function(err) {
-  console.log(err);
-});
+  imap.once('error', function(err) {
+    console.log(err);
+  });
 
-imap.once('end', function() {
-  //filter out the duplicate emails.
-  for(var i = 0; i < emailBuffer.length; i+=2){
-    emailResults.push(emailBuffer[i]);
-  }
-  emailResults.forEach(function(item){
-    db.insertReturn(item);
-  })
-  // console.log('filtered email results: ', emailResults)
-  console.log('Connection ended');
-});
+  imap.once('end', function() {
+    //filter out the duplicate emails.
+    for (var i = 0; i < emailBuffer.length; i += 2) {
+      emailResults.push(emailBuffer[i]);
+    }
 
-imap.connect();
+    emailResults.forEach(function(item) {
+      db.insertReturn(item);
+    })
 
-},
-start: true,
-timeZone: "America/Los_Angeles"
-});
+    // console.log('filtered email results: ', emailResults)
+    console.log('Connection ended');
+  });
+
+  imap.connect();
+
+};
 job.start();
-

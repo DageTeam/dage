@@ -5,7 +5,6 @@ var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
 var ManageUsers = React.createClass({
-  
   addUserToState: function(data){
     this.props.callbacks._addUserToState(data);
   },
@@ -16,10 +15,8 @@ var ManageUsers = React.createClass({
   },
   // function ran when enable/disable button is clicked. Use userArrayRequest to refresh
   toggleUser: function(){
-    console.log('toggleuser',this.props.userInfo)
     this.props.callbacks._userToggleActive(this.props.userInfo.username, this.props.userInfo.active);
     this.props.callbacks._userArrayRequest();
-
   },
   // function to add user after userinfo is inserted to table via new button
   addingUser: function(data) {
@@ -30,7 +27,6 @@ var ManageUsers = React.createClass({
     // add user to db after userinfo is inserted to table via new button
     var insertRowCallback = {
       afterInsertRow: function(data){
-        console.log('data', data);
         _this.addingUser(data);
       },
     };
