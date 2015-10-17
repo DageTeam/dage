@@ -4,8 +4,8 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 // var mailListener = require('./mailListener');
+//must manually start mailListener.
 var db = require('./database.js');
-
 var algo = require('./flaggingAlgo.js');
 var classify = require('./classifyingAlgo.js');
 var authorization = require('../auth.js');
@@ -22,20 +22,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-//Default route
+//Default route for server side code. Currently using webpacks.
 app.get('/', function(req, res) {
   // db.insertEmail(req.body);
   res.send('Hello, world!');
-});
-
-//TEMP: use this to create multiple users.
-app.post('/test', function(req, res) {
-
-  // db.insertEmail();
-  // console.log('!!THIS IS THE REQUEST....', req);
-  db.insertIntoUserTable(req.body.username, req.body.saltedHash, req.body.permissionGroup, req.body.name, req.body.title, req.body.email, req.body.department, req.body.managerID);
-
-  res.send('hello');
 });
 
 //dashboard is the placeholder url for the dashboard url for the client
@@ -47,8 +37,6 @@ app.get('/emailData', function(req, res) {
   if (userIsAuthenticated) {
     //TODO: placeholder userID until authentication is complete
     var userID = 1;
-
-    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     //get the flagged emails via a db query
     db.getFlaggedEmails(userID, isAdmin, false, function(emails) {
@@ -64,6 +52,7 @@ app.get('/emailData', function(req, res) {
 app.get('/allEmails', function(req,res) {
   var isAdmin = true;
   var userID = 1;
+
   db.getFlaggedEmails(userID, isAdmin, true, function(emails) {
     res.send(emails);
   })
@@ -79,7 +68,6 @@ app.post('/unflagEmail', function(req, res) {
 
 app.post('/emailMarkRead', function(req, res) {
   db.emailMarkRead(req.body.emailID, function(message){
-    console.log(message);
     res.send(message);
   })
 })
@@ -91,36 +79,36 @@ app.get('/filterData', function(req, res) {
   });
 });
 
-const emailsArray = [
-  {
-    id: 'emailId',
-    sender: 'ServerEMAIL!!!',
-    recipient: 'emailRecipient',
-    subject: 'subjectString',
-    body: 'bodyString',
-    sendTime: 1000,
-    focusLevel: 'complete',
-    flags:
-      [
-        {
-          type: 'flagTypeString1',
-          context: 'contextString1',
-        },
-        {
-          type: 'flagTypeString2',
-          context: 'contextString2',
-        },
-      ],
-  },
-];
+// var emailsArray = [
+//   {
+//     id: 'emailId',
+//     sender: 'ServerEMAIL!!!',
+//     recipient: 'emailRecipient',
+//     subject: 'subjectString',
+//     body: 'bodyString',
+//     sendTime: 1000,
+//     focusLevel: 'complete',
+//     flags:
+//       [
+//         {
+//           type: 'flagTypeString1',
+//           context: 'contextString1',
+//         },
+//         {
+//           type: 'flagTypeString2',
+//           context: 'contextString2',
+//         },
+//       ],
+//   },
+// ];
 
-app.get('/tempEmailData', function(req, res) {
-  //get the flagged emails via a db query
-  // res.setHeader('Access-Control-Allow-Origin', '*');
-  db.getFlaggedEmails(function(emails) {
-    res.send(emailsArray);
-  });
-});
+// app.get('/tempEmailData', function(req, res) {
+//   //get the flagged emails via a db query
+//   // res.setHeader('Access-Control-Allow-Origin', '*');
+//   db.getFlaggedEmails(function(emails) {
+//     res.send(emailsArray);
+//   });
+// });
 
 app.post('/submitfilter', function(req, res) {
   // req.body will be {username: 'Anthony', filter: 'Anthony's filter'};
@@ -142,11 +130,9 @@ app.post('/removekeyword', function(req, res){
   db.removeKeyword(req.body, function(message){
     res.send(message);
   })
-
 });
 
 //route handing for checking if user login is correct
-//TODO: finish this
 app.post('/userLogin', function(req, res) {
   // res.setHeader('Access-Control-Allow-Origin', '*');
   db.getUser(req.body, function(data) {
@@ -229,6 +215,7 @@ app.get('/getAllActiveUsers', function(req, res) {
 app.post('/createUser', function(req, res) {
   var salt = bcrypt.genSaltSync(10);
   req.body.hash = bcrypt.hashSync(req.body.password, salt);
+
   db.createUser(req.body, function() {
     res.send('success');
   });
@@ -267,10 +254,6 @@ app.post('/toggleUser', function(req, res) {
         message: 'User Successfully Toggled',
       });
   });
-});
-
-app.post('/', function(req, res) {
-  res.send('You posted!');
 });
 
 app.get('/*', function(req, res) {
