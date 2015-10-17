@@ -2,29 +2,34 @@ var React = require('react');
 
 var SideNav = React.createClass({
 
-  navigateAlertsRoute: function(){
+  navigateAlertsRoute: function() {
     this.props.callbacks._navigationRouteSelect('alerts');
   },
-  navigateDashboardRoute: function(){
+
+  navigateDashboardRoute: function() {
     this.props.callbacks._navigationRouteSelect('dashboard');
   },
-  navigateCustomizeRoute: function(){
+
+  navigateCustomizeRoute: function() {
     this.props.callbacks._navigationRouteSelect('customize');
   },
-  navigateManageUserRoute: function(){
+
+  navigateManageUserRoute: function() {
     this.props.callbacks._navigationRouteSelect('manageUser');
   },
-  navigateAllEmailsRoute: function(){
+
+  navigateAllEmailsRoute: function() {
     this.props.callbacks._navigationRouteSelect('allEmails');
   },
-  navigateMLEmailsRoute: function(){
+
+  navigateMLEmailsRoute: function() {
     this.props.callbacks._navigationRouteSelect('MLEmails');
   },
 
   render: function() {
     var userPermissionGroup = this.props.userSession.permissionGroup;
 
-    const manageUserBlock = (userPermissionGroup === "admin") ?
+    const manageUserBlock = (userPermissionGroup === 'admin') ?
       <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li> : <div/>;
 
     // created sidenav component to be used throughout site
@@ -50,7 +55,7 @@ var SideNav = React.createClass({
                   { manageUserBlock }
                 </ul>
               
-              </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
             </nav>
           </div>
       );
