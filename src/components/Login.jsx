@@ -10,6 +10,7 @@ var Login = React.createClass({
     });
 
   },
+  // created username and password components. Added some inline styling
   render: function() {
     return (
       <div style={{marginLeft:'60px'}}>

@@ -4758,6 +4758,7 @@ input[type=radio], input[type=checkbox] {
 .alertNum{
     cursor:pointer;
 }
+/* custom css */
 .btn-info
 {
     background-color: #6e2568;
