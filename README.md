@@ -59,11 +59,7 @@ After which it will get all the flagged words, defined in the keywordTable, and 
 -Travis CI
 -Google Cloud SQL
 -Google Cloud BigTable
-<<<<<<< HEAD
 -AWS Elastic Beanstalk
-=======
--Amazon Web Services Elastic Beanstalk
->>>>>>> [docs] (readme): add algorithm documentation
 
 #Deployment#
 
@@ -84,9 +80,3 @@ Anthony Liu
 Max Li
 Andrew Nguyen
 Tito Esteves
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> [docs] (readme): add algorithm documentation
