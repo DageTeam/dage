@@ -27,6 +27,7 @@ var SideNav = React.createClass({
     const manageUserBlock = (userPermissionGroup === "admin") ?
       <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li> : <div/>;
 
+    // created sidenav component to be used throughout site
     return (
       <div className='page-wrapper'>
           <div className='wrap'>
