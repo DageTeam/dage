@@ -14,11 +14,9 @@ Let's look at Däge's functionalities:
 
 3. The all flagged emails panel archives all unflagged emails or those that have been read. 
 
-4. DägeWatch flagged emails - confidence level
+4. The customization panel allows the top level admin to manage custom filters and its related keywords. It features responsive adding and removing capabilities despite the need to query the database, thanks to the dynamic re-rendering capabilities based off the React state tree. 
 
-5. The customization panel allows the top level admin to manage custom filters and its related keywords. It features responsive adding and removing capabilities despite the need to query the database, thanks to the dynamic re-rendering capabilities based off the React state tree. 
-
-6. The manage users panel allows admin users to manage lower-level users. Set permission groups broken down by department so  teams only see relevant flagged emails. 
+5. The manage users panel allows admin users to manage lower-level users. Set permission groups broken down by department so  teams only see relevant flagged emails. 
 
 All these features provides actionable intel to make it incredibily easy to secure your company's outbound email stream. 
 
