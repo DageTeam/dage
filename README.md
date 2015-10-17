@@ -8,40 +8,48 @@ This is where Däge steps in. Däge actively and silently monitors outbound emai
 
 Let's look at Däge's functionalities:
 
-1. Upon signin, the dashboard providing high-level insights into when flagged emails are sent, most flagged users, and detailed breakdowns of why emails were flagged. The attractive D3-sourced charts and tables provide an easy to understand overview of your company's digital health. Clicking on the dynamic 'New Flags' number dispatches an action to change the state tree to take you to the unread 'alerts' panel. 
+1. Upon signin, the dashboard providing high-level insights into when flagged emails are sent, most flagged users, and detailed breakdowns of why emails were flagged. The attractive D3-sourced charts and tables provide an easy to understand overview of your company's digital health. Clicking on the dynamic 'New Flags' number dispatches an action to change the state tree to take you to the unread 'alerts' panel.
 
-2. The unread flagged emails panel allows you to receive new alerts on this screen. Every email has details on which keywords triggered the flag and the context the keyword exists in, allowing the admin or the lower level users to unflag emails to train DägeWatch. 
+2. The unread flagged emails panel allows you to receive new alerts on this screen. Every email has details on which keywords triggered the flag and the context the keyword exists in, allowing the admin or the lower level users to unflag emails to train DägeWatch.
 
-3. The all flagged emails panel archives all unflagged emails or those that have been read. 
+3. The all flagged emails panel archives all unflagged emails or those that have been read.
 
-4. DägeWatch flagged emails - see below. 
+4. DägeWatch flagged emails - see below.
 
-5. The customization panel allows the top level admin to manage custom filters and its related keywords. It features responsive adding and removing capabilities despite the need to query the database, thanks to the dynamic re-rendering capabilities based off the React state tree. 
+5. The customization panel allows the top level admin to manage custom filters and its related keywords. It features responsive adding and removing capabilities despite the need to query the database, thanks to the dynamic re-rendering capabilities based off the React state tree.
 
-6. The manage users panel allows admin users to manage lower-level users. Set permission groups broken down by department so  teams only see relevant flagged emails. 
+6. The manage users panel allows admin users to manage lower-level users. Set permission groups broken down by department so  teams only see relevant flagged emails.
 
-All these features provides actionable intel to make it incredibily easy to secure your company's outbound email stream. 
+All these features provides actionable intel to make it incredibily easy to secure your company's outbound email stream.
 
 #Architecture#
 
-![alt text](http://s19.postimg.org/kmc6xsotv/Slide1.jpg)
+![alt text](http://s19.postimg.org/dspbo6w1f/Slide1.jpg)
 
-Däge also features simple RESTful API calls from the front-end to back-end. However, it might be tedious/difficult to follow along the React/Redux structure if you have never had experiences with Redux way of creating new state trees through actions and reducers. We've provided several action/reducer map to elucidate how some of Däge's features are rendered. 
+Däge also features simple RESTful API calls from the front-end to back-end. However, it might be tedious/difficult to follow along the React/Redux structure if you have never had experiences with Redux way of creating new state trees through actions and reducers. We've provided several action/reducer map to elucidate how some of Däge's features are rendered.
 
-*Note: a) rectangular boxes represent the constants and the actions. b) words superimposed on the arrows represent the state changes caused by the reducers. c) the diamonds represent the different states within the state tree. 
+*Note: a) rectangular boxes represent the constants and the actions. b) words superimposed on the arrows represent the state changes caused by the reducers. c) the diamonds represent the different states within the state tree.
 
 **Emails**
 ![alt text](http://s19.postimg.org/mmy54vvlf/Redux_State_Tree_Actions_Trial_Blank.png)
 
-**Filters** 
+**Filters**
 ![alt text](http://s19.postimg.org/ek4k7b0dv/Blank_Flowchart_New_Page.png)
 
-**Authentication** 
+**Authentication**
 ![alt text](http://s19.postimg.org/cqx258ptf/manage_users_flow_New_Page.png)
 
-#HOW DOES THE DÄGEWATCH ALGORITHM SIFT THRU ALL EMAILS?
 
-Let’s start with the fetching of the email. The mailListener.js, when ran, consistently listens for incoming emails sent to the provided email address setup. In our case, it is Dägeprotect@gmail.com. When the mailListener detects a new mail has been received, it will first sanitize the email subject and email body for apostrophes. A single apostrophe can break the SQL Statement, thus we need to escape it by appending another apostrophe to it. Then the insertEmail function will be called from the database.js file to insert the email into the database.
+**Git Workflow**
+![Alt text](/screenshots/gitWorkflow.png?raw=true "GIT WorkFlow")
+
+**Database Schema**
+![Alt text](/screenshots/databaseSchema.png?raw=true "Database Schema")
+
+
+
+#HOW DOES OUR PROPRIETARY ALGORITHM SIFT THRU ALL EMAILS?
+Let’s start with the fetching of the email. The mailListener.js, when ran, consistently listens for incoming emails sent to the provided email address setup. In our case, it is dageprotect@gmail.com. When the mailListener detects a new mail has been received, it will first sanitize the email subject and email body for apostrophes. A single apostrophe can break the SQL Statement, thus we need to escape it by appending another apostrophe to it. Then the insertEmail function will be called from the database.js file to insert the email into the database.
 
 At this point, the program parses the email, which has been sent as an argument, into multiple columns, as defined in our schema. It will insert it into the emailTable, ready for the periodic Cron job to take further parse the email.
 
@@ -51,17 +59,17 @@ After which it will get all the flagged words, defined in the keywordTable, and 
 
 #TECHNOLOGIES USED:
 
--React
--Node
--Express
--SQLite
--Gulp
--Jasmine
--Karma
--Travis CI
--Google Cloud SQL
--Google Cloud BigTable
--AWS Elastic Beanstalk
+- React
+- Node
+- Express
+- SQLite
+- Gulp
+- Jasmine
+- Karma
+- Travis CI
+- Google Cloud SQL
+- Google Cloud BigTable
+- AWS Elastic Beanstalk
 
 #Deployment#
 
@@ -69,14 +77,14 @@ Run __BLANK__. That's it!
 
 #Testing#
 
-Make sure the Express server is running, then navigate to __BLANK__ and execute __BLANK__. 
+Make sure the Express server is running, then navigate to __BLANK__ and execute __BLANK__.
 
 #Contributing#
 
 Please see _CONTRIBUTING.md for contributing best practices. Aside from our extensive comments within the codebase, we've tried our best to create easy-to-understand self-documenting code. Please try to keep this up when you are contributing. Thanks!
 
 #Authors#
-TEAM DÄGE: 
+TEAM DÄGE:
 GT Deng
 Anthony Liu
 Max Li
