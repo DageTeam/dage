@@ -8,7 +8,7 @@ var Footer = React.createClass({
         <footer className='main-container'>
             <div className='g--half g--last'>
               <ul className='footer__links'>
-                <li className='copyright' style={{"textAlign":"center", "marginLeft":"50%", "width":"100%", 'marginTop':'100%'}}>©2015 Dage. All Rights Reserved.</li>
+                <li className='copyright' style={{'textAlign':'center', 'marginLeft':'50%', 'width':'100%', 'marginTop':'100%'}}>©2015 Dage. All Rights Reserved.</li>
               </ul>
             </div>
         </footer>

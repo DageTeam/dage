@@ -10,12 +10,13 @@ var Login = React.createClass({
     });
 
   },
+
   // created username and password components. Added some inline styling
   render: function() {
     return (
       <div style={{marginLeft:'60px'}}>
          
-     <form onSubmit={this.handleFormSubmit}>
+                                                                                                                                                                <form onSubmit={this.handleFormSubmit}>
        <ul className='form-fields'>
          <li>
            <input htmlFor='username' type='username' id='username' defaultValue='' ref='username'

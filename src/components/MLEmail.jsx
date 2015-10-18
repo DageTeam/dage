@@ -21,21 +21,23 @@ var GeneralEmail = React.createClass({
     this.props.callbacks._unflagEmail(this.props.emailId);
   },
 
-  markAsRead: function(){
+  markAsRead: function() {
     this.props.callbacks._emailMarkRead(this.props.emailId);
   },
 
   render: function() {
     var MLcode = 0;
 
-    if (this.props.n_classification === 'innappropriate'){
-      MLcode ++
+    if (this.props.n_classification === 'innappropriate') {
+      MLcode++
     }
-    if (JSON.stringify(this.props.p_classification) === JSON.stringify('P_inappropriate\r')){
-      MLcode ++
+
+    if (JSON.stringify(this.props.p_classification) === JSON.stringify('P_inappropriate\r')) {
+      MLcode++
     }
 
     const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
+
     // const allFlagsButton = <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
     const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
     const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}> Yes, flag this email</span>;
@@ -47,7 +49,7 @@ var GeneralEmail = React.createClass({
 
     const oneFLButtonsBlock = <div>{ fullEmailButton } </div>;
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
-    const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0,110) }[...]</td> : <td>{ this.props.body } </td>;
+    const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0, 110) }[...]</td> : <td>{ this.props.body } </td>;
 
     if (this.props.focusLevel == 'one') {
       return (
