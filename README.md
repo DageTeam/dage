@@ -2,7 +2,7 @@
 
 Every day, 112 billion corporate emails are sent. All it takes is 1 email to change the course of a company.
 
-What if your HR team can efficiently scan emails for harmful content? What if your security team can know if confidential emails are being put in the wrong hands? What if your sales team can track the content of the best and worst performing emails?
+What if your Human Resource team can efficiently scan emails for harmful content? What if your Security team can easily tell if confidential emails are being sent to the wrong people? What if your Sales team can track the content of the best and worst performing emails?
 
 This is where Däge steps in. Däge actively and silently monitors outbound emails from your server, utilizing machine learning to identify emails that is important to your team, and notifying you whenever it finds noteworthy emails. With the ability to scan thousands of emails every minute, Däge provides your company the tools to know the content of your employees’ emails, without you dedicating valuable resources or time.
 
