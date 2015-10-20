@@ -1,5 +1,8 @@
 # Däge #
 
+Check out our 3 minutes video at https://vimeo.com/142972852 
+
+
 Every day, 112 billion corporate emails are sent. All it takes is 1 email to change the course of a company.
 
 What if your Human Resource team can efficiently scan emails for harmful content? What if your Security team can easily tell if confidential emails are being sent to the wrong people? What if your Sales team can track the content of the best and worst performing emails?
