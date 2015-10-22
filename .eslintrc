@@ -15,5 +15,7 @@
     "no-else-return": 0,
     "space-before-function-paren": [0, "always"],
     "react/jsx-quotes": [0, "single"]
-  }
+  },
+  "plugins": ["react"],
+   "react/prop-types": 2
 }

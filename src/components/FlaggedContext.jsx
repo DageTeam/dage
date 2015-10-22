@@ -1,7 +1,11 @@
 const React = require('react');
 
 const FlaggedContext = React.createClass({
-
+  propTypes: {
+    flaggedKeyword: React.PropTypes.string.isRequired,
+    callbacks: React.PropTypes.object.isRequired,
+    context: React.PropTypes.object.isRequired
+  },
   styles:{
     table:{
       'marginTop':'0',

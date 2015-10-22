@@ -1,21 +1,21 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var BarChart = require('react-chartjs').Bar;
-var DoughnutChart = require('react-chartjs').Doughnut;
-var FixedDataTable = require('fixed-data-table');
+let React = require('react');
+let ReactDOM = require('react-dom');
+let BarChart = require('react-chartjs').Bar;
+let DoughnutChart = require('react-chartjs').Doughnut;
+let FixedDataTable = require('fixed-data-table');
 
-var Table = FixedDataTable.Table;
-var Column = FixedDataTable.Column;
+let Table = FixedDataTable.Table;
+let Column = FixedDataTable.Column;
 
-var Dashboard = React.createClass({
+let Dashboard = React.createClass({
 
   navigateAlert: function() {
     this.props.callbacks._navigationRouteSelect('alerts');
   },
 
   render: function() {
-    var emailNum = this.props.emails.emailsArray.length;
-    var barData = {
+    let emailNum = this.props.emails.emailsArray.length;
+    let barData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
       datasets: [
         {
@@ -29,7 +29,7 @@ var Dashboard = React.createClass({
       ],
     };
 
-    var barOptions = {
+    let barOptions = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero: true,
 
@@ -55,7 +55,7 @@ var Dashboard = React.createClass({
       barStrokeWidth: 2,
     };
 
-    var rows = [
+    let rows = [
       ['sara.shackleton@enron.com',525],
       ['richard.b.sanders@enron.com',494],
       ['tana.jones@enron.com',  225],
@@ -109,11 +109,11 @@ var Dashboard = React.createClass({
       ['rob.gay@enron.com',17],
     ];
 
-    var rowGetter = function(rowIndex) {
+    let rowGetter = function(rowIndex) {
       return rows[rowIndex];
     };
 
-    var doughnutDataEthics = [
+    let doughnutDataEthics = [
           {
             value: 64,
             color:'#4169E1',
@@ -207,7 +207,7 @@ var Dashboard = React.createClass({
 
       ];
 
-    var doughnutDataCompetitors = [
+    let doughnutDataCompetitors = [
           {
             value: 64,
             color:'#097054',
@@ -234,7 +234,7 @@ var Dashboard = React.createClass({
           },
       ];
 
-    var doughnutDataFilters = [
+    let doughnutDataFilters = [
         {
           value: 1195,
           color: '#46BFBD',
@@ -267,7 +267,7 @@ var Dashboard = React.createClass({
           },
       ];
 
-    var doughnutOptions = {
+    let doughnutOptions = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke: true,
 

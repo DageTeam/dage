@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var HomeContact = React.createClass({
+let HomeContact = React.createClass({
 
   render: function() {
     return (

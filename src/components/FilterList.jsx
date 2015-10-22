@@ -1,7 +1,7 @@
-var React = require('react');
-var Select = require('react-select');
+let React = require('react');
+let Select = require('react-select');
 
-var FilterList = React.createClass({
+let FilterList = React.createClass({
   propTypes: {
     label: React.PropTypes.string,
   },
@@ -33,7 +33,7 @@ var FilterList = React.createClass({
           allowCreate
           placeholder={ currentFilter }
           options= {this.props.options.filterOptions}
-          onChange= {this.selectFilter} />          
+          onChange= {this.selectFilter} />
                                                                                                                                                                                                 </div>
       )
   },

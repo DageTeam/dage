@@ -23,7 +23,7 @@ import {
 
 //username, permissionGroup, name, title, email, department, managerID, active
 
-// var data = {
+// let data = {
 //   username: 'gt',
 //   permissionGroup: 'admin',
 //   password: 'plaintext',
@@ -35,7 +35,7 @@ import {
 // };
 
 //TODO: CHANGE SERVERURL
-var serverUrl = 'http://127.0.0.1:4000';
+let serverUrl = 'http://127.0.0.1:4000';
 
 //TODO: fixme. refer to get user array function below
 //userAdd

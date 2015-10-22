@@ -1,10 +1,10 @@
-var React = require('react');
-var Griddle = require('griddle-react');
-var ReactBsTable = require('react-bootstrap-table');
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+let React = require('react');
+let Griddle = require('griddle-react');
+let ReactBsTable = require('react-bootstrap-table');
+let BootstrapTable = ReactBsTable.BootstrapTable;
+let TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
-var ManageUsers = React.createClass({
+let ManageUsers = React.createClass({
   addUserToState: function(data) {
     this.props.callbacks._addUserToState(data);
   },
@@ -27,15 +27,15 @@ var ManageUsers = React.createClass({
   },
 
   render: function() {
-    var _this = this;
+    let _this = this;
 
     // add user to db after userinfo is inserted to table via new button
-    var insertRowCallback = {
+    let insertRowCallback = {
       afterInsertRow: function(data) {
         _this.addingUser(data);
       },
     };
-    var selectRowProp = {
+    let selectRowProp = {
       mode: 'checkbox',
       clickToSelect: true,
       bgColor: 'rgb(238, 193, 213)',

@@ -1,7 +1,7 @@
-var React = require('react');
-var FlaggedContext = require('components/FlaggedContext');
+let React = require('react');
+let FlaggedContext = require('components/FlaggedContext');
 
-var FlaggedEmail = React.createClass({
+let FlaggedEmail = React.createClass({
 
   showAllFlags: function() {
     // this.props./*CBFuncShowFlags*/('all');
@@ -31,22 +31,22 @@ var FlaggedEmail = React.createClass({
   },
 
   render: function() {
-    var contentRows = [];
+    let contentRows = [];
     /*FLAGGEDCONTEXT props from email array from state tree*/
-    var contentList = this.props.flags;
-    var flagsArray = [];
-    for (var i = 0; i < contentList.length; i++) {
+    let contentList = this.props.flags;
+    let flagsArray = [];
+    for (let i = 0; i < contentList.length; i++) {
       flagsArray.push(contentList[i].flaggedKeyword);
     };
 
-    var displayLength = contentList.length;
-    var userPermissionGroup = this.props.userSession.permissionGroup;
+    let displayLength = contentList.length;
+    let userPermissionGroup = this.props.userSession.permissionGroup;
     if (this.props.focusLevel === 'one') {
       displayLength = 1;
     }
 
-    for (var i = 0; i < displayLength; i++) {
-      var content = contentList[i];
+    for (let i = 0; i < displayLength; i++) {
+      let content = contentList[i];
       contentRows.push(
           <FlaggedContext
             flaggedKeyword={ content.flaggedKeyword }

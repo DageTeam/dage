@@ -1,17 +1,17 @@
-var React = require('react');
-var GeneralEmail = require('components/GeneralEmail.jsx');
+let React = require('react');
+let GeneralEmail = require('components/GeneralEmail.jsx');
 
-var AllEmailsList = React.createClass({
+let AllEmailsList = React.createClass({
 
   // componentWillMount() {
   //   this.props.callbacks._allEmailArrayFetch();
   // },
 
   render: function() {
-    var allEmailsRows = [];
-    var emailList = this.props.emails.allEmailsArray;
-    for (var i = emailList.length - 1; i >= 0; i--) {
-      var email = emailList[i];
+    let allEmailsRows = [];
+    let emailList = this.props.emails.allEmailsArray;
+    for (let i = emailList.length - 1; i >= 0; i--) {
+      let email = emailList[i];
       allEmailsRows.push(
         <GeneralEmail
           key = {email.id}

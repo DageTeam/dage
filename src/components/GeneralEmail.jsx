@@ -1,7 +1,7 @@
-var React = require('react');
-var FlaggedContext = require('components/FlaggedContext');
+let React = require('react');
+let FlaggedContext = require('components/FlaggedContext');
 
-var GeneralEmail = React.createClass({
+let GeneralEmail = React.createClass({
 
   showAllFlags: function() {
     // this.props./*CBFuncShowFlags*/('all');
@@ -31,21 +31,21 @@ var GeneralEmail = React.createClass({
   },
 
   render: function() {
-    var contentRows = [];
-    var contentList = this.props.flags;
-    var flagsArray = [];
-    for (var i = 0; i < contentList.length; i++) {
+    let contentRows = [];
+    let contentList = this.props.flags;
+    let flagsArray = [];
+    for (let i = 0; i < contentList.length; i++) {
       flagsArray.push(contentList[i].flaggedKeyword);
     };
 
-    var displayLength = contentList.length;
-    var userPermissionGroup = this.props.userSession.permissionGroup;
+    let displayLength = contentList.length;
+    let userPermissionGroup = this.props.userSession.permissionGroup;
     if (this.props.focusLevel === 'one') {
       displayLength = 1;
     }
 
-    for (var i = 0; i < displayLength; i++) {
-      var content = contentList[i];
+    for (let i = 0; i < displayLength; i++) {
+      let content = contentList[i];
       contentRows.push(
           <FlaggedContext
             flaggedKeyword={ content.flaggedKeyword }
@@ -76,12 +76,12 @@ var GeneralEmail = React.createClass({
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' > 
+            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
             </div>
-            <div className='container' > 
+            <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 {markNoButton}
               {oneFLButtonsBlock}
             </div>
@@ -96,20 +96,20 @@ var GeneralEmail = React.createClass({
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' > 
+            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
 
             </div>
-            <div className='container' > 
+            <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 {markNoButton}
               {allFLButtonsBlock}
             </div>
             <div className='container' style={{'marginTop':'1%', 'marginBottom':'1%'}}>
               {contentRows}
             </div>
-            
+
                                                                                                                                                                                                                                                                                                                                 </div>
         </div>
       )
@@ -120,13 +120,13 @@ var GeneralEmail = React.createClass({
             <div className='container' >
               <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>From</span>: {this.props.sender}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Subject</span>: {this.props.subject}</div>
-            </div> 
-                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' > 
+            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <div className='heading' style={{'verticalAlign':'middle', 'float':'left'}}><span style={{'fontWeight':'500'}}>To</span>: {this.props.recipient}</div>
               <div className='heading' style={{'verticalAlign':'middle', 'float':'right'}}><span style={{'fontWeight':'500'}}>Date</span>: {this.props.sendTime}</div>
 
             </div>
-            <div className='container' > 
+            <div className='container' >
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 {markNoButton}
               {fullEmailButtonsBlock}
             </div>
@@ -142,7 +142,7 @@ var GeneralEmail = React.createClass({
                   </tr>
               </table>
             </div>
-            
+
                                                                                                                                                                                                                                                                                                                                 </div>
         </div>
       )

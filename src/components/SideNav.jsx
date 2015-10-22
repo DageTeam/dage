@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var SideNav = React.createClass({
+let SideNav = React.createClass({
 
   navigateAlertsRoute: function() {
     this.props.callbacks._navigationRouteSelect('alerts');
@@ -27,7 +27,7 @@ var SideNav = React.createClass({
   },
 
   render: function() {
-    var userPermissionGroup = this.props.userSession.permissionGroup;
+    let userPermissionGroup = this.props.userSession.permissionGroup;
 
     const manageUserBlock = (userPermissionGroup === 'admin') ?
       <li className='nav__item site-nav--contact'><a onClick={ this.navigateManageUserRoute }>Manage User<i className='icon--contact'></i></a></li> : <div/>;
@@ -54,7 +54,7 @@ var SideNav = React.createClass({
                   <li className='nav__item nav__item--has-child site-nav--company'><a onClick={ this.navigateCustomizeRoute }>Customize<i className='icon--company'></i></a></li>
                   { manageUserBlock }
                 </ul>
-              
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
             </nav>
           </div>

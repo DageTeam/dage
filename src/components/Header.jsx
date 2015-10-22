@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var Header = React.createClass({
+let Header = React.createClass({
 
   logout: function() {
     this.props.callbacks._deleteToken();

@@ -1,17 +1,17 @@
-var React = require('react');
-var MLEmail = require('components/MLEmail.jsx');
+let React = require('react');
+let MLEmail = require('components/MLEmail.jsx');
 
-var MLEmailsList = React.createClass({
+let MLEmailsList = React.createClass({
 
   // componentWillMount() {
   //   this.props.callbacks._allEmailArrayFetch();
   // },
 
   render: function() {
-    var MLEmailsRows = [];
-    var emailList = this.props.emails.MLEmailsArray;
-    for (var i = emailList.length - 1; i >= 0; i--) {
-      var email = emailList[i];
+    let MLEmailsRows = [];
+    let emailList = this.props.emails.MLEmailsArray;
+    for (let i = emailList.length - 1; i >= 0; i--) {
+      let email = emailList[i];
       MLEmailsRows.push(
         <MLEmail
           key = {email.id}

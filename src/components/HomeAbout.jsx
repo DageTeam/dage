@@ -1,7 +1,7 @@
-var React = require('react');
+let React = require('react');
 
 //112.5B emails sent per day. source: http://www.radicati.com/wp/wp-content/uploads/2015/02/Email-Statistics-Report-2015-2019-Executive-Summary.pdf
-var HomeAbout = React.createClass({
+let HomeAbout = React.createClass({
 
   render: function() {
     return (

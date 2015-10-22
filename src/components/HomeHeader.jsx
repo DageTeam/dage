@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var HomeHeader = React.createClass({
+let HomeHeader = React.createClass({
 
   render: function() {
     return (
