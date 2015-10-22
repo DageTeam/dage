@@ -1,9 +1,15 @@
-var React = require('react');
+const React = require('react');
 
-var FlaggedContext = React.createClass({
+const FlaggedContext = React.createClass({
 
-  render: function() {
-    var context = this.props.context;
+  styles:{
+    table:{
+      'marginTop':'0',
+      'tableLayout':'fixed'
+    }
+  },
+
+  render: function flaggedContextFx() {
     return (
      <div>
        <table style={this.styles.table}>
@@ -18,14 +24,8 @@ var FlaggedContext = React.createClass({
        </table>
      </div>
      );
-  },
+  }
 
-  styles:{
-    table:{
-      'marginTop':'0',
-      'tableLayout':'fixed',
-    },
-  },
 });
 
 module.exports = FlaggedContext;
