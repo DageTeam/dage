@@ -1,8 +1,8 @@
-var React = require('react');
-var ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
+let React = require('react');
+let ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
 
 // this component is used to load script into react
-var ScriptLoader = React.createClass({
+let ScriptLoader = React.createClass({
   mixins: [ReactScriptLoaderMixin],
   getInitialState: function() {
     return {
@@ -28,7 +28,7 @@ var ScriptLoader = React.createClass({
   },
 
   render: function() {
-    var message;
+    let message;
     if (this.state.scriptLoading) {
       console.log('loading scriptLoader component...');
     } else if (this.state.scriptLoadError) {

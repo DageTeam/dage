@@ -1,7 +1,17 @@
-var React = require('react');
-var FlaggedContext = require('components/FlaggedContext');
-
-var GeneralEmail = React.createClass({
+const React = require('react');
+const GeneralEmail = React.createClass({
+  propTypes: {
+    body: React.PropTypes.string.isRequired,
+    sender: React.PropTypes.string.isRequired,
+    subject: React.PropTypes.string.isRequired,
+    recipient: React.PropTypes.string.isRequired,
+    sendTime: React.PropTypes.string.isRequired,
+    focusLevel: React.PropTypes.string.isRequired,
+    n_classification: React.PropTypes.string.isRequired,
+    p_classification: React.PropTypes.string.isRequired,
+    emailId: React.PropTypes.string.isRequired,
+    callbacks: React.PropTypes.object.isRequired
+  },
 
   showCompleteEmail: function() {
     // this.props./*CBFuncShowCompleteEmail*/('complete');
@@ -14,7 +24,7 @@ var GeneralEmail = React.createClass({
   },
 
   markIsFlag: function() {
-    //TODO: insert function
+    // TODO: insert function
   },
 
   markIsNotFlag: function() {
@@ -25,33 +35,46 @@ var GeneralEmail = React.createClass({
     this.props.callbacks._emailMarkRead(this.props.emailId);
   },
 
+  styles:{
+    table:{
+      'marginTop':'0',
+      'position':'relative',
+      'width':'75%',
+    },
+    rows:{
+      'borderBottom':'3px solid purple',
+      'marginBottom':'10px',
+      'marginTop':'5px',
+    },
+  },
+
   render: function() {
-    var MLcode = 0;
+    let MLcode = 0;
 
     if (this.props.n_classification === 'innappropriate') {
-      MLcode++
+      MLcode++;
     }
 
     if (JSON.stringify(this.props.p_classification) === JSON.stringify('P_inappropriate\r')) {
-      MLcode++
+      MLcode++;
     }
 
-    const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right','wordSpacing':'-10px','cursor':'pointer'}}>See Full Email</span></small> : <div/>;
+    const fullEmailButton = this.props.body.length > 110 ? <small><span onClick={ this.showCompleteEmail } className='glyphicon glyphicon-plus' style={{'float':'right', 'wordSpacing':'-10px', 'cursor':'pointer'}}>See Full Email</span></small> : <div/>;
 
     // const allFlagsButton = <small><span onClick={ this.showAllFlags } className='glyphicon glyphicon-chevron-down' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Show all { this.props.flags.length } flags</span></small>;
-    const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}>Minimize</span></small>;
-    const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right','wordSpacing':'-10px','marginRight':'10px','cursor':'pointer'}}> Yes, flag this email</span>;
-    const markNoButton = <span onClick={ this.markIsNotFlag } style={{'float':'left','color':'green','marginRight':'10px','cursor':'pointer'}}>Unflag </span>;
-    const markReadButton = <span onClick={ this.markAsRead} id='markRead' style={{'float':'left','color':'#ea6314','marginRight':'10px','cursor':'pointer'}}>Mark Read</span>;
+    const collapseButton = <small><span onClick={ this.showOneFlag } className='glyphicon glyphicon-chevron-up' style={{'float':'right', 'wordSpacing':'-10px', 'marginRight':'10px', 'cursor':'pointer'}}>Minimize</span></small>;
+//    const markYesButton = <span onClick={ this.markIsFlag } style={{'float':'right', 'wordSpacing':'-10px', 'marginRight':'10px', 'cursor':'pointer'}}> Yes,  flag this email</span>;
+//    const markNoButton = <span onClick={ this.markIsNotFlag } style={{'float':'left', 'color':'green', 'marginRight':'10px', 'cursor':'pointer'}}>Unflag </span>;
+//    const markReadButton = <span onClick={ this.markAsRead} id='markRead' style={{'float':'left', 'color':'#ea6314', 'marginRight':'10px', 'cursor':'pointer'}}>Mark Read</span>;
 
-    const MLTag = MLcode === 2 ? <span style={{'float':'left','color':'red','marginRight':'10px','fontWeight':'bold'}}>High confidence </span> :
-      <span style={{'float':'left','color':'orange','marginRight':'10px','fontWeight':'bold'}}>Low confidence </span>
+    const MLTag = MLcode === 2 ? <span style={{'float':'left', 'color':'red', 'marginRight':'10px', 'fontWeight':'bold'}}>High confidence </span> :
+      <span style={{'float':'left', 'color':'orange', 'marginRight':'10px', 'fontWeight':'bold'}}>Low confidence </span>;
 
     const oneFLButtonsBlock = <div>{ fullEmailButton } </div>;
     const fullEmailButtonsBlock = <div> { collapseButton } </div>;
     const emailMessage = this.props.body.length > 110 ? <td>{ this.props.body.slice(0, 110) }[...]</td> : <td>{ this.props.body } </td>;
 
-    if (this.props.focusLevel == 'one') {
+    if (this.props.focusLevel === 'one') {
       return (
         <div style={{'width':'100%'}}>
           <div className='container' style={this.styles.rows}>
@@ -80,7 +103,7 @@ var GeneralEmail = React.createClass({
             </div>
           </div>
         </div>
-      )
+      );
     } else if (this.props.focusLevel === 'complete') {
       return (
         <div style={{'width':'100%'}}>
@@ -112,21 +135,8 @@ var GeneralEmail = React.createClass({
 
           </div>
         </div>
-      )
+      );
     }
-  },
-
-  styles:{
-    table:{
-      'marginTop':'0',
-      'position':'relative',
-      'width':'75%',
-    },
-    rows:{
-      'borderBottom':'3px solid purple',
-      'marginBottom':'10px',
-      'marginTop':'5px',
-    },
   },
 });
 

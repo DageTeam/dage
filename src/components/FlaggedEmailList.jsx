@@ -1,13 +1,13 @@
-var React = require('react');
-var FlaggedEmail = require('components/FlaggedEmail.jsx');
+let React = require('react');
+let FlaggedEmail = require('components/FlaggedEmail.jsx');
 
-var FlaggedEmailList = React.createClass({
+let FlaggedEmailList = React.createClass({
 
   render: function() {
-    var emailRows = [];
-    var emailList = this.props.state.emailsArray;
-    for (var i = emailList.length - 1; i >= 0; i--) {
-      var email = emailList[i];
+    let emailRows = [];
+    let emailList = this.props.state.emailsArray;
+    for (let i = emailList.length - 1; i >= 0; i--) {
+      let email = emailList[i];
       emailRows.push(
         <FlaggedEmail
           key = {email.id}

@@ -1,9 +1,19 @@
-var React = require('react');
+const React = require('react');
 
-var FlaggedContext = React.createClass({
+const FlaggedContext = React.createClass({
+  propTypes: {
+    flaggedKeyword: React.PropTypes.string.isRequired,
+    callbacks: React.PropTypes.object.isRequired,
+    context: React.PropTypes.object.isRequired
+  },
+  styles:{
+    table:{
+      'marginTop':'0',
+      'tableLayout':'fixed'
+    }
+  },
 
-  render: function() {
-    var context = this.props.context;
+  render: function flaggedContextFx() {
     return (
      <div>
        <table style={this.styles.table}>
@@ -18,14 +28,8 @@ var FlaggedContext = React.createClass({
        </table>
      </div>
      );
-  },
+  }
 
-  styles:{
-    table:{
-      'marginTop':'0',
-      'tableLayout':'fixed',
-    },
-  },
 });
 
 module.exports = FlaggedContext;

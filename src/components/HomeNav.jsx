@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var HomeNav = React.createClass({
+let HomeNav = React.createClass({
   render: function() {
     return (
     <div>

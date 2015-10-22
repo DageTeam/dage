@@ -16,7 +16,7 @@ import {
 //invoked on application load. Assumes user is auth'd. Sends GET request to server for a given user--
 //if user is not auth'd, would ideally redirect to a login page (in this case, sense dispatch for userFetchError)
 
-var serverUrl = 'http://127.0.0.1:4000';
+let serverUrl = 'http://127.0.0.1:4000';
 
 export function applicationLoaded(data) {
   return dispatch => {
@@ -25,7 +25,7 @@ export function applicationLoaded(data) {
       data,
     });
 
-    var token = window.localStorage.getItem('dage-token');
+    let token = window.localStorage.getItem('dage-token');
     console.log('this is token', JSON.stringify(token));
     return request
       .post(serverUrl + '/userAuth')

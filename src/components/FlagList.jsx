@@ -1,13 +1,13 @@
-var React = require('react');
+let React = require('react');
 
-var Select = require('react-select');
+let Select = require('react-select');
 
-var FlagDisplay = React.createClass({
+let FlagDisplay = React.createClass({
   ManageFlag: function(flags) {
-    var removeFlag;
-    var checkFlag = {};
-    var flagsArr = flags.split(',');
-    for (var i = 0; i < this.props.options.length; i++) {
+    let removeFlag;
+    let checkFlag = {};
+    let flagsArr = flags.split(',');
+    for (let i = 0; i < this.props.options.length; i++) {
       if (flagsArr.indexOf(this.props.options[i].value.toString()) === -1) {
         checkFlag[this.props.options[i].value] = false;
       }else {
@@ -15,7 +15,7 @@ var FlagDisplay = React.createClass({
       }
     }
 
-    for (var key in checkFlag) {
+    for (let key in checkFlag) {
       if (checkFlag[key] === false) {
         removeFlag = key;
       }
@@ -24,7 +24,7 @@ var FlagDisplay = React.createClass({
     if (removeFlag) {
       this.props.callbacks._filterRemoveFlagKeyword(removeFlag);
     } else {
-      var newFlag = flags.split(',');
+      let newFlag = flags.split(',');
       newFlag = newFlag[newFlag.length - 1];
       this.props.callbacks._filterAddFlagKeyword(newFlag);
     }

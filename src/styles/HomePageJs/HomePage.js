@@ -1,8 +1,8 @@
 (function($) {
-    "use strict"; 
+    "use strict";
 
     $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
+        let $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top - 50)
         }, 1250, 'easeInOutExpo');
@@ -33,4 +33,4 @@
 
     new WOW().init();
 
-})(jQuery); 
+})(jQuery);

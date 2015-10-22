@@ -36,7 +36,7 @@ import {
 
 } from 'constants/emails';
 
-var serverUrl = 'http://127.0.0.1:4000';
+let serverUrl = 'http://127.0.0.1:4000';
 
 export function emailArrayFetch() {
   console.log('emailArrayFetch triggered');

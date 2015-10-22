@@ -26,7 +26,7 @@ config.set('vendor_dependencies', [
   'react-router',
   'redux',
   'redux-devtools',
-  'redux-devtools/lib/react'
+  'redux-devtools/lib/react',
 ]);
 
 config.set('webpack_lint_in_dev', true);
@@ -39,19 +39,20 @@ Edit at your own risk
 
 -------------------------------------------------
 ************************************************/
+
 // ------------------------------------
 // Environment
 // ------------------------------------
 config.set('env', process.env.NODE_ENV);
 config.set('globals', {
-  'process.env'  : {
-    'NODE_ENV' : JSON.stringify(config.get('env'))
+  'process.env': {
+    'NODE_ENV': JSON.stringify(config.get('env')),
   },
-  'NODE_ENV'     : config.get('env'),
-  '__DEV__'      : config.get('env') === 'development',
-  '__PROD__'     : config.get('env') === 'production',
-  '__DEBUG__'    : config.get('env') === 'development' && !argv.no_debug,
-  '__DEBUG_NW__' : !!argv.nw
+  'NODE_ENV': config.get('env'),
+  '__DEV__': config.get('env') === 'development',
+  '__PROD__': config.get('env') === 'production',
+  '__DEBUG__': config.get('env') === 'development' && !argv.no_debug,
+  '__DEBUG_NW__': !!argv.nw,
 });
 
 // ------------------------------------
@@ -76,9 +77,9 @@ const paths = (() => {
   const project = (...args) => resolve.apply(resolve, [...base, ...args]);
 
   return {
-    project : project,
-    src     : project.bind(null, config.get('dir_src')),
-    dist    : project.bind(null, config.get('dir_dist'))
+    project: project,
+    src: project.bind(null, config.get('dir_src')),
+    dist: project.bind(null, config.get('dir_dist')),
   };
 })();
 
@@ -97,7 +98,7 @@ config.set('utils_aliases', [
   'stores',
   'styles',
   'utils',
-  'views'
+  'views',
 ].reduce((acc, x) => ((acc[x] = paths.src(x)) && acc), {}));
 
 export default config;

@@ -1,9 +1,9 @@
-var React = require('react');
-var FilterList = require('components/FilterList');
-var DashboardView = require('views/DashboardView');
+let React = require('react');
+let FilterList = require('components/FilterList');
+let DashboardView = require('views/DashboardView');
 import Login from 'components/Login';
 
-var MainContent = React.createClass({
+let MainContent = React.createClass({
 
   render: function() {
     return (

@@ -176,35 +176,35 @@ export class MainView extends React.Component {
 
       _flagHighlightRender: (inputText, keywordArray) => {
         // function flatMap(array, fn) {
-        //   var result = [];
-        //   for (var i = 0; i < array.length; i++) {
-        //     var mapping = fn(array[i]);
+        //   let result = [];
+        //   for (let i = 0; i < array.length; i++) {
+        //     let mapping = fn(array[i]);
         //     result = result.concat(mapping);
         //   }
 
         //   return result;
         // }
 
-        // var flagRE = new RegExp(keyword, 'g', 'i');
-        // var result = flatMap(inputText.split(flagRE), function(part) {
+        // let flagRE = new RegExp(keyword, 'g', 'i');
+        // let result = flatMap(inputText.split(flagRE), function(part) {
         //   return [part, <span style={{color: '#ea6314', fontWeight:'bold'}}>{keyword}</span>];
         // });
 
-        var result = [inputText];
-        for (var i = 0; i < keywordArray.length; i++) {
-          var flaggedWord = keywordArray[i];
-          var flaggedRE = new RegExp(flaggedWord, 'g', 'i');
-          for (var j = 0; j < result.length; j++) {
+        let result = [inputText];
+        for (let i = 0; i < keywordArray.length; i++) {
+          let flaggedWord = keywordArray[i];
+          let flaggedRE = new RegExp(flaggedWord, 'g', 'i');
+          for (let j = 0; j < result.length; j++) {
             if (typeof result[j] === 'string') {
-              var tempArray = result[j].split(flaggedRE);
+              let tempArray = result[j].split(flaggedRE);
               result.splice(j, 1);
-              var tempArray2 = [];
-              for (var l = 0; l < tempArray.length; l++) {
+              let tempArray2 = [];
+              for (let l = 0; l < tempArray.length; l++) {
                 tempArray2.push(tempArray[l], <span style={{color: '#ea6314', fontWeight:'bold'}}>{flaggedWord}</span>);
               }
 
               tempArray2.pop();
-              for (var k = 0; k < tempArray2.length; k++) {
+              for (let k = 0; k < tempArray2.length; k++) {
                 result.splice(j, 0, tempArray2[k]);
                 j++;
               }

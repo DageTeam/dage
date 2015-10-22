@@ -1,6 +1,6 @@
-var React = require('react');
+let React = require('react');
 
-var HomeService = React.createClass({
+let HomeService = React.createClass({
 
   render: function() {
     return (
