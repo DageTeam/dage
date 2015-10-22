@@ -16,13 +16,13 @@ app.use(require('./middleware/logger'));
 // Static File Middleware
 // ------------------------------------
 app.use(serve(paths.dist('client'), {
-  index : '__IGNORE_INDEX.HTML__'
+  index: '__IGNORE_INDEX.HTML__',
 }));
 
 // ------------------------------------
 // View Rendering
 // ------------------------------------
-function getInitialState () {
+function getInitialState() {
   const counter = this.request.query.counter ?
     parseInt(this.request.query.counter) : 0;
 

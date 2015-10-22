@@ -5,11 +5,13 @@ var job = new CronJob('* * * * * * ', function() {
    * at 11:30:00 AM. It does not run on Saturday
    * or Sunday.
    */
-   console.log('run cron');
-  }, function(){
+  console.log('run cron');
+}, function() {
   },
+
   true,
-  "America/Los_Angeles");
-  true /* Start the job right now */
-  // timeZone /* Time zone of this job. */
-  job.start();
+  'America/Los_Angeles');
+true /* Start the job right now */
+
+// timeZone /* Time zone of this job. */
+job.start();

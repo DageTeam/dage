@@ -11,15 +11,17 @@ var getEmailStats = function getEmailStats(tagName, email) {
   var totalNumOfWords = 0;
 
   //get an array of keywords based on the tagName
-  return getArrayOfKeywordsFromTagsTable(tagName, function(arr){
+  return getArrayOfKeywordsFromTagsTable(tagName, function(arr) {
     // console.log('these are the keywords from the tagTable.....arr=', arr);
 
     //stem the email.body before getting the frequency of the words.
     var stemmedArray = getStemmedArray(email.body);
+
     // console.log('this is the stemmedArray', stemmedArray);
 
     //get word frequency object
     var obj = getWordFrequency(stemmedArray);
+
     // console.log('this is the wordFrequency object', obj);
 
     //loop thru the tagArray to get a count of the keywords
@@ -55,10 +57,13 @@ var getWordFrequency = function getWordFrequency(str) {
     if (match.index === regEx.lastIndex) {
       regEx.lastIndex++;
     }
+
     //if the existing word is not in the obj, set the value to 1, else increase the value by 1.
     obj[match[0]] ? obj[match[0]] += 1 : obj[match[0]] = 1;
+
     // console.log('this is the matched word///////........', obj[match[0]]);
   }
+
   return obj;
 };
 
@@ -93,14 +98,10 @@ var getStemmedArray = function getStemmedArray(str) {
 //   'ducker',
 //   'duck' ]
 
-
 // var testStringgy = {
 //   body : 'hi gringo or cracker. this is a long ducking email. it includes numbers and digits and repeats of the fellowing: stem, stems, stemming, stemmed. duck, ducking, ducked, ducker, ducks'
 // };
 // // console.log('testing getEmailStats........', getEmailStats('racism', testStringgy));
 // //shit works. but why does it say undefined?
 // //TESTING PURPOSES.....
-
-
-
 

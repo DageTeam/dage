@@ -72,10 +72,12 @@ app.get('/MLEmails', function(req,res) {
 
   // connection.connect();
 
-  var returnObjectCallback = function (json){
+  var returnObjectCallback = function(json) {
     console.log('inside returnObjectCallback')
+
     // res.setHeader('Content-Type' , 'x-application/json');
     res.send(json);
+
     // res.send(json);
   }
 
@@ -85,18 +87,20 @@ app.get('/MLEmails', function(req,res) {
   // };
 
   var json = '';
-  var query = "select * from p_ethicFilterClassified \
-   where p_classification like '%P_inappropriate%' \
-   and n_classification like '%innappropriate%' \
-   and body like '%fuck%'limit 20"
+  var query = 'select * from p_ethicFilterClassified \
+   where p_classification like \'%P_inappropriate%\' \
+   and n_classification like \'%innappropriate%\' \
+   and body like \'%fuck%\'limit 20'
   connection.query(query, function(err, rows, fields) {
     console.log('inside Query')
     if (err) throw err;
     json = JSON.stringify(rows);
+
     // connection.end();
-    rows.forEach(function(row){
+    rows.forEach(function(row) {
       row.focusLevel = 'one'
     })
+
     return returnObjectCallback(rows);
   });
 })
@@ -110,7 +114,7 @@ app.post('/unflagEmail', function(req, res) {
 });
 
 app.post('/emailMarkRead', function(req, res) {
-  db.emailMarkRead(req.body.emailID, function(message){
+  db.emailMarkRead(req.body.emailID, function(message) {
     res.send(message);
   })
 })
@@ -169,8 +173,8 @@ app.post('/submitkeyword', function(req, res) {
   });
 });
 
-app.post('/removekeyword', function(req, res){
-  db.removeKeyword(req.body, function(message){
+app.post('/removekeyword', function(req, res) {
+  db.removeKeyword(req.body, function(message) {
     res.send(message);
   })
 });
@@ -293,7 +297,7 @@ app.post('/passwordReset', function(req, res) {
 //url to mark user active/inactive password
 app.post('/toggleUser', function(req, res) {
   db.toggleUserActive(req.body.username, req.body.active, function() {
-      res.send({
+    res.send({
         message: 'User Successfully Toggled',
       });
   });
