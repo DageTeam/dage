@@ -1250,7 +1250,8 @@ html.no-svg .linkedin:hover .icon--linkedin {
 
 .wrap {
     overflow: hidden;
-    position: relative
+    position: relative;
+    height:0px;
 }
 
 .gallery-cell {

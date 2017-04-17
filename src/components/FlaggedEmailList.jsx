@@ -5,7 +5,6 @@ var FlaggedEmailList = React.createClass({
 
   render: function(){
     var emailRows = [];
-    // var emailList = /*EMAILARRAY props from state tree*/;
     var emailList = this.props.state.emailsArray;
     for (var i = 0; i < emailList.length; i++) {
       var email = emailList[i];
@@ -20,13 +19,20 @@ var FlaggedEmailList = React.createClass({
           body = {email.body}
           focusLevel = {email.focusLevel}
           callbacks = {this.props.callbacks}
-          // /*CBFuncShowFlags*/={this.props.CBFunc}
-          // /*CBFuncShowCompleteEmail*/={this.props.CBFunc}
           />
       )
     }
 
-    return (<div> { emailRows } </div> );
+    return (<div style={this.styles.emailListBox}> { emailRows } </div> );
+  },
+  styles:{
+    emailListBox:{
+      'margin-left': '5%',
+      'width': '90%',
+      'height': '600px',
+      'overflow': 'scroll',
+      'border': '3px solid purple'
+    }
   }
 });
 
